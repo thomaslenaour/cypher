@@ -6,6 +6,10 @@ on:
       - main
   pull_request:
 
+permissions:
+  actions: read
+  contents: read
+
 jobs:
   main:
     name: Nx Cloud - Main Job
