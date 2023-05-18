@@ -1,7 +1,13 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
-import { configuration, validateConfiguration } from './configuration';
+import {
+  ApiConfiguration,
+  configuration,
+  validateConfiguration,
+} from './configuration';
 
 @Module({
   imports: [
@@ -10,6 +16,19 @@ import { configuration, validateConfiguration } from './configuration';
       expandVariables: true,
       load: [configuration],
       validate: validateConfiguration,
+    }),
+    GraphQLModule.forRootAsync<ApolloDriverConfig>({
+      imports: [ConfigModule],
+      driver: ApolloDriver,
+      useFactory: async (configService: ConfigService) => {
+        const graphqlConfig =
+          configService.get<ApiConfiguration['graphql']>('graphql');
+        if (!graphqlConfig) {
+          throw new Error('Missing GraphQL configuration');
+        }
+        return graphqlConfig;
+      },
+      inject: [ConfigService],
     }),
   ],
 })

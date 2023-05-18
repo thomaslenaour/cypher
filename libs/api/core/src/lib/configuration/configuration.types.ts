@@ -1,3 +1,5 @@
+import { ApolloDriverConfig } from '@nestjs/apollo';
+
 export enum Environment {
   Development = 'development',
   Production = 'production',
@@ -8,4 +10,5 @@ export enum Environment {
 export type ApiConfiguration = {
   port: number;
   environment: Environment;
+  graphql: ApolloDriverConfig;
 };
