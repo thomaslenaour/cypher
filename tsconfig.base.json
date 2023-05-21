@@ -15,7 +15,13 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@cypher/api/core": ["libs/api/core/src/index.ts"]
+      "@cypher/api/core": ["libs/api/core/src/index.ts"],
+      "@cypher/api/shared/database/orm": [
+        "libs/api/shared/database/orm/src/index.ts"
+      ],
+      "@cypher/api/shared/database/prisma": [
+        "libs/api/shared/database/prisma/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

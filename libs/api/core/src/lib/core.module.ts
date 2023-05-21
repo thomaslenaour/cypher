@@ -3,6 +3,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
+import { OrmModule } from '@cypher/api/shared/database/orm';
+
 import {
   ApiConfiguration,
   configuration,
@@ -30,6 +32,7 @@ import {
       },
       inject: [ConfigService],
     }),
+    OrmModule,
   ],
 })
 export class CoreModule {}
