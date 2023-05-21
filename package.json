@@ -2,10 +2,19 @@
   "name": "cypher",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {
-    "cm": "cz"
-  },
   "private": true,
+  "scripts": {
+    "cm": "cz",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:migrate:deploy": "prisma migrate deploy",
+    "prisma:migrate:reset": "prisma migrate reset",
+    "prisma:seed": "prisma db seed"
+  },
+  "prisma": {
+    "schema": "./libs/api/shared/database/prisma/src/lib/schema.prisma",
+    "seed": "ts-node --transpile-only ./libs/api/shared/database/prisma/src/lib/seed.ts"
+  },
   "devDependencies": {
     "@commitlint/cli": "^17.6.3",
     "@commitlint/config-conventional": "^17.6.3",

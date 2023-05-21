@@ -66,24 +66,6 @@
         "command": "docker-compose up -d",
         "cwd": "apps/api"
       }
-    },
-    "prisma:generate": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "prisma generate --schema=./libs/api/shared/database/prisma/src/lib/schema.prisma"
-      }
-    },
-    "prisma:migrate": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "prisma migrate dev --schema=./libs/api/shared/database/prisma/src/lib/schema.prisma --name {args.name}"
-      }
-    },
-    "prisma:migrate:depoy": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "prisma migrate deploy --schema=./libs/api/shared/database/prisma/src/lib/schema.prisma"
-      }
     }
   },
   "tags": []
