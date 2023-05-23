@@ -1,8 +1,15 @@
 import { Module } from '@nestjs/common';
+import { hash, compare } from 'bcrypt';
 
-import { PasswordService } from './services/password.service';
+import {
+  PASSWORD_ENCRYPTION_PROVIDER,
+  PasswordService,
+} from './services/password.service';
 
 @Module({
-  providers: [PasswordService],
+  providers: [
+    PasswordService,
+    { provide: PASSWORD_ENCRYPTION_PROVIDER, useValue: { hash, compare } },
+  ],
 })
 export class AuthenticationModule {}

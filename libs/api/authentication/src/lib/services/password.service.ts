@@ -8,7 +8,9 @@ export interface PasswordEncryptionProvider {
   compare(plainPassword: string, hashedPassword: string): Promise<boolean>;
 }
 
-export const PASSWORD_ENCRYPTION_PROVIDER = 'PASSWORD_ENCRYPTION_PROVIDER';
+export const PASSWORD_ENCRYPTION_PROVIDER = Symbol(
+  'PASSWORD_ENCRYPTION_PROVIDER'
+);
 
 @Injectable()
 export class PasswordService {
