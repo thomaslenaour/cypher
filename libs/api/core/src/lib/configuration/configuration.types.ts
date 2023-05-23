@@ -11,4 +11,13 @@ export type ApiConfiguration = {
   port: number;
   environment: Environment;
   graphql: ApolloDriverConfig;
+  providers: ProvidersConfiguration;
 };
+
+export interface ProvidersConfiguration {
+  passwordEncryption: PasswordEncryptionConfiguration;
+}
+
+export interface PasswordEncryptionConfiguration {
+  saltOrRounds: number;
+}

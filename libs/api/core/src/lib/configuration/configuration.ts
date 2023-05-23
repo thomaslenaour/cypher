@@ -13,4 +13,9 @@ export default (): ApiConfiguration => ({
     autoSchemaFile: true,
     plugins: isDevelopment ? [ApolloServerPluginLandingPageLocalDefault()] : [],
   },
+  providers: {
+    passwordEncryption: {
+      saltOrRounds: 10,
+    },
+  },
 });

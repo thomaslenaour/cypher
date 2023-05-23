@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@cypher/api/authentication": ["libs/api/authentication/src/index.ts"],
       "@cypher/api/core": ["libs/api/core/src/index.ts"],
       "@cypher/api/shared/database/orm": [
         "libs/api/shared/database/orm/src/index.ts"
