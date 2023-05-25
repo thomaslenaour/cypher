@@ -15,12 +15,18 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@cypher/api/authentication": ["libs/api/authentication/src/index.ts"],
       "@cypher/api/core": ["libs/api/core/src/index.ts"],
       "@cypher/api/shared/database/orm": [
         "libs/api/shared/database/orm/src/index.ts"
       ],
       "@cypher/api/shared/database/prisma": [
         "libs/api/shared/database/prisma/src/index.ts"
+      ],
+      "@cypher/front/libs/auth": ["libs/front/libs/auth/src/index.ts"],
+      "@cypher/front/libs/auth/server": ["libs/front/libs/auth/src/server.ts"],
+      "@cypher/shared/config/authentication": [
+        "libs/shared/config/authentication/src/index.ts"
       ]
     }
   },

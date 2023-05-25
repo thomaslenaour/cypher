@@ -13,4 +13,7 @@ export default (): ApiConfiguration => ({
     autoSchemaFile: true,
     plugins: isDevelopment ? [ApolloServerPluginLandingPageLocalDefault()] : [],
   },
+  authentication: {
+    jwtSecret: process.env.JWT_SECRET,
+  },
 });
