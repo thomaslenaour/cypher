@@ -8,6 +8,7 @@ import {
   API_ACCESS_TOKEN_EXPIRES_IN_MILLISECONDS,
   API_ACCESS_TOKEN_EXPIRES_IN_MINUTES,
   API_ACCESS_TOKEN_REVALIDATE_INTERVAL_IN_MILLISECONDS,
+  ApiJwtPayload,
   FRONT_ACCESS_TOKEN_EXPIRES_IN_SECONDS,
 } from '@cypher/shared/config/authentication';
 
@@ -36,16 +37,17 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
     async jwt({ token, account }) {
-      if (
-        account ||
+      const generateNewAccessToken =
         token?.accessTokenExpires <=
-          Date.now() + API_ACCESS_TOKEN_REVALIDATE_INTERVAL_IN_MILLISECONDS
-      ) {
-        token.accessToken = jwt.sign(
-          { sub: token.sub },
-          process.env.JWT_SECRET,
-          { expiresIn: `${API_ACCESS_TOKEN_EXPIRES_IN_MINUTES}m` }
-        );
+        Date.now() + API_ACCESS_TOKEN_REVALIDATE_INTERVAL_IN_MILLISECONDS;
+
+      if (account || generateNewAccessToken) {
+        const jwtPayload: Omit<ApiJwtPayload, 'iat' | 'exp'> = {
+          sub: token.sub as string,
+        };
+        token.accessToken = jwt.sign(jwtPayload, process.env.JWT_SECRET, {
+          expiresIn: `${API_ACCESS_TOKEN_EXPIRES_IN_MINUTES}m`,
+        });
         token.accessTokenExpires =
           Date.now() + API_ACCESS_TOKEN_EXPIRES_IN_MILLISECONDS;
       }
