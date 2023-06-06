@@ -17,6 +17,9 @@ class EnvironmentVariables implements HasKeys<NodeJS.ProcessEnv> {
 
   @IsString()
   DATABASE_URL: string;
+
+  @IsString()
+  JWT_SECRET: string;
 }
 
 export function validateConfiguration(config: Record<string, unknown>) {

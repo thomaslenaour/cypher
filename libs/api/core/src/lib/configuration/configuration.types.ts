@@ -11,4 +11,9 @@ export type ApiConfiguration = {
   port: number;
   environment: Environment;
   graphql: ApolloDriverConfig;
+  authentication: AuthenticationConfiguration;
+};
+
+export type AuthenticationConfiguration = {
+  jwtSecret: string;
 };
