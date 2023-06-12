@@ -1,16 +1,13 @@
-'use client';
-
-import View from './components/View';
-import Link from 'next/link';
 import { Button } from '@cypher/front/shared/ui';
+import Link from 'next/link';
 
 export default async function Index() {
   return (
     <>
-      <Button variant="outlined">Click me</Button>
-      <p>Welcome to Cypher App!</p>
-      <Link href="/other">hello worldd</Link>
-      <View />
+      <h1>Hello World</h1>
+      <Link href="/api/auth/signin">
+        <Button>Connexion</Button>
+      </Link>
     </>
   );
 }
