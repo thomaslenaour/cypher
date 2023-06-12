@@ -70,6 +70,9 @@
   },
   "dependencies": {
     "@apollo/server": "^4.7.1",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/joy": "^5.0.0-alpha.83",
     "@nestjs/apollo": "^11.0.5",
     "@nestjs/common": "^9.1.1",
     "@nestjs/config": "^2.3.2",

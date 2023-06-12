@@ -5,7 +5,7 @@ import Link from 'next/link';
 export default async function Other() {
   return (
     <div>
-      Other page <Link href="/">back</Link>
+      Other page <Link href="/">backk</Link>
     </div>
   );
 }
