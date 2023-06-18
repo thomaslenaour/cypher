@@ -1,0 +1,10 @@
+{
+  "Header": {
+    "login": {
+      "cta": "Connexion"
+    },
+    "register": {
+      "cta": "Inscription"
+    }
+  }
+}
