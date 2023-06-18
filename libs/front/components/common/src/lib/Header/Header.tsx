@@ -2,9 +2,13 @@ import Link from 'next/link';
 
 import { Box, Button, Container, Typography } from '@cypher/front/shared/ui';
 
+import { useServerTranslations } from '@cypher/front/libs/i18n/server';
+
 import { Navigation } from './Navigation';
 
 export function Header() {
+  const t = useServerTranslations('Header');
+
   return (
     <Box component="header" py={3}>
       <Container>
@@ -28,9 +32,9 @@ export function Header() {
           <Navigation />
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <Button variant="outlined" color="neutral">
-              Connexion
+              {t('login.cta')}
             </Button>
-            <Button>Inscription</Button>
+            <Button>{t('register.cta')}</Button>
           </Box>
         </Box>
       </Container>
