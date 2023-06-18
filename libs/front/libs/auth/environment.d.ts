@@ -8,6 +8,8 @@ declare global {
       FACEBOOK_CLIENT_ID: string;
       FACEBOOK_CLIENT_SECRET: string;
       JWT_SECRET: string;
+      EMAIL_SERVER: string;
+      EMAIL_FROM: string;
     }
   }
 }
