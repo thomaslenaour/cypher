@@ -23,6 +23,12 @@
       "@cypher/api/shared/database/prisma": [
         "libs/api/shared/database/prisma/src/index.ts"
       ],
+      "@cypher/front/components/common": [
+        "libs/front/components/common/src/index.ts"
+      ],
+      "@cypher/front/components/common/server": [
+        "libs/front/components/common/src/server.ts"
+      ],
       "@cypher/front/core": ["libs/front/core/src/index.ts"],
       "@cypher/front/core/server": ["libs/front/core/src/server.ts"],
       "@cypher/front/libs/auth": ["libs/front/libs/auth/src/index.ts"],
