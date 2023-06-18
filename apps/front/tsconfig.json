@@ -27,7 +27,7 @@
     "../../dist/apps/front/.next/types/**/*.ts",
     "next-env.d.ts",
     "environment.d.ts",
-    "../../libs/front/libs/auth/environment.d.ts"
+    "../../libs/front/libs/auth/*.d.ts"
   ],
   "exclude": [
     "node_modules",
