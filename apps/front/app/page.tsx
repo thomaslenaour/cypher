@@ -1,13 +1,10 @@
-import { Button } from '@cypher/front/shared/ui';
-import Link from 'next/link';
+import { Header } from '@cypher/front/components/common/server';
 
-export default async function Index() {
+export default function IndexPage() {
   return (
     <>
-      <h1>Hello World</h1>
-      <Link href="/api/auth/signin">
-        <Button>Connexion</Button>
-      </Link>
+      <Header />
+      <p>Welcome to Home page!</p>
     </>
   );
 }
