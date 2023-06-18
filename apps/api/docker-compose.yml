@@ -7,7 +7,7 @@ services:
       - ../../.env
     restart: always
     ports:
-      - '5432:5432'
+      - 5432:5432
     volumes:
       - cypher-postgres:/var/lib/postgresql/data
 
