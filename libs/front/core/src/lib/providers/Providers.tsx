@@ -18,11 +18,7 @@ export function Providers({ children }: ProvidersProps) {
   return (
     <CssVarsProvider theme={theme}>
       <CssBaseline />
-      <GlobalStyles
-        styles={{
-          a: { textDecoration: 'none', color: 'inherit' },
-        }}
-      />
+      <GlobalStyles />
       <SessionProvider
         refetchInterval={FRONT_ACCESS_TOKEN_REFETCH_INTERVAL_IN_SECONDS}
         refetchOnWindowFocus
