@@ -6,5 +6,13 @@
     "register": {
       "cta": "Inscription"
     }
+  },
+  "Navigation": {
+    "links": {
+      "rooms": "Rooms",
+      "events": "Evenements",
+      "aboutUs": "A propos",
+      "blog": "Blog"
+    }
   }
 }
