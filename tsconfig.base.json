@@ -17,12 +17,14 @@
     "paths": {
       "@cypher/api/authentication": ["libs/api/authentication/src/index.ts"],
       "@cypher/api/core": ["libs/api/core/src/index.ts"],
+      "@cypher/api/room": ["libs/api/room/src/index.ts"],
       "@cypher/api/shared/database/orm": [
         "libs/api/shared/database/orm/src/index.ts"
       ],
       "@cypher/api/shared/database/prisma": [
         "libs/api/shared/database/prisma/src/index.ts"
       ],
+      "@cypher/api/shared/livekit": ["libs/api/shared/livekit/src/index.ts"],
       "@cypher/front/components/common": [
         "libs/front/components/common/src/index.ts"
       ],
@@ -35,6 +37,10 @@
       "@cypher/front/libs/auth/server": ["libs/front/libs/auth/src/server.ts"],
       "@cypher/front/libs/i18n": ["libs/front/libs/i18n/src/index.ts"],
       "@cypher/front/libs/i18n/server": ["libs/front/libs/i18n/src/server.ts"],
+      "@cypher/front/pages/room": ["libs/front/pages/room/src/index.ts"],
+      "@cypher/front/pages/room/server": [
+        "libs/front/pages/room/src/server.ts"
+      ],
       "@cypher/front/shared/ui": ["libs/front/shared/ui/src/index.ts"],
       "@cypher/front/shared/ui/server": ["libs/front/shared/ui/src/server.ts"],
       "@cypher/shared/config/authentication": [
