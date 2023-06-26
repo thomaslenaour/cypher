@@ -37,7 +37,7 @@ export class LivekitService implements OnModuleInit {
         identity: payload.participantName,
       }
     );
-    at.addGrant({ roomJoin: true, room: payload.roomName });
+    at.addGrant({ roomJoin: true, room: payload.roomName, canPublish: false });
 
     return at.toJwt();
   }

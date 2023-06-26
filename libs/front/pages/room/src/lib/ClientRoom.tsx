@@ -5,7 +5,7 @@ interface ClientRoomProps {
 }
 
 export function ClientRoom({ initialToken }: ClientRoomProps) {
-  return <div>Single Room, token: {initialToken}</div>;
+  return <div>Room, token: {initialToken}</div>;
 }
 
 export default ClientRoom;
