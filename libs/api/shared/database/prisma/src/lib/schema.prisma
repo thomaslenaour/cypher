@@ -54,3 +54,8 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+model Room {
+  id   String @id @default(cuid())
+  name String
+}

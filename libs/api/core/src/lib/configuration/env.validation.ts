@@ -9,6 +9,9 @@ type HasKeys<T> = {
 };
 
 class EnvironmentVariables implements HasKeys<NodeJS.ProcessEnv> {
+  @IsString()
+  NODE_ENV: string;
+
   @IsEnum(Environment)
   APP_ENV: Environment;
 
@@ -20,6 +23,15 @@ class EnvironmentVariables implements HasKeys<NodeJS.ProcessEnv> {
 
   @IsString()
   JWT_SECRET: string;
+
+  @IsString()
+  LIVEKIT_HOST: string;
+
+  @IsString()
+  LIVEKIT_API_KEY: string;
+
+  @IsString()
+  LIVEKIT_API_SECRET: string;
 }
 
 export function validateConfiguration(config: Record<string, unknown>) {

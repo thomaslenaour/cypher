@@ -12,8 +12,19 @@ export type ApiConfiguration = {
   environment: Environment;
   graphql: ApolloDriverConfig;
   authentication: AuthenticationConfiguration;
+  providers: ProvidersConfiguration;
 };
 
 export type AuthenticationConfiguration = {
   jwtSecret: string;
+};
+
+export type ProvidersConfiguration = {
+  livekit: LivekitConfiguration;
+};
+
+export type LivekitConfiguration = {
+  host: string;
+  apiKey: string;
+  apiSecret: string;
 };
