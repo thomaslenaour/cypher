@@ -33,6 +33,10 @@
       ],
       "@cypher/front/core": ["libs/front/core/src/index.ts"],
       "@cypher/front/core/server": ["libs/front/core/src/server.ts"],
+      "@cypher/front/libs/apollo": ["libs/front/libs/apollo/src/index.ts"],
+      "@cypher/front/libs/apollo/server": [
+        "libs/front/libs/apollo/src/server.ts"
+      ],
       "@cypher/front/libs/auth": ["libs/front/libs/auth/src/index.ts"],
       "@cypher/front/libs/auth/server": ["libs/front/libs/auth/src/server.ts"],
       "@cypher/front/libs/i18n": ["libs/front/libs/i18n/src/index.ts"],

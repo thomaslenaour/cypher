@@ -9,6 +9,7 @@ import {
   GlobalStyles,
 } from '@cypher/front/shared/ui';
 import { FRONT_ACCESS_TOKEN_REFETCH_INTERVAL_IN_SECONDS } from '@cypher/shared/config/authentication';
+import { ApolloProvider } from '@cypher/front/libs/apollo';
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -16,16 +17,18 @@ interface ProvidersProps {
 
 export function Providers({ children }: ProvidersProps) {
   return (
-    <CssVarsProvider theme={theme}>
-      <CssBaseline />
-      <GlobalStyles />
-      <SessionProvider
-        refetchInterval={FRONT_ACCESS_TOKEN_REFETCH_INTERVAL_IN_SECONDS}
-        refetchOnWindowFocus
-      >
-        {children}
-      </SessionProvider>
-    </CssVarsProvider>
+    <ApolloProvider>
+      <CssVarsProvider theme={theme}>
+        <CssBaseline />
+        <GlobalStyles />
+        <SessionProvider
+          refetchInterval={FRONT_ACCESS_TOKEN_REFETCH_INTERVAL_IN_SECONDS}
+          refetchOnWindowFocus
+        >
+          {children}
+        </SessionProvider>
+      </CssVarsProvider>
+    </ApolloProvider>
   );
 }
 
