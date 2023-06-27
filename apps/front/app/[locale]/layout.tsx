@@ -25,7 +25,6 @@ export default function RootLayout({ children, params }: RootLayoutProps) {
   return (
     <html lang={locale}>
       <body>
-        {/* @ts-expect-error Server Component */}
         <I18nProvider locale={locale}>
           <Providers>{children}</Providers>
         </I18nProvider>
