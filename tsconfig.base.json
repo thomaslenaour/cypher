@@ -45,6 +45,9 @@
       "@cypher/front/pages/room/server": [
         "libs/front/pages/room/src/server.ts"
       ],
+      "@cypher/front/shared/graphql": [
+        "libs/front/shared/graphql/src/index.ts"
+      ],
       "@cypher/front/shared/ui": ["libs/front/shared/ui/src/index.ts"],
       "@cypher/front/shared/ui/server": ["libs/front/shared/ui/src/server.ts"],
       "@cypher/shared/config/authentication": [
