@@ -41,4 +41,12 @@ export class LivekitService implements OnModuleInit {
 
     return at.toJwt();
   }
+
+  async getParticipants(roomName: string) {
+    const participants = await this.roomServiceClient.listParticipants(
+      roomName
+    );
+
+    return participants;
+  }
 }

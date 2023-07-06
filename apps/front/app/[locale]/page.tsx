@@ -1,10 +1,1 @@
-import { Header } from '@cypher/front/components/common/server';
-
-export default function IndexPage() {
-  return (
-    <>
-      <Header />
-      <p>Welcome to Home page!</p>
-    </>
-  );
-}
+export { HomePage as default, dynamic } from '@cypher/front/pages/home/server';

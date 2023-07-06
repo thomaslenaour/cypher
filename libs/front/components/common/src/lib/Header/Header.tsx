@@ -10,7 +10,7 @@ export function Header() {
   const t = useServerTranslations('Header');
 
   return (
-    <Box component="header" py={3}>
+    <Box component="header" sx={{ py: 3, backgroundColor: 'common.white' }}>
       <Container>
         <Box
           sx={{

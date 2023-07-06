@@ -31,6 +31,12 @@
       "@cypher/front/components/common/server": [
         "libs/front/components/common/src/server.ts"
       ],
+      "@cypher/front/components/rooms": [
+        "libs/front/components/rooms/src/index.ts"
+      ],
+      "@cypher/front/components/rooms/server": [
+        "libs/front/components/rooms/src/server.ts"
+      ],
       "@cypher/front/core": ["libs/front/core/src/index.ts"],
       "@cypher/front/core/server": ["libs/front/core/src/server.ts"],
       "@cypher/front/libs/apollo": ["libs/front/libs/apollo/src/index.ts"],
@@ -41,6 +47,10 @@
       "@cypher/front/libs/auth/server": ["libs/front/libs/auth/src/server.ts"],
       "@cypher/front/libs/i18n": ["libs/front/libs/i18n/src/index.ts"],
       "@cypher/front/libs/i18n/server": ["libs/front/libs/i18n/src/server.ts"],
+      "@cypher/front/pages/home": ["libs/front/pages/home/src/index.ts"],
+      "@cypher/front/pages/home/server": [
+        "libs/front/pages/home/src/server.ts"
+      ],
       "@cypher/front/pages/room": ["libs/front/pages/room/src/index.ts"],
       "@cypher/front/pages/room/server": [
         "libs/front/pages/room/src/server.ts"

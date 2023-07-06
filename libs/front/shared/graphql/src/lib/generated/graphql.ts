@@ -44,13 +44,63 @@ export type MutationJoinRoomArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  rooms: Array<RoomObjectType>;
   test: Scalars['String']['output'];
+};
+
+export type RoomObjectType = {
+  __typename?: 'RoomObjectType';
+  id: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  participantsNumber: Scalars['Float']['output'];
+};
+
+export type GetRoomsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetRoomsQuery = {
+  __typename?: 'Query';
+  rooms: Array<{
+    __typename?: 'RoomObjectType';
+    id: string;
+    name: string;
+    participantsNumber: number;
+  }>;
 };
 
 export type GetTestQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetTestQuery = { __typename?: 'Query'; test: string };
 
+export const GetRoomsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetRooms' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'rooms' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'participantsNumber' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<GetRoomsQuery, GetRoomsQueryVariables>;
 export const GetTestDocument = {
   kind: 'Document',
   definitions: [
