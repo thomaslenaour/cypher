@@ -67,6 +67,12 @@ export type GetRoomsQuery = {
   }>;
 };
 
+export type JoinRoomMutationVariables = Exact<{
+  roomId: Scalars['String']['input'];
+}>;
+
+export type JoinRoomMutation = { __typename?: 'Mutation'; joinRoom: string };
+
 export type GetTestQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetTestQuery = { __typename?: 'Query'; test: string };
@@ -101,6 +107,60 @@ export const GetRoomsDocument = {
     },
   ],
 } as unknown as DocumentNode<GetRoomsQuery, GetRoomsQueryVariables>;
+export const JoinRoomDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'JoinRoom' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'roomId' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'joinRoom' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'data' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'roomId' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'roomId' },
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<JoinRoomMutation, JoinRoomMutationVariables>;
 export const GetTestDocument = {
   kind: 'Document',
   definitions: [

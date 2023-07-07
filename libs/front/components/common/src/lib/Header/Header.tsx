@@ -7,7 +7,27 @@ import { useServerTranslations } from '@cypher/front/libs/i18n/server';
 import { Navigation } from './Navigation';
 
 export function Header() {
-  const t = useServerTranslations('Header');
+  const t = useServerTranslations();
+  const links = {
+    rooms: {
+      label: t('Navigation.links.rooms'),
+      href: '/rooms',
+    },
+    events: {
+      label: t('Navigation.links.events'),
+      href: '/events',
+    },
+    aboutUs: {
+      label: t('Navigation.links.aboutUs'),
+      href: '/about-us',
+    },
+    blog: {
+      label: t('Navigation.links.blog'),
+      href: '/blog',
+    },
+  };
+
+  console.log('links', links);
 
   return (
     <Box component="header" sx={{ py: 3, backgroundColor: 'common.white' }}>
@@ -29,12 +49,12 @@ export function Header() {
               Cypher
             </Typography>
           </Link>
-          <Navigation />
+          <Navigation links={links} />
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <Button variant="outlined" color="neutral">
-              {t('login.cta')}
+              {t('Header.login.cta')}
             </Button>
-            <Button>{t('register.cta')}</Button>
+            <Button>{t('Header.register.cta')}</Button>
           </Box>
         </Box>
       </Container>

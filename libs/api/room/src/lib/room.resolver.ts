@@ -23,10 +23,6 @@ export class RoomResolver {
 
   @Query(() => [RoomObjectType])
   async rooms() {
-    const delay = (ms: number) =>
-      new Promise((resolve) => setTimeout(resolve, ms));
-
-    await delay(1000);
     return await this.roomService.getRooms();
   }
 

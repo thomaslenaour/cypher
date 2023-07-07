@@ -13,7 +13,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-  'query GetRooms {\n  rooms {\n    id\n    name\n    participantsNumber\n  }\n}':
+  'query GetRooms {\n  rooms {\n    id\n    name\n    participantsNumber\n  }\n}\n\nmutation JoinRoom($roomId: String!) {\n  joinRoom(data: {roomId: $roomId})\n}':
     types.GetRoomsDocument,
   'query GetTest {\n  test\n}': types.GetTestDocument,
 };
@@ -36,8 +36,8 @@ export function graphql(source: string): unknown;
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'query GetRooms {\n  rooms {\n    id\n    name\n    participantsNumber\n  }\n}'
-): (typeof documents)['query GetRooms {\n  rooms {\n    id\n    name\n    participantsNumber\n  }\n}'];
+  source: 'query GetRooms {\n  rooms {\n    id\n    name\n    participantsNumber\n  }\n}\n\nmutation JoinRoom($roomId: String!) {\n  joinRoom(data: {roomId: $roomId})\n}'
+): (typeof documents)['query GetRooms {\n  rooms {\n    id\n    name\n    participantsNumber\n  }\n}\n\nmutation JoinRoom($roomId: String!) {\n  joinRoom(data: {roomId: $roomId})\n}'];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
