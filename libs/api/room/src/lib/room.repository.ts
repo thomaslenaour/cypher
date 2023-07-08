@@ -8,4 +8,8 @@ export class RoomRepository {
   getRoom(roomId: string) {
     return this.prisma.room.findUnique({ where: { id: roomId } });
   }
+
+  getRooms() {
+    return this.prisma.room.findMany();
+  }
 }

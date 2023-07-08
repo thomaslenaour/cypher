@@ -1,29 +1,15 @@
 import Link from 'next/link';
 
 import { Box, Typography } from '@cypher/front/shared/ui';
-import { useServerTranslations } from '@cypher/front/libs/i18n/server';
 
-export function Navigation() {
-  const t = useServerTranslations('Navigation');
-  const links = {
-    rooms: {
-      label: t('links.rooms'),
-      href: '/rooms',
-    },
-    events: {
-      label: t('links.events'),
-      href: '/events',
-    },
-    aboutUs: {
-      label: t('links.aboutUs'),
-      href: '/about-us',
-    },
-    blog: {
-      label: t('links.blog'),
-      href: '/blog',
-    },
+type LinkType = { label: string; href: string };
+interface NavigationProps {
+  links: {
+    [key: string]: LinkType;
   };
+}
 
+export function Navigation({ links }: NavigationProps) {
   return (
     <Box component="nav">
       <Box

@@ -1,0 +1,11 @@
+query GetRooms {
+  rooms {
+    id
+    name
+    participantsNumber
+  }
+}
+
+mutation JoinRoom($roomId: String!) {
+  joinRoom(data: { roomId: $roomId })
+}

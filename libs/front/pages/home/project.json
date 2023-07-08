@@ -1,0 +1,16 @@
+{
+  "name": "front-pages-home",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/front/pages/home/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/front/pages/home/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  }
+}

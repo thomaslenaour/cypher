@@ -24,4 +24,14 @@ export class RoomService {
 
     return at;
   }
+
+  async getRooms() {
+    return this.roomRepository.getRooms();
+  }
+
+  async getParticipantsNumber(roomName: string) {
+    const participants = await this.livekitService.getParticipants(roomName);
+
+    return participants?.length || 0;
+  }
 }

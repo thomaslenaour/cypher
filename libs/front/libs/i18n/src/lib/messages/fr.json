@@ -14,5 +14,8 @@
       "aboutUs": "A propos",
       "blog": "Blog"
     }
+  },
+  "RoomCard": {
+    "participants": "{count, plural, =0 {Aucun participant} =1 {{count} participant} other {{count} participants}}"
   }
 }

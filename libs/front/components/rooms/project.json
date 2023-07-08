@@ -1,0 +1,16 @@
+{
+  "name": "front-components-rooms",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/front/components/rooms/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/front/components/rooms/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  }
+}
