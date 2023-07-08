@@ -1,11 +1,8 @@
 {
   "Header": {
-    "login": {
-      "cta": "Connexion"
-    },
-    "register": {
-      "cta": "Inscription"
-    }
+    "login": "Connexion",
+    "register": "Inscription",
+    "logout": "Déconnexion"
   },
   "Navigation": {
     "links": {
@@ -17,5 +14,19 @@
   },
   "RoomCard": {
     "participants": "{count, plural, =0 {Aucun participant} =1 {{count} participant} other {{count} participants}}"
+  },
+  "LoginPage": {
+    "title": "Connexion",
+    "description": "Bienvenue sur Cypher. Connectez-vous pour accéder à votre compte.",
+    "divider": "ou"
+  },
+  "RegisterPage": {
+    "title": "Inscription",
+    "description": "Bienvenue sur Cypher. Inscrivez-vous afin de rejoindre une communauté de passionnés autour de la musique urbaine.",
+    "divider": "ou"
+  },
+  "EmailLogin": {
+    "placeholder": "Entrez votre adresse email",
+    "button": "Recevoir un lien de connexion"
   }
 }

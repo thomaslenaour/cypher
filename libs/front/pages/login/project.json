@@ -1,0 +1,16 @@
+{
+  "name": "front-pages-login",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/front/pages/login/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/front/pages/login/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  }
+}
