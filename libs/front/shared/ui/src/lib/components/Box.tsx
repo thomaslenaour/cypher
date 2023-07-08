@@ -1,3 +1,5 @@
+'use client';
+
 import MuiBox, { BoxProps as MuiBoxProps } from '@mui/joy/Box';
 import { forwardRef } from 'react';
 

@@ -25,6 +25,12 @@
         "libs/api/shared/database/prisma/src/index.ts"
       ],
       "@cypher/api/shared/livekit": ["libs/api/shared/livekit/src/index.ts"],
+      "@cypher/front/components/authentication": [
+        "libs/front/components/authentication/src/index.ts"
+      ],
+      "@cypher/front/components/authentication/server": [
+        "libs/front/components/authentication/src/server.ts"
+      ],
       "@cypher/front/components/common": [
         "libs/front/components/common/src/index.ts"
       ],
@@ -50,6 +56,16 @@
       "@cypher/front/pages/home": ["libs/front/pages/home/src/index.ts"],
       "@cypher/front/pages/home/server": [
         "libs/front/pages/home/src/server.ts"
+      ],
+      "@cypher/front/pages/login": ["libs/front/pages/login/src/index.ts"],
+      "@cypher/front/pages/login/server": [
+        "libs/front/pages/login/src/server.ts"
+      ],
+      "@cypher/front/pages/register": [
+        "libs/front/pages/register/src/index.ts"
+      ],
+      "@cypher/front/pages/register/server": [
+        "libs/front/pages/register/src/server.ts"
       ],
       "@cypher/front/pages/room": ["libs/front/pages/room/src/index.ts"],
       "@cypher/front/pages/room/server": [
