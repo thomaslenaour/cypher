@@ -26,7 +26,7 @@ export default function RegisterPageContent({
       <Container
         maxWidth="sm"
         sx={{
-          pt: 4,
+          py: 5,
         }}
       >
         <AuthenticationCard
