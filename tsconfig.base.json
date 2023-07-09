@@ -53,10 +53,6 @@
       "@cypher/front/libs/auth/server": ["libs/front/libs/auth/src/server.ts"],
       "@cypher/front/libs/i18n": ["libs/front/libs/i18n/src/index.ts"],
       "@cypher/front/libs/i18n/server": ["libs/front/libs/i18n/src/server.ts"],
-      "@cypher/front/pages/home": ["libs/front/pages/home/src/index.ts"],
-      "@cypher/front/pages/home/server": [
-        "libs/front/pages/home/src/server.ts"
-      ],
       "@cypher/front/pages/login": ["libs/front/pages/login/src/index.ts"],
       "@cypher/front/pages/login/server": [
         "libs/front/pages/login/src/server.ts"
@@ -70,6 +66,10 @@
       "@cypher/front/pages/room": ["libs/front/pages/room/src/index.ts"],
       "@cypher/front/pages/room/server": [
         "libs/front/pages/room/src/server.ts"
+      ],
+      "@cypher/front/pages/root": ["libs/front/pages/root/src/index.ts"],
+      "@cypher/front/pages/root/server": [
+        "libs/front/pages/root/src/server.ts"
       ],
       "@cypher/front/shared/graphql": [
         "libs/front/shared/graphql/src/index.ts"

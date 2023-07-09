@@ -1,1 +1,1 @@
-export { HomePage as default } from '@cypher/front/pages/home/server';
+export { HomePage as default } from '@cypher/front/pages/root/server';
