@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 
 import { I18nProvider, useServerLocale } from '@cypher/front/libs/i18n/server';
 import { Providers } from '@cypher/front/core';
+import { Footer } from '@cypher/front/components/common/server';
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -26,7 +27,10 @@ export function RootLayout({ children, params }: RootLayoutProps) {
     <html lang={locale}>
       <body>
         <I18nProvider locale={locale}>
-          <Providers>{children}</Providers>
+          <Providers>
+            {children}
+            <Footer />
+          </Providers>
         </I18nProvider>
       </body>
     </html>
