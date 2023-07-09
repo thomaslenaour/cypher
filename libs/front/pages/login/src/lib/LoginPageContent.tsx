@@ -24,7 +24,7 @@ export function LoginPageContent({ providers }: LoginPageContentProps) {
       <Container
         maxWidth="sm"
         sx={{
-          pt: 4,
+          py: 5,
         }}
       >
         <AuthenticationCard
