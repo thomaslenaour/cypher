@@ -10,7 +10,13 @@ export class RoomService {
     private readonly roomRepository: RoomRepository
   ) {}
 
-  async getRoomAccessToken({ roomId }: { roomId: string }) {
+  async getRoomAccessToken({
+    roomId,
+    userId,
+  }: {
+    roomId: string;
+    userId?: string;
+  }) {
     const room = await this.roomRepository.getRoom(roomId);
 
     if (!room) {
@@ -23,6 +29,44 @@ export class RoomService {
     });
 
     return at;
+  }
+
+  async toggleMyselfFromQueue({
+    roomId,
+    identity,
+    userId,
+  }: {
+    roomId: string;
+    identity: string;
+    userId: string;
+  }) {
+    const room = await this.roomRepository.getRoom(roomId);
+
+    if (!room) {
+      throw new Error('No room found with given id');
+    }
+
+    const participant = await this.livekitService.getParticipant(
+      roomId,
+      identity
+    );
+
+    if (!participant) {
+      throw new Error('No participant found with given identity');
+    }
+
+    const participantMetadata = JSON.parse(participant.metadata);
+    const isAllowed = participantMetadata?.userId === userId;
+
+    if (!isAllowed) {
+      throw new Error('You are not allowed to toggle this participant');
+    }
+
+    const isParticipantInQueue = participantMetadata?.inQueueAt;
+
+    return isParticipantInQueue
+      ? await this.livekitService.removeParticipantFromQueue(roomId, identity)
+      : await this.livekitService.addParticipantToQueue(roomId, identity);
   }
 
   async getRooms() {

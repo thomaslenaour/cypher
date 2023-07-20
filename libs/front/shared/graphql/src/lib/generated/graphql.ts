@@ -36,10 +36,15 @@ export type JoinRoomInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   joinRoom: Scalars['String']['output'];
+  toggleMyselfFromQueue: Scalars['Boolean']['output'];
 };
 
 export type MutationJoinRoomArgs = {
   data: JoinRoomInput;
+};
+
+export type MutationToggleMyselfFromQueueArgs = {
+  data: ToggleMyselfFromQueueInput;
 };
 
 export type Query = {
@@ -53,6 +58,20 @@ export type RoomObjectType = {
   id: Scalars['String']['output'];
   name: Scalars['String']['output'];
   participantsNumber: Scalars['Float']['output'];
+};
+
+export type ToggleMyselfFromQueueInput = {
+  identity: Scalars['String']['input'];
+  roomId: Scalars['String']['input'];
+};
+
+export type ToggleMyselfFromQueueMutationVariables = Exact<{
+  data: ToggleMyselfFromQueueInput;
+}>;
+
+export type ToggleMyselfFromQueueMutation = {
+  __typename?: 'Mutation';
+  toggleMyselfFromQueue: boolean;
 };
 
 export type GetRoomsQueryVariables = Exact<{ [key: string]: never }>;
@@ -77,6 +96,51 @@ export type GetTestQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetTestQuery = { __typename?: 'Query'; test: string };
 
+export const ToggleMyselfFromQueueDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'ToggleMyselfFromQueue' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'data' } },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'ToggleMyselfFromQueueInput' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'toggleMyselfFromQueue' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'data' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'data' },
+                },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  ToggleMyselfFromQueueMutation,
+  ToggleMyselfFromQueueMutationVariables
+>;
 export const GetRoomsDocument = {
   kind: 'Document',
   definitions: [

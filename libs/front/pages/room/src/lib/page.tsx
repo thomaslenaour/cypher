@@ -1,5 +1,5 @@
 import { Header } from '@cypher/front/components/common/server';
-import { Typography } from '@cypher/front/shared/ui';
+import { Typography, Box } from '@cypher/front/shared/ui';
 import ClientRoom from './ClientRoom';
 import { getClient } from '@cypher/front/libs/apollo/server';
 import { JoinRoomDocument } from '@cypher/front/shared/graphql';
@@ -16,6 +16,11 @@ export async function RoomPage({ params }: RoomPageProps) {
     variables: {
       roomId: params.id,
     },
+    context: {
+      fetchOptions: {
+        cache: 'no-store',
+      },
+    },
   });
   const token = response.data?.joinRoom;
 
@@ -26,10 +31,12 @@ export async function RoomPage({ params }: RoomPageProps) {
   return (
     <>
       <Header />
-      <Typography level="h2" sx={{ textAlign: 'center' }}>
-        Room Name
-      </Typography>
-      <ClientRoom initialToken={token} />
+      <Box sx={{ py: 5 }}>
+        <Typography level="h3" fontWeight={700} textAlign="center" mb={2}>
+          Room name
+        </Typography>
+        <ClientRoom initialToken={token} />
+      </Box>
     </>
   );
 }

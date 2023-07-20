@@ -1,6 +1,7 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { AccessToken, RoomServiceClient } from 'livekit-server-sdk';
 import { ConfigService } from '@nestjs/config';
+import { v4 as uuidv4 } from 'uuid';
 
 import { LivekitConfiguration } from '@cypher/api/core';
 
@@ -34,7 +35,10 @@ export class LivekitService implements OnModuleInit {
       this.livekitConfig.apiSecret,
       {
         name: payload.participantName || 'Anonymous',
-        identity: payload.participantName,
+        identity: uuidv4(),
+        metadata: JSON.stringify({
+          userId: 'xxxx',
+        }),
       }
     );
     at.addGrant({ roomJoin: true, room: payload.roomName, canPublish: false });
@@ -48,5 +52,38 @@ export class LivekitService implements OnModuleInit {
     );
 
     return participants;
+  }
+
+  async getParticipant(roomName: string, identity: string) {
+    const participant = await this.roomServiceClient.getParticipant(
+      roomName,
+      identity
+    );
+
+    return participant;
+  }
+
+  async addParticipantToQueue(roomName: string, identity: string) {
+    const participant = await this.roomServiceClient.updateParticipant(
+      roomName,
+      identity,
+      JSON.stringify({
+        inQueueAt: new Date().toISOString(),
+      })
+    );
+
+    return participant;
+  }
+
+  async removeParticipantFromQueue(roomName: string, identity: string) {
+    const participant = await this.roomServiceClient.updateParticipant(
+      roomName,
+      identity,
+      JSON.stringify({
+        inQueueAt: null,
+      })
+    );
+
+    return participant;
   }
 }

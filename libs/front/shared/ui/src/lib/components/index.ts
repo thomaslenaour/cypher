@@ -14,6 +14,7 @@ export { default as CardContent } from '@mui/joy/CardContent';
 export { default as Stack } from '@mui/joy/Stack';
 export { default as FormLabel } from '@mui/joy/FormLabel';
 export { default as FormControl } from '@mui/joy/FormControl';
+export { default as Avatar } from '@mui/joy/Avatar';
 
 // Custom UI Components
 export { Box } from './Box';
