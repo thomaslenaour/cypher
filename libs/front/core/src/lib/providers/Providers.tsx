@@ -2,12 +2,7 @@
 
 import { SessionProvider } from 'next-auth/react';
 
-import {
-  CssVarsProvider,
-  theme,
-  CssBaseline,
-  GlobalStyles,
-} from '@cypher/front/shared/ui';
+import { ThemeRegistry } from '@cypher/front/shared/ui';
 import { FRONT_ACCESS_TOKEN_REFETCH_INTERVAL_IN_SECONDS } from '@cypher/shared/config/authentication';
 import { ApolloProvider } from '@cypher/front/libs/apollo';
 
@@ -18,16 +13,14 @@ interface ProvidersProps {
 export function Providers({ children }: ProvidersProps) {
   return (
     <ApolloProvider>
-      <CssVarsProvider theme={theme}>
-        <CssBaseline />
-        <GlobalStyles />
+      <ThemeRegistry>
         <SessionProvider
           refetchInterval={FRONT_ACCESS_TOKEN_REFETCH_INTERVAL_IN_SECONDS}
           refetchOnWindowFocus
         >
           {children}
         </SessionProvider>
-      </CssVarsProvider>
+      </ThemeRegistry>
     </ApolloProvider>
   );
 }

@@ -1,5 +1,3 @@
-'use client';
-
 // Joy UI Components
 export { CssVarsProvider, styled } from '@mui/joy/styles';
 export { default as CssBaseline } from '@mui/joy/CssBaseline';
@@ -19,4 +17,4 @@ export { default as Avatar } from '@mui/joy/Avatar';
 // Custom UI Components
 export { Box } from './Box';
 export { Container } from './Container';
-export * from './GlobalStyles';
+export { GlobalStyles } from './GlobalStyles/GlobalStyles';
