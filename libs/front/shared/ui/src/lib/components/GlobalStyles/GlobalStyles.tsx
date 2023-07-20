@@ -1,3 +1,5 @@
+'use client';
+
 import JoyGlobalStyles from '@mui/joy/GlobalStyles';
 
 export function GlobalStyles() {
