@@ -8,20 +8,19 @@ import { ApolloProvider } from '@cypher/front/libs/apollo';
 
 interface ProvidersProps {
   children: React.ReactNode;
+  authToken: string;
 }
 
-export function Providers({ children }: ProvidersProps) {
+export function Providers({ children, authToken = '' }: ProvidersProps) {
   return (
-    <ApolloProvider>
-      <ThemeRegistry>
-        <SessionProvider
-          refetchInterval={FRONT_ACCESS_TOKEN_REFETCH_INTERVAL_IN_SECONDS}
-          refetchOnWindowFocus
-        >
-          {children}
-        </SessionProvider>
-      </ThemeRegistry>
-    </ApolloProvider>
+    <SessionProvider
+      refetchInterval={FRONT_ACCESS_TOKEN_REFETCH_INTERVAL_IN_SECONDS}
+      refetchOnWindowFocus
+    >
+      <ApolloProvider authToken={authToken}>
+        <ThemeRegistry>{children}</ThemeRegistry>
+      </ApolloProvider>
+    </SessionProvider>
   );
 }
 
