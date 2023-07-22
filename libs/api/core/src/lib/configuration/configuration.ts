@@ -5,6 +5,13 @@ const isDevelopment = process.env.APP_ENV === Environment.Development;
 export default (): ApiConfiguration => ({
   port: parseInt(process.env.PORT),
   environment: process.env.APP_ENV as Environment,
+  security: {
+    cors: {
+      allowedOrigins: isDevelopment
+        ? [/http:\/\/localhost:3000/]
+        : [/https:\/\/cypherapp.co/],
+    },
+  },
   graphql: {
     sortSchema: true,
     playground: isDevelopment,
