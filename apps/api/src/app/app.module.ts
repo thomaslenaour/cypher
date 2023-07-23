@@ -5,9 +5,10 @@ import { AuthenticationModule } from '@cypher/api/authentication';
 import { RoomModule } from '@cypher/api/room';
 
 import { AppResolver } from './app.resolver';
+import { UserProfileModule } from '@cypher/api/user-profile';
 
 @Module({
-  imports: [CoreModule, AuthenticationModule, RoomModule],
+  imports: [CoreModule, AuthenticationModule, RoomModule, UserProfileModule],
   providers: [AppResolver],
 })
 export class AppModule {}
