@@ -25,6 +25,7 @@
         "libs/api/shared/database/prisma/src/index.ts"
       ],
       "@cypher/api/shared/livekit": ["libs/api/shared/livekit/src/index.ts"],
+      "@cypher/api/user-profile": ["libs/api/user-profile/src/index.ts"],
       "@cypher/front/components/authentication": [
         "libs/front/components/authentication/src/index.ts"
       ],
