@@ -21,10 +21,10 @@ export class UserObjectType {
   @Field({ nullable: true })
   profile?: UserProfileObjectType | null;
 
-  @Field(() => [UserObjectType])
+  @Field(() => [UserObjectType], { nullable: true })
   followedBy?: UserObjectType[];
 
-  @Field(() => [UserObjectType])
+  @Field(() => [UserObjectType], { nullable: true })
   following?: UserObjectType[];
 }
 
