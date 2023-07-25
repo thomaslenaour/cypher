@@ -35,8 +35,13 @@ export type JoinRoomInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  joinPublicRoom: Scalars['String']['output'];
   joinRoom: Scalars['String']['output'];
   toggleMyselfFromQueue: Scalars['Boolean']['output'];
+};
+
+export type MutationJoinPublicRoomArgs = {
+  data: JoinRoomInput;
 };
 
 export type MutationJoinRoomArgs = {
@@ -74,6 +79,21 @@ export type ToggleMyselfFromQueueMutation = {
   toggleMyselfFromQueue: boolean;
 };
 
+export type JoinPublicRoomMutationVariables = Exact<{
+  roomId: Scalars['String']['input'];
+}>;
+
+export type JoinPublicRoomMutation = {
+  __typename?: 'Mutation';
+  joinPublicRoom: string;
+};
+
+export type JoinRoomMutationVariables = Exact<{
+  roomId: Scalars['String']['input'];
+}>;
+
+export type JoinRoomMutation = { __typename?: 'Mutation'; joinRoom: string };
+
 export type GetRoomsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetRoomsQuery = {
@@ -85,12 +105,6 @@ export type GetRoomsQuery = {
     participantsNumber: number;
   }>;
 };
-
-export type JoinRoomMutationVariables = Exact<{
-  roomId: Scalars['String']['input'];
-}>;
-
-export type JoinRoomMutation = { __typename?: 'Mutation'; joinRoom: string };
 
 export type GetTestQueryVariables = Exact<{ [key: string]: never }>;
 
@@ -141,36 +155,63 @@ export const ToggleMyselfFromQueueDocument = {
   ToggleMyselfFromQueueMutation,
   ToggleMyselfFromQueueMutationVariables
 >;
-export const GetRoomsDocument = {
+export const JoinPublicRoomDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'GetRooms' },
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'JoinPublicRoom' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'roomId' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+      ],
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'rooms' },
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'participantsNumber' },
+            name: { kind: 'Name', value: 'joinPublicRoom' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'data' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'roomId' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'roomId' },
+                      },
+                    },
+                  ],
                 },
-              ],
-            },
+              },
+            ],
           },
         ],
       },
     },
   ],
-} as unknown as DocumentNode<GetRoomsQuery, GetRoomsQueryVariables>;
+} as unknown as DocumentNode<
+  JoinPublicRoomMutation,
+  JoinPublicRoomMutationVariables
+>;
 export const JoinRoomDocument = {
   kind: 'Document',
   definitions: [
@@ -225,6 +266,36 @@ export const JoinRoomDocument = {
     },
   ],
 } as unknown as DocumentNode<JoinRoomMutation, JoinRoomMutationVariables>;
+export const GetRoomsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetRooms' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'rooms' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'participantsNumber' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<GetRoomsQuery, GetRoomsQueryVariables>;
 export const GetTestDocument = {
   kind: 'Document',
   definitions: [

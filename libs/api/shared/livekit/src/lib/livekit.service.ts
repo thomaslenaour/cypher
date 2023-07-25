@@ -29,7 +29,11 @@ export class LivekitService implements OnModuleInit {
     );
   }
 
-  createAccessToken(payload: { roomName: string; participantName?: string }) {
+  createAccessToken(payload: {
+    roomName: string;
+    participantName?: string;
+    userId?: string;
+  }) {
     const at = new AccessToken(
       this.livekitConfig.apiKey,
       this.livekitConfig.apiSecret,
@@ -37,7 +41,7 @@ export class LivekitService implements OnModuleInit {
         name: payload.participantName || 'Anonymous',
         identity: uuidv4(),
         metadata: JSON.stringify({
-          userId: 'xxxx',
+          userId: payload?.userId || '',
         }),
       }
     );
@@ -63,11 +67,16 @@ export class LivekitService implements OnModuleInit {
     return participant;
   }
 
-  async addParticipantToQueue(roomName: string, identity: string) {
+  async addParticipantToQueue(
+    roomName: string,
+    identity: string,
+    previousMetadata?: Record<string, string>
+  ) {
     const participant = await this.roomServiceClient.updateParticipant(
       roomName,
       identity,
       JSON.stringify({
+        ...previousMetadata,
         inQueueAt: new Date().toISOString(),
       })
     );
@@ -75,11 +84,16 @@ export class LivekitService implements OnModuleInit {
     return participant;
   }
 
-  async removeParticipantFromQueue(roomName: string, identity: string) {
+  async removeParticipantFromQueue(
+    roomName: string,
+    identity: string,
+    previousMetadata?: Record<string, string>
+  ) {
     const participant = await this.roomServiceClient.updateParticipant(
       roomName,
       identity,
       JSON.stringify({
+        ...previousMetadata,
         inQueueAt: null,
       })
     );

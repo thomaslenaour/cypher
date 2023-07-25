@@ -25,7 +25,8 @@ export class RoomService {
 
     const at = this.livekitService.createAccessToken({
       roomName: `${roomId}`,
-      participantName: 'test',
+      participantName: userId ? 'Fecthed Participant name' : '',
+      userId,
     });
 
     return at;
@@ -50,6 +51,9 @@ export class RoomService {
       roomId,
       identity
     );
+    const currentParticipantMetadata = participant?.metadata
+      ? JSON.parse(participant.metadata)
+      : {};
 
     if (!participant) {
       throw new Error('No participant found with given identity');
@@ -65,8 +69,16 @@ export class RoomService {
     const isParticipantInQueue = participantMetadata?.inQueueAt;
 
     return isParticipantInQueue
-      ? await this.livekitService.removeParticipantFromQueue(roomId, identity)
-      : await this.livekitService.addParticipantToQueue(roomId, identity);
+      ? await this.livekitService.removeParticipantFromQueue(
+          roomId,
+          identity,
+          currentParticipantMetadata
+        )
+      : await this.livekitService.addParticipantToQueue(
+          roomId,
+          identity,
+          currentParticipantMetadata
+        );
   }
 
   async getRooms() {

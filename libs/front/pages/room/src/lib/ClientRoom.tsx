@@ -6,9 +6,10 @@ import { InsideRoom } from './InsideRoom';
 
 interface ClientRoomProps {
   initialToken: string;
+  roomId: string;
 }
 
-export function ClientRoom({ initialToken }: ClientRoomProps) {
+export function ClientRoom({ initialToken, roomId }: ClientRoomProps) {
   return (
     <Container>
       <LiveKitRoom
@@ -18,7 +19,7 @@ export function ClientRoom({ initialToken }: ClientRoomProps) {
         audio={true}
         connect={true}
       >
-        <InsideRoom />
+        <InsideRoom roomId={roomId} />
         <RoomAudioRenderer />
       </LiveKitRoom>
     </Container>
