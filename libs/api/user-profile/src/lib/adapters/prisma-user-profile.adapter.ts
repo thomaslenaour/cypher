@@ -14,7 +14,7 @@ export class UserProfilePrismaAdapter implements UserProfileRepository {
   ): Promise<UserProfileObjectType | null> {
     return await this.prisma.userProfile.findUnique({
       where: {
-        [key]: value,
+        [key as string]: value,
       },
     });
   }
