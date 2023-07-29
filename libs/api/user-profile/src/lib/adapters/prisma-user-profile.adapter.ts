@@ -12,9 +12,9 @@ export class UserProfilePrismaAdapter implements UserProfileRepository {
     key: UserProfileUniqueFields,
     value: string
   ): Promise<UserProfileObjectType | null> {
-    return await this.prisma.userProfile.findUnique({
+    return await this.prisma.userProfile.findFirst({
       where: {
-        [key as string]: value,
+        [key]: value,
       },
     });
   }
