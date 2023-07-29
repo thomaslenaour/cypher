@@ -46,6 +46,8 @@ model User {
   accounts      Account[]
   sessions      Session[]
   profile       UserProfile?
+  followedBy    User[]       @relation("UserFollows")
+  following     User[]       @relation("UserFollows")
 }
 
 model UserProfile {

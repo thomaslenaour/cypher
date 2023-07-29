@@ -14,6 +14,8 @@ import { UserProfilePrismaAdapter } from './adapters/prisma-user-profile.adapter
       useClass: UserProfilePrismaAdapter,
     },
   ],
-  exports: [],
+  exports: [UserProfileService],
 })
 export class UserProfileModule {}
+export { UserProfileObjectType } from './user-profile.model';
+export { UserProfileService } from './user-profile.service';
