@@ -1,0 +1,10 @@
+query getUserProfile($key: String!, $value: String!) {
+  userProfile(key: $key, value: $value) {
+    id
+    bannerUrl
+    profileUrl
+    pseudo
+    punchline
+    userId
+  }
+}

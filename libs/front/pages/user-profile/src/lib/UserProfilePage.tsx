@@ -1,13 +1,19 @@
 import { Header } from '@cypher/front/components/common/server';
-import { Box, Typography } from '@cypher/front/shared/ui';
+import { UserProfile } from './components/UserProfile';
 
-export async function UserProfilePage() {
+interface IUserProfilePageParams {
+  pseudo: string;
+}
+
+export async function UserProfilePage({
+  params,
+}: {
+  params: IUserProfilePageParams;
+}) {
   return (
     <>
       <Header />
-      <Box>
-        <Typography>Hello User Profile Page</Typography>
-      </Box>
+      <UserProfile pseudo={params.pseudo} />
     </>
   );
 }

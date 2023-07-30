@@ -53,6 +53,19 @@ export type MutationFollowArgs = {
 
 export type MutationJoinPublicRoomArgs = {
   data: JoinRoomInput;
+  follow: UserObjectType;
+  joinRoom: Scalars['String']['output'];
+  unfollow: UserObjectType;
+};
+
+export type MutationFollowArgs = {
+  followed: Scalars['String']['input'];
+  following: Scalars['String']['input'];
+};
+
+export type MutationUnfollowArgs = {
+  unfollowed: Scalars['String']['input'];
+  unfollowing: Scalars['String']['input'];
 };
 
 export type MutationJoinRoomArgs = {
@@ -183,8 +196,28 @@ export type GetRoomsQuery = {
 };
 
 export type GetTestQueryVariables = Exact<{ [key: string]: never }>;
+export type UserObjectType = {
+  __typename?: 'UserObjectType';
+  email?: Maybe<Scalars['String']['output']>;
+  emailVerified?: Maybe<Scalars['DateTime']['output']>;
+  followedBy?: Maybe<Array<UserObjectType>>;
+  following?: Maybe<Array<UserObjectType>>;
+  id: Scalars['String']['output'];
+  image?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  profile: UserProfileObjectType;
+};
 
-export type GetTestQuery = { __typename?: 'Query'; test: string };
+export type UserProfileObjectType = {
+  __typename?: 'UserProfileObjectType';
+  bannerUrl?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
+  profileUrl?: Maybe<Scalars['String']['output']>;
+  pseudo: Scalars['String']['output'];
+  punchline?: Maybe<Scalars['String']['output']>;
+  userId: Scalars['String']['output'];
+  userName?: Maybe<Scalars['String']['output']>;
+};
 
 export const ToggleMyselfFromQueueDocument = {
   kind: 'Document',
@@ -288,6 +321,7 @@ export const JoinPublicRoomDocument = {
   JoinPublicRoomMutation,
   JoinPublicRoomMutationVariables
 >;
+
 export const JoinRoomDocument = {
   kind: 'Document',
   definitions: [
@@ -387,51 +421,27 @@ export const StartPublishingDocument = {
   StartPublishingMutation,
   StartPublishingMutationVariables
 >;
-export const StopPublishingDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'StopPublishing' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'data' } },
-          type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: { kind: 'Name', value: 'StartStopPublishingInput' },
-            },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'stopPublishing' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'data' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'data' },
-                },
-              },
-            ],
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<
-  StopPublishingMutation,
-  StopPublishingMutationVariables
->;
+
+export type GetTestQuery = { __typename?: 'Query'; test: string };
+
+export type GetUserProfileQueryVariables = Exact<{
+  key: Scalars['String']['input'];
+  value: Scalars['String']['input'];
+}>;
+
+export type GetUserProfileQuery = {
+  __typename?: 'Query';
+  userProfile: {
+    __typename?: 'UserProfileObjectType';
+    id: string;
+    bannerUrl?: string | null;
+    profileUrl?: string | null;
+    pseudo: string;
+    punchline?: string | null;
+    userId: string;
+  };
+};
+
 export const GetRoomsDocument = {
   kind: 'Document',
   definitions: [
@@ -462,6 +472,7 @@ export const GetRoomsDocument = {
     },
   ],
 } as unknown as DocumentNode<GetRoomsQuery, GetRoomsQueryVariables>;
+
 export const GetTestDocument = {
   kind: 'Document',
   definitions: [
@@ -476,3 +487,78 @@ export const GetTestDocument = {
     },
   ],
 } as unknown as DocumentNode<GetTestQuery, GetTestQueryVariables>;
+export const GetUserProfileDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'getUserProfile' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'key' } },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'value' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'userProfile' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'key' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'key' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'value' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'value' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'bannerUrl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'profileUrl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pseudo' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'punchline' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'userId' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<GetUserProfileQuery, GetUserProfileQueryVariables>;
