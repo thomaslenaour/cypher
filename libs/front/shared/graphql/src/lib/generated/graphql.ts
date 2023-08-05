@@ -211,6 +211,7 @@ export type UserObjectType = {
 export type UserProfileObjectType = {
   __typename?: 'UserProfileObjectType';
   bannerUrl?: Maybe<Scalars['String']['output']>;
+  createdAt: Scalars['DateTime']['output'];
   id: Scalars['String']['output'];
   profileUrl?: Maybe<Scalars['String']['output']>;
   pseudo: Scalars['String']['output'];
@@ -549,6 +550,195 @@ export const GetUserProfileDocument = {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'bannerUrl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'profileUrl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pseudo' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'punchline' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'userId' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<GetUserProfileQuery, GetUserProfileQueryVariables>;
+export type GetUserProfileQuery = {
+  __typename?: 'Query';
+  userProfile: {
+    __typename?: 'UserProfileObjectType';
+    id: string;
+    createdAt: any;
+    bannerUrl?: string | null;
+    profileUrl?: string | null;
+    pseudo: string;
+    punchline?: string | null;
+    userId: string;
+  };
+};
+
+export const GetRoomsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetRooms' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'rooms' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'participantsNumber' },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<GetRoomsQuery, GetRoomsQueryVariables>;
+
+export const JoinRoomDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'JoinRoom' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'roomId' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'joinRoom' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'data' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'roomId' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'roomId' },
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<JoinRoomMutation, JoinRoomMutationVariables>;
+export const GetTestDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetTest' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [{ kind: 'Field', name: { kind: 'Name', value: 'test' } }],
+      },
+    },
+  ],
+} as unknown as DocumentNode<GetTestQuery, GetTestQueryVariables>;
+export const GetUserProfileDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'getUserProfile' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'key' } },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'value' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'userProfile' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'key' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'key' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'value' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'value' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'bannerUrl' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'profileUrl' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'pseudo' } },

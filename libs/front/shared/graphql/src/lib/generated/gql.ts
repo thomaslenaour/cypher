@@ -22,6 +22,11 @@ const documents = {
     types.GetRoomsDocument,
   'query getUserProfile($key: String!, $value: String!) {\n  userProfile(key: $key, value: $value) {\n    id\n    bannerUrl\n    profileUrl\n    pseudo\n    punchline\n    userId\n  }\n}':
     types.GetUserProfileDocument,
+  'query GetRooms {\n  rooms {\n    id\n    name\n    participantsNumber\n  }\n}\n\nmutation JoinRoom($roomId: String!) {\n  joinRoom(data: {roomId: $roomId})\n}':
+    types.GetRoomsDocument,
+  'query GetTest {\n  test\n}': types.GetTestDocument,
+  'query getUserProfile($key: String!, $value: String!) {\n  userProfile(key: $key, value: $value) {\n    id\n    createdAt\n    bannerUrl\n    profileUrl\n    pseudo\n    punchline\n    userId\n  }\n}':
+    types.GetUserProfileDocument,
 };
 
 /**
@@ -65,6 +70,9 @@ export function graphql(
 export function graphql(
   source: 'query getUserProfile($key: String!, $value: String!) {\n  userProfile(key: $key, value: $value) {\n    id\n    bannerUrl\n    profileUrl\n    pseudo\n    punchline\n    userId\n  }\n}'
 ): (typeof documents)['query getUserProfile($key: String!, $value: String!) {\n  userProfile(key: $key, value: $value) {\n    id\n    bannerUrl\n    profileUrl\n    pseudo\n    punchline\n    userId\n  }\n}'];
+export function graphql(
+  source: 'query getUserProfile($key: String!, $value: String!) {\n  userProfile(key: $key, value: $value) {\n    id\n    createdAt\n    bannerUrl\n    profileUrl\n    pseudo\n    punchline\n    userId\n  }\n}'
+): (typeof documents)['query getUserProfile($key: String!, $value: String!) {\n  userProfile(key: $key, value: $value) {\n    id\n    createdAt\n    bannerUrl\n    profileUrl\n    pseudo\n    punchline\n    userId\n  }\n}'];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

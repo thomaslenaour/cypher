@@ -1,6 +1,7 @@
 query getUserProfile($key: String!, $value: String!) {
   userProfile(key: $key, value: $value) {
     id
+    createdAt
     bannerUrl
     profileUrl
     pseudo
