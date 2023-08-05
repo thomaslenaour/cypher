@@ -73,6 +73,15 @@ export function graphql(
 export function graphql(
   source: 'query getUserProfile($key: String!, $value: String!) {\n  userProfile(key: $key, value: $value) {\n    id\n    createdAt\n    bannerUrl\n    profileUrl\n    pseudo\n    punchline\n    userId\n  }\n}'
 ): (typeof documents)['query getUserProfile($key: String!, $value: String!) {\n  userProfile(key: $key, value: $value) {\n    id\n    createdAt\n    bannerUrl\n    profileUrl\n    pseudo\n    punchline\n    userId\n  }\n}'];
+export function graphql(
+  source: 'query getUserProfile($key: String!, $value: String!) {\n  userProfile(key: $key, value: $value) {\n    id\n    createdAt\n    bannerUrl\n    profileUrl\n    pseudo\n    punchline\n    userId\n  }\n}'
+): (typeof documents)['query getUserProfile($key: String!, $value: String!) {\n  userProfile(key: $key, value: $value) {\n    id\n    createdAt\n    bannerUrl\n    profileUrl\n    pseudo\n    punchline\n    userId\n  }\n}'];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'query getUser($key: String!, $value: String!) {\n  user(key: $key, value: $value) {\n    id\n    followedBy {\n      id\n    }\n  }\n}'
+): (typeof documents)['query getUser($key: String!, $value: String!) {\n  user(key: $key, value: $value) {\n    id\n    followedBy {\n      id\n    }\n  }\n}'];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

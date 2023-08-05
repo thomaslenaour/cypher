@@ -93,6 +93,7 @@ export type Query = {
   __typename?: 'Query';
   rooms: Array<RoomObjectType>;
   test: Scalars['String']['output'];
+  user: UserObjectType;
   userProfile: UserProfileObjectType;
 };
 

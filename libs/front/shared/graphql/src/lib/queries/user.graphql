@@ -1,0 +1,8 @@
+query getUser($key: String!, $value: String!) {
+  user(key: $key, value: $value) {
+    id
+    followedBy {
+      id
+    }
+  }
+}
