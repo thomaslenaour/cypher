@@ -2,27 +2,45 @@ import { Prisma } from '@prisma/client';
 
 export const user: Prisma.UserCreateManyInput[] = [
   {
-    id: 'thoxmr6gr000008l2d26y2tho',
-    email: 'thomas@cypherapp.co',
+    id: 'plkxmr6gr000008l2d26y2plk',
+    email: 'polak@cypherapp.co',
     emailVerified: new Date('2023-05-21T16:27:06.737Z'),
-    name: 'Thomas Le Naour',
+    name: 'Polak',
   },
   {
-    id: 'thexmr6gr000008l2d26y2the',
-    email: 'theo@cypherapp.co',
+    id: 'traxmr6gr000008l2d26y2tra',
+    email: 'travis.scott@cypherapp.co',
     emailVerified: new Date('2023-05-21T16:27:06.737Z'),
-    name: 'Théo Delas',
+    name: 'Travis Scott',
   },
   {
-    id: 'sasxmr6gr000008l2d26y2sas',
-    email: 'sascha@cypherapp.co',
+    id: 'kenxmr6gr000008l2d26y2ken',
+    email: 'kendrick.lamar@cypherapp.co',
     emailVerified: new Date('2023-05-21T16:27:06.737Z'),
-    name: 'Sascha Salles',
+    name: 'Kendrick Lamar',
   },
   {
-    id: 'alexmr6gr000008l2d26y2ale',
-    email: 'alex@cypherapp.co',
+    id: 'limxmr6gr000008l2d26y2lim',
+    email: 'limsa.daulnay@cypherapp.co',
     emailVerified: new Date('2023-05-21T16:27:06.737Z'),
-    name: 'Alex Boisseau',
+    name: 'Limsa Daulnay',
+  },
+  {
+    id: 'draxmr6gr000008l2d26y2dra',
+    email: 'drake@cypherapp.co',
+    emailVerified: new Date('2023-05-21T16:27:06.737Z'),
+    name: 'Drake',
+  },
+  {
+    id: 'emixmr6gr000008l2d26y2emi',
+    email: 'eminem@cypherapp.co',
+    emailVerified: new Date('2023-05-21T16:27:06.737Z'),
+    name: 'Eminem',
+  },
+  {
+    id: 'layxmr6gr000008l2d26y2lay',
+    email: 'laylow@cypherapp.co',
+    emailVerified: new Date('2023-05-21T16:27:06.737Z'),
+    name: 'Laylow',
   },
 ];
