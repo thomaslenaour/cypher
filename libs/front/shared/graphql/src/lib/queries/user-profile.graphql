@@ -6,6 +6,7 @@ query getUserProfile($key: String!, $value: String!) {
     profileUrl
     pseudo
     punchline
+    userName
     userId
   }
 }
