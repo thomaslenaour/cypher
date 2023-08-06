@@ -6,19 +6,16 @@ interface IBannerProps {
 }
 
 const styles = (bannerUrl?: string | null): SxProps => {
-  let bannerStyles: SxProps;
-
-  if (bannerUrl != null) {
-    bannerStyles = {
-      background: `url("${bannerUrl}")`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-    };
-  } else {
-    bannerStyles = {
-      background: 'primary.main',
-    };
-  }
+  const bannerStyles: SxProps =
+    bannerUrl != null
+      ? {
+          background: `url("${bannerUrl}")`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }
+      : {
+          backgroundColor: 'primary.900',
+        };
 
   return {
     ...bannerStyles,

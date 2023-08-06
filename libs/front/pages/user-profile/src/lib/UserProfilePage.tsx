@@ -65,7 +65,10 @@ export async function UserProfilePage({
         <Box sx={styles}>
           <Banner bannerUrl={profile.bannerUrl} />
           <Container id="user-profile-header">
-            <PictureAndFollow profileUrl={profile.profileUrl} />
+            <PictureAndFollow
+              pseudo={profile.pseudo}
+              profileUrl={profile.profileUrl}
+            />
             <Stack
               direction={'row'}
               justifyContent={'space-between'}

@@ -1,26 +1,30 @@
-import { Box, Button, SxProps } from '@cypher/front/shared/ui';
+import { Box, Button, SxProps, Typography } from '@cypher/front/shared/ui';
 
 const styles = (profileUrl?: string | null): SxProps => {
-  let profileStyles: SxProps;
   const profilePictureHeight = 8.125; // rem
 
-  if (profileUrl != null) {
-    profileStyles = {
-      background: `url("${profileUrl}")`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-    };
-  } else {
-    profileStyles = {
-      background: 'secondary.main',
-    };
-  }
+  const profileStyles: SxProps =
+    profileUrl != null
+      ? {
+          background: `url("${profileUrl}")`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }
+      : {
+          backgroundColor: 'primary.500',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          '& > span': {
+            color: 'white',
+          },
+        };
 
   return {
     display: 'flex',
     alignItems: 'end',
     justifyContent: 'space-between',
-    '& > div': {
+    '& > #profile-picture': {
       ...profileStyles,
       height: `${profilePictureHeight}rem`,
       width: '8.125rem',
@@ -32,13 +36,25 @@ const styles = (profileUrl?: string | null): SxProps => {
 };
 
 interface IPictureAndFollowProps {
+  pseudo: string;
   profileUrl?: string | null;
 }
 
-export async function PictureAndFollow({ profileUrl }: IPictureAndFollowProps) {
+export async function PictureAndFollow({
+  pseudo,
+  profileUrl,
+}: IPictureAndFollowProps) {
   return (
     <Box id="picture-and-follow" sx={styles(profileUrl)}>
-      <Box />
+      {profileUrl ? (
+        <Box id="profile-picture" />
+      ) : (
+        <Box id="profile-picture">
+          <Typography level="h1" component="span">
+            {pseudo[0].toUpperCase()}
+          </Typography>
+        </Box>
+      )}
       <Button color="primary">Follow</Button>
     </Box>
   );
