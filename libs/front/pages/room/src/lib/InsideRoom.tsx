@@ -1,4 +1,6 @@
 'use client';
+import { useCallback, useEffect, useState } from 'react';
+import { useRoomContext } from '@livekit/components-react';
 
 import { Box } from '@cypher/front/shared/ui';
 
@@ -11,6 +13,19 @@ interface InsideRoomProps {
 }
 
 export function InsideRoom({ roomId }: InsideRoomProps) {
+  const currentRoom = useRoomContext();
+  const [microphoneEnabled, setMicrophoneEnabled] = useState(false);
+
+  const handleMicrophoneOpen = useCallback(() => {
+    setMicrophoneEnabled(true);
+  }, []);
+
+  useEffect(() => {
+    if (currentRoom) {
+      currentRoom.localParticipant.setMicrophoneEnabled(microphoneEnabled);
+    }
+  }, [microphoneEnabled, currentRoom]);
+
   return (
     <Box
       sx={{
@@ -22,7 +37,10 @@ export function InsideRoom({ roomId }: InsideRoomProps) {
         height: '600px',
       }}
     >
-      <InsideRoomLeftSide />
+      <InsideRoomLeftSide
+        microphoneEnabled={microphoneEnabled}
+        onMicrophoneClick={() => setMicrophoneEnabled((prev) => !prev)}
+      />
       <Box
         sx={{
           flex: 1,
@@ -31,7 +49,10 @@ export function InsideRoom({ roomId }: InsideRoomProps) {
           borderColor: 'neutral.100',
         }}
       >
-        <InsideRoomMiddleArea roomId={roomId} />
+        <InsideRoomMiddleArea
+          roomId={roomId}
+          onMicrophoneOpen={handleMicrophoneOpen}
+        />
       </Box>
       <InsideRoomRightSide />
     </Box>

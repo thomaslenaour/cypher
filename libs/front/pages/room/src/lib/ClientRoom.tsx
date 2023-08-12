@@ -15,9 +15,9 @@ export function ClientRoom({ initialToken, roomId }: ClientRoomProps) {
       <LiveKitRoom
         token={initialToken}
         serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_SERVER_URL}
-        video={false}
-        audio={true}
         connect={true}
+        video={false}
+        audio={false}
       >
         <InsideRoom roomId={roomId} />
         <RoomAudioRenderer />

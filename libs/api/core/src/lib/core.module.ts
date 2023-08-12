@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { ScheduleModule } from '@nestjs/schedule';
 
 import { OrmModule } from '@cypher/api/shared/database/orm';
 
@@ -33,6 +34,7 @@ import {
       inject: [ConfigService],
     }),
     OrmModule,
+    ScheduleModule.forRoot(),
   ],
 })
 export class CoreModule {}

@@ -8,7 +8,7 @@ export default (): ApiConfiguration => ({
   security: {
     cors: {
       allowedOrigins: isDevelopment
-        ? [/http:\/\/localhost:3000/]
+        ? [/http:\/\/localhost:3000/, /http:\/\/localhost:3001/]
         : [/https:\/\/cypherapp.co/],
     },
   },

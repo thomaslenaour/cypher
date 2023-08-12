@@ -45,7 +45,13 @@ export class LivekitService implements OnModuleInit {
         }),
       }
     );
-    at.addGrant({ roomJoin: true, room: payload.roomName, canPublish: false });
+    at.addGrant({
+      roomJoin: true,
+      room: payload.roomName,
+      canSubscribe: true,
+      canPublish: false,
+      canPublishData: false,
+    });
 
     return at.toJwt();
   }
@@ -67,37 +73,23 @@ export class LivekitService implements OnModuleInit {
     return participant;
   }
 
-  async addParticipantToQueue(
+  async updateParticipant(
     roomName: string,
     identity: string,
-    previousMetadata?: Record<string, string>
+    metadata: Record<string, string>,
+    permission: {
+      canPublish: boolean;
+      canSubscribe: boolean;
+      canPublishData: boolean;
+    }
   ) {
-    const participant = await this.roomServiceClient.updateParticipant(
+    const newParticipant = await this.roomServiceClient.updateParticipant(
       roomName,
       identity,
-      JSON.stringify({
-        ...previousMetadata,
-        inQueueAt: new Date().toISOString(),
-      })
+      JSON.stringify(metadata),
+      permission
     );
 
-    return participant;
-  }
-
-  async removeParticipantFromQueue(
-    roomName: string,
-    identity: string,
-    previousMetadata?: Record<string, string>
-  ) {
-    const participant = await this.roomServiceClient.updateParticipant(
-      roomName,
-      identity,
-      JSON.stringify({
-        ...previousMetadata,
-        inQueueAt: null,
-      })
-    );
-
-    return participant;
+    return newParticipant;
   }
 }

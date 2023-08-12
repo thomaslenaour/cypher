@@ -9,3 +9,7 @@ mutation JoinPublicRoom($roomId: String!) {
 mutation JoinRoom($roomId: String!) {
   joinRoom(data: { roomId: $roomId })
 }
+
+mutation StartPublishing($data: StartPublishingInput!) {
+  startPublishing(data: $data)
+}

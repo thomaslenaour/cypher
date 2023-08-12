@@ -1,7 +1,16 @@
-import { Box, Button, Typography } from '@cypher/front/shared/ui';
-import { Mic } from 'lucide-react';
+import { Mic, MicOff } from 'lucide-react';
 
-export function InsideRoomLeftSide() {
+import { Box, Button, Typography } from '@cypher/front/shared/ui';
+
+interface InsideRoomLeftSideProps {
+  microphoneEnabled: boolean;
+  onMicrophoneClick: () => void;
+}
+
+export function InsideRoomLeftSide({
+  microphoneEnabled,
+  onMicrophoneClick,
+}: InsideRoomLeftSideProps) {
   return (
     <Box
       sx={{
@@ -24,8 +33,12 @@ export function InsideRoomLeftSide() {
         </ul>
       </Box>
       <Box>
-        <Button startDecorator={<Mic />} fullWidth>
-          Activer
+        <Button
+          startDecorator={microphoneEnabled ? <MicOff /> : <Mic />}
+          onClick={onMicrophoneClick}
+          fullWidth
+        >
+          {microphoneEnabled ? 'Désactiver' : 'Activer'}
         </Button>
       </Box>
     </Box>

@@ -1,5 +1,6 @@
-import { Box, Typography } from '@cypher/front/shared/ui';
 import { Chat, useParticipants } from '@livekit/components-react';
+
+import { Box, Typography } from '@cypher/front/shared/ui';
 
 export function InsideRoomRightSide() {
   const participants = useParticipants();
@@ -13,12 +14,10 @@ export function InsideRoomRightSide() {
     })
     .sort((a, b) => {
       if (a.metadata && b.metadata) {
-        const parsedMetadataA = JSON.parse(a.metadata);
-        const parsedMetadataB = JSON.parse(b.metadata);
+        const aMetadata = JSON.parse(a.metadata);
+        const bMetadata = JSON.parse(b.metadata);
 
-        if (parsedMetadataA.inQueueAt && parsedMetadataB.inQueueAt) {
-          return parsedMetadataB.inQueueAt - parsedMetadataA.inQueueAt;
-        }
+        return aMetadata.inQueueAt - bMetadata.inQueueAt;
       }
       return 0;
     });

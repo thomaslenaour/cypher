@@ -37,6 +37,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   joinPublicRoom: Scalars['String']['output'];
   joinRoom: Scalars['String']['output'];
+  startPublishing: Scalars['Boolean']['output'];
   toggleMyselfFromQueue: Scalars['Boolean']['output'];
 };
 
@@ -46,6 +47,10 @@ export type MutationJoinPublicRoomArgs = {
 
 export type MutationJoinRoomArgs = {
   data: JoinRoomInput;
+};
+
+export type MutationStartPublishingArgs = {
+  data: StartPublishingInput;
 };
 
 export type MutationToggleMyselfFromQueueArgs = {
@@ -63,6 +68,11 @@ export type RoomObjectType = {
   id: Scalars['String']['output'];
   name: Scalars['String']['output'];
   participantsNumber: Scalars['Float']['output'];
+};
+
+export type StartPublishingInput = {
+  identity: Scalars['String']['input'];
+  roomId: Scalars['String']['input'];
 };
 
 export type ToggleMyselfFromQueueInput = {
@@ -93,6 +103,15 @@ export type JoinRoomMutationVariables = Exact<{
 }>;
 
 export type JoinRoomMutation = { __typename?: 'Mutation'; joinRoom: string };
+
+export type StartPublishingMutationVariables = Exact<{
+  data: StartPublishingInput;
+}>;
+
+export type StartPublishingMutation = {
+  __typename?: 'Mutation';
+  startPublishing: boolean;
+};
 
 export type GetRoomsQueryVariables = Exact<{ [key: string]: never }>;
 
@@ -266,6 +285,51 @@ export const JoinRoomDocument = {
     },
   ],
 } as unknown as DocumentNode<JoinRoomMutation, JoinRoomMutationVariables>;
+export const StartPublishingDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'StartPublishing' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'data' } },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'StartPublishingInput' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'startPublishing' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'data' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'data' },
+                },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  StartPublishingMutation,
+  StartPublishingMutationVariables
+>;
 export const GetRoomsDocument = {
   kind: 'Document',
   definitions: [
