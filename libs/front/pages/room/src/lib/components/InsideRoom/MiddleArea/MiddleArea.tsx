@@ -1,5 +1,7 @@
 'use client';
 
+import avatarDefault from '../avatar-default.png';
+
 import { useMemo } from 'react';
 import {
   ParticipantLoop,
@@ -8,11 +10,12 @@ import {
   useParticipants,
 } from '@livekit/components-react';
 
-import { Avatar, Box, Button } from '@cypher/front/shared/ui';
+import { Avatar, Box, Button, Typography } from '@cypher/front/shared/ui';
 import { StartPublishingDocument } from '@cypher/front/shared/graphql';
 import { useMutation } from '@cypher/front/libs/apollo';
 
-import { TakeMicButton } from '../TakeMicButton';
+import { TakeMicButton } from './TakeMicButton';
+import { Play } from 'lucide-react';
 
 interface InsideRoomMiddleProps {
   roomId: string;
@@ -40,7 +43,7 @@ export function InsideRoomMiddleArea({
     currentParticipant?.localParticipant?.identity ===
     currentPublisher?.identity;
 
-  const [startPublishing] = useMutation(StartPublishingDocument);
+  const [startPublishing, { loading }] = useMutation(StartPublishingDocument);
 
   const handleStartPublishingClick = async () => {
     if (!iAmThePublisher) return;
@@ -83,17 +86,34 @@ export function InsideRoomMiddleArea({
           alignItems: 'center',
         }}
       >
-        <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)' }}>
-          <ParticipantLoop participants={participants}>
-            <div>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+          <Box mb={2}>
+            {currentPublisher ? (
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                }}
+              >
+                <Typography level="h4" textAlign="center">
+                  {currentPublisher.name} est en train de rapper !
+                </Typography>
+                <Avatar src={avatarDefault.src} size="lg" />
+                <Typography textAlign="center">
+                  {currentPublisher.name}
+                </Typography>
+              </Box>
+            ) : (
+              'Aucun publisher'
+            )}
+          </Box>
+          <Box>
+            <Typography textAlign="center">Dans la room</Typography>
+            <ParticipantLoop participants={participants}>
               <ParticipantItem />
-            </div>
-          </ParticipantLoop>
-          {currentPublisher ? (
-            <pre>Publisher : {currentPublisher.identity}</pre>
-          ) : (
-            'aucun publisher'
-          )}
+            </ParticipantLoop>
+          </Box>
         </Box>
       </Box>
       <Box
@@ -105,8 +125,12 @@ export function InsideRoomMiddleArea({
         }}
       >
         {iAmThePublisher ? (
-          <Button onClick={handleStartPublishingClick}>
-            Let's go ! Je clique et je commence à rapper
+          <Button
+            startDecorator={<Play />}
+            onClick={handleStartPublishingClick}
+            loading={loading}
+          >
+            Je clique et je commence à rapper
           </Button>
         ) : (
           <TakeMicButton roomId={roomId} />
@@ -119,5 +143,18 @@ export function InsideRoomMiddleArea({
 function ParticipantItem() {
   const participant = useParticipantContext();
 
-  return <Avatar size="lg">{participant.identity}</Avatar>;
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      <Avatar src={avatarDefault.src} />
+      <Typography level="body4" textAlign="center">
+        {participant.name}
+      </Typography>
+    </Box>
+  );
 }

@@ -4,9 +4,9 @@ import { useRoomContext } from '@livekit/components-react';
 
 import { Box } from '@cypher/front/shared/ui';
 
-import { InsideRoomLeftSide } from './components/InsideRoom/LeftSide';
-import { InsideRoomRightSide } from './components/InsideRoom/RightSide';
-import { InsideRoomMiddleArea } from './components/InsideRoom/MiddleArea';
+import { InsideRoomLeftSide } from './LeftSide/LeftSide';
+import { InsideRoomRightSide } from './RightSide/RightSide';
+import { InsideRoomMiddleArea } from './MiddleArea/MiddleArea';
 
 interface InsideRoomProps {
   roomId: string;
@@ -33,6 +33,7 @@ export function InsideRoom({ roomId }: InsideRoomProps) {
         justifyContent: 'space-between',
         backgroundColor: 'common.white',
         borderRadius: '16px',
+        border: '1px solid',
         borderColor: 'neutral.100',
         height: '600px',
       }}
@@ -47,6 +48,7 @@ export function InsideRoom({ roomId }: InsideRoomProps) {
           borderLeft: '1px solid',
           borderRight: '1px solid',
           borderColor: 'neutral.100',
+          p: 1,
         }}
       >
         <InsideRoomMiddleArea

@@ -4,6 +4,7 @@ import { useMutation } from '@cypher/front/libs/apollo';
 import { ToggleMyselfFromQueueDocument } from '@cypher/front/shared/graphql';
 import { Button } from '@cypher/front/shared/ui';
 import { useLocalParticipant } from '@livekit/components-react';
+import { Mic2, Undo2 } from 'lucide-react';
 import { useMemo } from 'react';
 
 interface TakeMicButtonProps {
@@ -12,7 +13,7 @@ interface TakeMicButtonProps {
 
 export function TakeMicButton({ roomId }: TakeMicButtonProps) {
   const currentParticipant = useLocalParticipant();
-  const participantIsInQueue = useMemo(() => {
+  const iAmInTheQueue = useMemo(() => {
     if (currentParticipant.localParticipant?.metadata) {
       const parsedMetadata = JSON.parse(
         currentParticipant.localParticipant.metadata
@@ -21,7 +22,9 @@ export function TakeMicButton({ roomId }: TakeMicButtonProps) {
     }
     return false;
   }, [currentParticipant]);
-  const [toggleMyselfFromQueue] = useMutation(ToggleMyselfFromQueueDocument);
+  const [toggleMyselfFromQueue, { loading }] = useMutation(
+    ToggleMyselfFromQueueDocument
+  );
 
   const handleClick = async () => {
     if (currentParticipant.localParticipant?.lastMicrophoneError) {
@@ -40,8 +43,12 @@ export function TakeMicButton({ roomId }: TakeMicButtonProps) {
   };
 
   return (
-    <Button size="lg" onClick={handleClick}>
-      {participantIsInQueue ? 'Se retirer de la queue' : 'Prendre le mic'}
+    <Button
+      startDecorator={iAmInTheQueue ? <Undo2 /> : <Mic2 />}
+      onClick={handleClick}
+      loading={loading}
+    >
+      {iAmInTheQueue ? 'Se retirer de la queue' : 'Prendre le micro'}
     </Button>
   );
 }

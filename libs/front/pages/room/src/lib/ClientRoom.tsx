@@ -2,7 +2,7 @@
 
 import { LiveKitRoom, RoomAudioRenderer } from '@livekit/components-react';
 import { Container } from '@cypher/front/shared/ui';
-import { InsideRoom } from './InsideRoom';
+import { InsideRoom } from './components/InsideRoom/InsideRoom';
 
 interface ClientRoomProps {
   initialToken: string;

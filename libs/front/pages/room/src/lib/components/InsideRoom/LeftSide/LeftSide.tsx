@@ -14,31 +14,33 @@ export function InsideRoomLeftSide({
   return (
     <Box
       sx={{
+        p: 1,
         height: '100%',
-        width: '150px',
+        width: '180px',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
       }}
     >
-      <Box p={2}>
-        <Typography level="h4" fontWeight={700}>
-          Instrus
+      <Box>
+        <Typography level="h5" fontWeight={700}>
+          Prochains beats
         </Typography>
-        <ul>
-          <li>xxxx</li>
-          <li>xxxx</li>
-          <li>xxxx</li>
-          <li>xxxx</li>
-        </ul>
+        <Box>
+          <Typography level="body2">Beat 1</Typography>
+          <Typography level="body2">Beat 2</Typography>
+          <Typography level="body2">Beat 3</Typography>
+          <Typography level="body2">Beat 4</Typography>
+        </Box>
       </Box>
       <Box>
         <Button
-          startDecorator={microphoneEnabled ? <MicOff /> : <Mic />}
+          startDecorator={microphoneEnabled ? <Mic /> : <MicOff />}
           onClick={onMicrophoneClick}
+          color={microphoneEnabled ? 'primary' : 'danger'}
           fullWidth
         >
-          {microphoneEnabled ? 'Désactiver' : 'Activer'}
+          Mic. {microphoneEnabled ? 'ON' : 'OFF'}
         </Button>
       </Box>
     </Box>

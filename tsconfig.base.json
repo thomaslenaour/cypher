@@ -78,7 +78,8 @@
       "@cypher/front/shared/ui/server": ["libs/front/shared/ui/src/server.ts"],
       "@cypher/shared/config/authentication": [
         "libs/shared/config/authentication/src/index.ts"
-      ]
+      ],
+      "@cypher/shared/types": ["libs/shared/types/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
