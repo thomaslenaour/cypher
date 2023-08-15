@@ -12,7 +12,6 @@ export class RoomCronService {
 
   @Cron('*/10 * * * * *')
   async handleCron() {
-    // console.log('Trigger Cron');
     const rooms = await this.roomRepository.getRooms();
 
     await Promise.all(

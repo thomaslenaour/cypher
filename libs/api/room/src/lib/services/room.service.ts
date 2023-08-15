@@ -80,7 +80,7 @@ export class RoomService {
           room.id,
           currentPublisher.identity,
           { ...currentPublisherMetadata, canPublishAt: null, inQueueAt: null },
-          { canPublish: false, canPublishData: false, canSubscribe: true }
+          { canPublish: false, canPublishData: true, canSubscribe: true }
         );
 
         return;

@@ -38,7 +38,7 @@ export class LivekitService implements OnModuleInit {
       this.livekitConfig.apiKey,
       this.livekitConfig.apiSecret,
       {
-        name: payload.participantName || 'Anonymous',
+        name: payload?.participantName || 'Anonymous',
         identity: uuidv4(),
         metadata: JSON.stringify({
           userId: payload?.userId || '',
@@ -50,7 +50,7 @@ export class LivekitService implements OnModuleInit {
       room: payload.roomName,
       canSubscribe: true,
       canPublish: false,
-      canPublishData: false,
+      canPublishData: true,
     });
 
     return at.toJwt();

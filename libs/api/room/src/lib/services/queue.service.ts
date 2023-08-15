@@ -55,7 +55,7 @@ export class RoomQueueService {
       roomId,
       identity,
       newMetadata,
-      { canPublish: false, canPublishData: false, canSubscribe: true }
+      { canPublish: false, canPublishData: true, canSubscribe: true }
     );
   }
 

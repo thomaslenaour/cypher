@@ -17,6 +17,8 @@ export { default as List } from '@mui/joy/List';
 export { default as ListItem } from '@mui/joy/ListItem';
 export { default as ListItemContent } from '@mui/joy/ListItemContent';
 export { default as ListItemDecorator } from '@mui/joy/ListItemDecorator';
+export { default as Select } from '@mui/joy/Select';
+export { default as Option } from '@mui/joy/Option';
 
 // Custom UI Components
 export { Box } from './Box';

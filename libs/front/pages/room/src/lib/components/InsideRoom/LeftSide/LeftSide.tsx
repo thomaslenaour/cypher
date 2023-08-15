@@ -2,6 +2,8 @@ import { Mic, MicOff } from 'lucide-react';
 
 import { Box, Button, Typography } from '@cypher/front/shared/ui';
 
+import { MediaDeviceSelect } from './MediaDeviceSelect';
+
 interface InsideRoomLeftSideProps {
   microphoneEnabled: boolean;
   onMicrophoneClick: () => void;
@@ -34,6 +36,7 @@ export function InsideRoomLeftSide({
         </Box>
       </Box>
       <Box>
+        <MediaDeviceSelect />
         <Button
           startDecorator={microphoneEnabled ? <Mic /> : <MicOff />}
           onClick={onMicrophoneClick}
