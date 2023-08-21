@@ -24,7 +24,6 @@ export type ProvidersConfiguration = {
 };
 
 export type LivekitConfiguration = {
-  host: string;
   apiKey: string;
   apiSecret: string;
 };
