@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "cm": "cz",
+    "build:api": "nx build api --prod",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:migrate:deploy": "prisma migrate deploy",
