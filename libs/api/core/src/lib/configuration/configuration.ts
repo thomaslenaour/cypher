@@ -15,7 +15,6 @@ export default (): ApiConfiguration => ({
   },
   providers: {
     livekit: {
-      host: process.env.LIVEKIT_HOST,
       apiKey: process.env.LIVEKIT_API_KEY,
       apiSecret: process.env.LIVEKIT_API_SECRET,
     },

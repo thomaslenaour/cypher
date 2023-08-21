@@ -25,9 +25,6 @@ class EnvironmentVariables implements HasKeys<NodeJS.ProcessEnv> {
   JWT_SECRET: string;
 
   @IsString()
-  LIVEKIT_HOST: string;
-
-  @IsString()
   LIVEKIT_API_KEY: string;
 
   @IsString()
