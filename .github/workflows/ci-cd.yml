@@ -75,7 +75,7 @@ jobs:
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
 
   front-deployment-prod:
-    name: Client Deployment (Production)
+    name: Front Deployment (Production)
     needs: pre-deploy
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && github.event_name == 'push' && contains(needs.pre-deploy.outputs.apps, 'front')
