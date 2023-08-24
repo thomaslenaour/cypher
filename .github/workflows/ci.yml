@@ -10,6 +10,13 @@ permissions:
   actions: read
   contents: read
 
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+  HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+  HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
+
 jobs:
   main:
     name: Nx Cloud - Main Job
@@ -31,3 +38,38 @@ jobs:
     uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.13.0
     with:
       number-of-agents: 3
+
+  pre-deploy:
+    name: Pre Deployment Checks
+    needs: main
+    runs-on: ubuntu-latest
+    if: (github.ref == 'refs/heads/main') && github.event_name == 'push'
+    outputs:
+      apps: ${{ steps.apps.outputs.apps }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: nrwl/nx-set-shas@v3
+        with:
+          main-branch-name: ${GITHUB_REF##*/}
+      - run: npm ci
+      - name: apps
+        id: apps
+        run: |
+          apps=$(npx nx print-affected --type=app --select=projects)
+          echo "apps=${apps}" >> "$GITHUB_OUTPUT"
+
+  api-deploy-prod:
+    name: API Deploy (Producion)
+    needs: pre-deploy
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push' && contains(needs.pre-deploy.outputs.apps, 'api')
+    steps:
+      - uses: actions/checkout@v3
+      - name: Deploy to Heroku
+        uses: akhileshns/heroku-deploy@v3.12.14
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
