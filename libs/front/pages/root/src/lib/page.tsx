@@ -1,6 +1,7 @@
 import { Header } from '@cypher/front/components/common/server';
 import { getClient } from '@cypher/front/libs/apollo/server';
 import { GetRoomsDocument } from '@cypher/front/shared/graphql';
+
 import RoomSection from './components/RoomSection';
 
 export async function HomePage() {
