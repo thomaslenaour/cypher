@@ -11,8 +11,6 @@ permissions:
   contents: read
 
 env:
-  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
   HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
   HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
   HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
@@ -61,7 +59,7 @@ jobs:
           echo "apps=${apps}" >> "$GITHUB_OUTPUT"
 
   api-deploy-prod:
-    name: API Deploy (Producion)
+    name: API Deploy (Production)
     needs: pre-deploy
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && github.event_name == 'push' && contains(needs.pre-deploy.outputs.apps, 'api')
