@@ -15,7 +15,7 @@
     "prisma:migrate:reset": "prisma migrate reset",
     "prisma:seed": "prisma db seed",
     "prisma:studio": "prisma studio",
-    "build:heroku-apps": "./scripts/heroku.build",
+    "build:heroku-apps": "./scripts/heroku.build.sh",
     "heroku-postbuild": "npm run build:heroku-apps"
   },
   "prisma": {
