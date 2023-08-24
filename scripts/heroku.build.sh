@@ -15,7 +15,7 @@ fi
   cd $PROJECT_ROOT
 
   if [ "$NX_APP_NAME" = "api" ]; then
-    nx run prisma:generate
+    npm run prisma:generate
     nx build api --prod
   else
     echo "Error: no build config for NX_APP_NAME value '$NX_APP_NAME'"
