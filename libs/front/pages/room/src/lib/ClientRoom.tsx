@@ -7,9 +7,14 @@ import { InsideRoom } from './components/InsideRoom/InsideRoom';
 interface ClientRoomProps {
   initialToken: string;
   roomId: string;
+  authenticated: boolean;
 }
 
-export function ClientRoom({ initialToken, roomId }: ClientRoomProps) {
+export function ClientRoom({
+  initialToken,
+  roomId,
+  authenticated,
+}: ClientRoomProps) {
   return (
     <Container>
       <LiveKitRoom
@@ -19,7 +24,7 @@ export function ClientRoom({ initialToken, roomId }: ClientRoomProps) {
         video={false}
         audio={false}
       >
-        <InsideRoom roomId={roomId} />
+        <InsideRoom roomId={roomId} authenticated={authenticated} />
         <RoomAudioRenderer />
       </LiveKitRoom>
     </Container>

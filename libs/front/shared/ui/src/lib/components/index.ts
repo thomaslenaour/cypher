@@ -20,6 +20,7 @@ export { default as ListItemDecorator } from '@mui/joy/ListItemDecorator';
 export { default as Select } from '@mui/joy/Select';
 export { default as Option } from '@mui/joy/Option';
 export { default as IconButton } from '@mui/joy/IconButton';
+export { default as Tooltip } from '@mui/joy/Tooltip';
 
 // Custom UI Components
 export { Box } from './Box';

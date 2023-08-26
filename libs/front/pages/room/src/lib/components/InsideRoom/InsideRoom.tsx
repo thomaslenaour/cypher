@@ -10,9 +10,10 @@ import { InsideRoomMiddleArea } from './MiddleArea/MiddleArea';
 
 interface InsideRoomProps {
   roomId: string;
+  authenticated: boolean;
 }
 
-export function InsideRoom({ roomId }: InsideRoomProps) {
+export function InsideRoom({ roomId, authenticated }: InsideRoomProps) {
   const currentRoom = useRoomContext();
   const [microphoneEnabled, setMicrophoneEnabled] = useState(false);
 
@@ -48,12 +49,12 @@ export function InsideRoom({ roomId }: InsideRoomProps) {
           borderLeft: '1px solid',
           borderRight: '1px solid',
           borderColor: 'neutral.100',
-          p: 1,
         }}
       >
         <InsideRoomMiddleArea
           roomId={roomId}
           onMicrophoneOpen={handleMicrophoneOpen}
+          authenticated={authenticated}
         />
       </Box>
       <InsideRoomRightSide />

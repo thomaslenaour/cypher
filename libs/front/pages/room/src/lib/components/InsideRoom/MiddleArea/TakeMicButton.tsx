@@ -4,14 +4,17 @@ import { useMutation } from '@cypher/front/libs/apollo';
 import { ToggleMyselfFromQueueDocument } from '@cypher/front/shared/graphql';
 import { Button } from '@cypher/front/shared/ui';
 import { useLocalParticipant } from '@livekit/components-react';
-import { Mic2, Undo2 } from 'lucide-react';
+import { ListPlus, ListX, LogIn } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useMemo } from 'react';
 
 interface TakeMicButtonProps {
   roomId: string;
+  authenticated: boolean;
 }
 
-export function TakeMicButton({ roomId }: TakeMicButtonProps) {
+export function TakeMicButton({ roomId, authenticated }: TakeMicButtonProps) {
+  const router = useRouter();
   const currentParticipant = useLocalParticipant();
   const iAmInTheQueue = useMemo(() => {
     if (currentParticipant.localParticipant?.metadata) {
@@ -26,7 +29,23 @@ export function TakeMicButton({ roomId }: TakeMicButtonProps) {
     ToggleMyselfFromQueueDocument
   );
 
+  const button = useMemo(() => {
+    if (!authenticated)
+      return { label: 'Connectez-vous pour prendre le micro', icon: <LogIn /> };
+    if (!iAmInTheQueue)
+      return { label: "Rejoindre la file d'attente", icon: <ListPlus /> };
+    if (iAmInTheQueue)
+      return { label: "Se retirer de la file d'attente", icon: <ListX /> };
+
+    return { label: '', icon: null };
+  }, [iAmInTheQueue, authenticated]);
+
   const handleClick = async () => {
+    if (!authenticated) {
+      router.push('/login');
+      return;
+    }
+
     if (currentParticipant.localParticipant?.lastMicrophoneError) {
       console.log('you have to enable your mic before entering the queue');
       return;
@@ -44,11 +63,13 @@ export function TakeMicButton({ roomId }: TakeMicButtonProps) {
 
   return (
     <Button
-      startDecorator={iAmInTheQueue ? <Undo2 /> : <Mic2 />}
+      startDecorator={button?.icon}
       onClick={handleClick}
       loading={loading}
+      size="lg"
+      sx={{ borderRadius: 0 }}
     >
-      {iAmInTheQueue ? 'Se retirer de la queue' : 'Prendre le micro'}
+      {button.label}
     </Button>
   );
 }

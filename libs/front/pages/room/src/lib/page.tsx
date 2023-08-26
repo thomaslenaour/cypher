@@ -57,7 +57,11 @@ export async function RoomPage({ params }: RoomPageProps) {
         <Typography level="h3" fontWeight={700} textAlign="center" mb={2}>
           Room name
         </Typography>
-        <ClientRoom initialToken={token} roomId={params.id} />
+        <ClientRoom
+          initialToken={token}
+          roomId={params.id}
+          authenticated={!!session}
+        />
       </Box>
     </>
   );
