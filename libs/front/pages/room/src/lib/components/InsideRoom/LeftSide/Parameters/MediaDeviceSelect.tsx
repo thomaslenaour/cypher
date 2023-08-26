@@ -28,12 +28,13 @@ export function MediaDeviceSelect() {
 
   return (
     <Select
-      color="primary"
-      variant="plain"
+      color="neutral"
+      variant="soft"
       defaultValue={activeDeviceId}
       onChange={(_, value) => {
         value && handleActiveDeviceChange(value);
       }}
+      sx={{ borderRadius: 0 }}
     >
       {devices.map((device) => (
         <Option key={device.deviceId} value={device.deviceId}>

@@ -34,8 +34,12 @@ export function Queue() {
     }));
 
   return (
-    <Box>
-      <Typography level="h5" fontWeight={700}>
+    <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <Typography
+        level="h5"
+        fontWeight={700}
+        sx={{ p: 1, borderBottom: '1px #EAEEF6 solid' }}
+      >
         File d'attente
       </Typography>
       <QueueList participants={participantsInQueue} />

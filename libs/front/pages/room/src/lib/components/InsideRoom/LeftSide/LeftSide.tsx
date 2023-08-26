@@ -1,8 +1,7 @@
-import { Mic, MicOff } from 'lucide-react';
+import { Box } from '@cypher/front/shared/ui';
 
-import { Box, Button, Typography } from '@cypher/front/shared/ui';
-
-import { MediaDeviceSelect } from './MediaDeviceSelect';
+import { Beats } from './Beats/Beats';
+import { Parameters } from './Parameters/Parameters';
 
 interface InsideRoomLeftSideProps {
   microphoneEnabled: boolean;
@@ -16,35 +15,21 @@ export function InsideRoomLeftSide({
   return (
     <Box
       sx={{
-        p: 1,
         height: '100%',
-        width: '180px',
+        width: '200px',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
       }}
     >
-      <Box>
-        <Typography level="h5" fontWeight={700}>
-          Prochains beats
-        </Typography>
-        <Box>
-          <Typography level="body2">Beat 1</Typography>
-          <Typography level="body2">Beat 2</Typography>
-          <Typography level="body2">Beat 3</Typography>
-          <Typography level="body2">Beat 4</Typography>
-        </Box>
+      <Box sx={{ height: '50%' }}>
+        <Beats />
       </Box>
-      <Box>
-        <MediaDeviceSelect />
-        <Button
-          startDecorator={microphoneEnabled ? <Mic /> : <MicOff />}
-          onClick={onMicrophoneClick}
-          color={microphoneEnabled ? 'primary' : 'danger'}
-          fullWidth
-        >
-          Mic. {microphoneEnabled ? 'ON' : 'OFF'}
-        </Button>
+      <Box sx={{ height: '50%' }}>
+        <Parameters
+          microphoneEnabled={microphoneEnabled}
+          onMicrophoneClick={onMicrophoneClick}
+        />
       </Box>
     </Box>
   );
