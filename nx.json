@@ -5,14 +5,14 @@
     "default": {
       "runner": "nx-cloud",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"],
+        "cacheableOperations": ["pre-build", "build", "lint", "test", "e2e"],
         "accessToken": "MjgzN2IzNTItMDU0MC00ZWRiLWFmZTUtZjdmNWJlNTVlMTQzfHJlYWQtb25seQ=="
       }
     }
   },
   "targetDefaults": {
     "build": {
-      "dependsOn": ["pre-build", "^build"],
+      "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
     },
     "test": {
