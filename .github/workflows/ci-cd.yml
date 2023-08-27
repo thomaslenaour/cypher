@@ -59,7 +59,7 @@ jobs:
       - name: apps
         id: apps
         run: |
-          apps=$(npx nx show projects --affected --apps)
+          apps=$(npx nx print-affected --type=app --select=projects)
           echo "apps=${apps}" >> "$GITHUB_OUTPUT"
 
   api-deployment-prod:
