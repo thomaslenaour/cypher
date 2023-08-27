@@ -29,6 +29,12 @@ export class LivekitService implements OnModuleInit {
     );
   }
 
+  async roomExists(roomName: string) {
+    const rooms = await this.roomServiceClient.listRooms([roomName]);
+
+    return rooms?.length > 0;
+  }
+
   createAccessToken(payload: {
     roomName: string;
     participantName?: string;

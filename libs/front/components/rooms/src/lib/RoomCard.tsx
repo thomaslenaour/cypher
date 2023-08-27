@@ -11,7 +11,7 @@ import { useServerTranslations } from '@cypher/front/libs/i18n/server';
 
 interface RoomCardProps {
   name: string;
-  participantNumber: number;
+  participantNumber?: number;
 }
 
 export function RoomCard({ name, participantNumber }: RoomCardProps) {
@@ -37,7 +37,7 @@ export function RoomCard({ name, participantNumber }: RoomCardProps) {
           fontSize="sm"
           textColor="neutral.300"
         >
-          {t('participants', { count: 2 })}
+          {t('participants', { count: participantNumber || 0 })}
         </Typography>
       </CardContent>
     </Card>

@@ -8,6 +8,6 @@ export class RoomObjectType {
   @Field()
   name!: string;
 
-  @Field()
-  participantsNumber!: number;
+  @Field({ nullable: true })
+  participantsNumber?: number;
 }

@@ -78,7 +78,7 @@ export class RoomResolver {
     return await this.roomService.getRooms();
   }
 
-  @ResolveField('participantsNumber', () => Number)
+  @ResolveField('participantsNumber', () => Number, { nullable: true })
   async participantsNumber(@Parent() room: Room) {
     return await this.roomService.getParticipantsNumber(room.name);
   }

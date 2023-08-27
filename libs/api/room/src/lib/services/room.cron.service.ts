@@ -2,12 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { RoomService } from './room.service';
 import { RoomRepository } from '../room.repository';
+import { LivekitService } from '@cypher/api/shared/livekit';
 
 @Injectable()
 export class RoomCronService {
   constructor(
     private readonly roomService: RoomService,
-    private readonly roomRepository: RoomRepository
+    private readonly roomRepository: RoomRepository,
+    private readonly livekitService: LivekitService
   ) {}
 
   @Cron('*/10 * * * * *')
@@ -16,6 +18,9 @@ export class RoomCronService {
 
     await Promise.all(
       rooms.map(async (room) => {
+        const roomExists = await this.livekitService.roomExists(room.id);
+        if (!roomExists) return;
+
         await this.roomService.defineCurrentPublisher({ roomId: room.id });
       })
     );

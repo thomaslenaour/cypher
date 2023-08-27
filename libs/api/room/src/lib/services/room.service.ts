@@ -53,8 +53,10 @@ export class RoomService {
   }
 
   async getParticipantsNumber(roomName: string) {
-    const participants = await this.livekitService.getParticipants(roomName);
+    const roomExists = await this.livekitService.roomExists(roomName);
+    if (!roomExists) return 0;
 
+    const participants = await this.livekitService.getParticipants(roomName);
     return participants?.length || 0;
   }
 
