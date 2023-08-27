@@ -17,6 +17,12 @@ const nextConfig = {
     // See: https://github.com/gregberge/svgr
     svgr: false,
   },
+  experimental: {
+    outputFileTracingIgnores: [
+      '**/node_modules/@swc/core-linux-x64-gnu',
+      '**/node_modules/@swc/core-linux-x64-musl',
+    ],
+  },
 };
 
 const plugins = [
