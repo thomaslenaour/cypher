@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 import { useChat } from '@livekit/components-react';
+import { Send } from 'lucide-react';
 
 import { Box, IconButton, Input, Typography } from '@cypher/front/shared/ui';
-import { Send } from 'lucide-react';
 
 export function Chat() {
   const [message, setMessage] = useState('');
