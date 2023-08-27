@@ -8,7 +8,7 @@
   },
   "scripts": {
     "cm": "cz",
-    "build:front": "nx build front --prod",
+    "build:front": "prisma generate && nx build front --prod",
     "build:api": "nx build api --prod",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
