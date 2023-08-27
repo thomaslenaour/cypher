@@ -3,19 +3,28 @@
 import { useMutation } from '@cypher/front/libs/apollo';
 import { ToggleMyselfFromQueueDocument } from '@cypher/front/shared/graphql';
 import { Button } from '@cypher/front/shared/ui';
-import { useLocalParticipant } from '@livekit/components-react';
-import { ListPlus, ListX, LogIn } from 'lucide-react';
+import {
+  useLocalParticipant,
+  useParticipants,
+} from '@livekit/components-react';
+import { ListPlus, ListX, LogIn, Mic2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useMemo } from 'react';
 
 interface TakeMicButtonProps {
   roomId: string;
   authenticated: boolean;
+  onPublishingClick: () => Promise<void>;
 }
 
-export function TakeMicButton({ roomId, authenticated }: TakeMicButtonProps) {
+export function TakeMicButton({
+  roomId,
+  authenticated,
+  onPublishingClick,
+}: TakeMicButtonProps) {
   const router = useRouter();
   const currentParticipant = useLocalParticipant();
+  const participants = useParticipants();
   const iAmInTheQueue = useMemo(() => {
     if (currentParticipant.localParticipant?.metadata) {
       const parsedMetadata = JSON.parse(
@@ -25,6 +34,21 @@ export function TakeMicButton({ roomId, authenticated }: TakeMicButtonProps) {
     }
     return false;
   }, [currentParticipant]);
+  const currentPublisher = useMemo(() => {
+    const publisher = participants.find((participant) => {
+      if (participant?.metadata) {
+        const parsedMetadata = JSON.parse(participant.metadata);
+        return parsedMetadata?.canPublishAt;
+      }
+      return false;
+    });
+
+    return publisher;
+  }, [participants]);
+  const iAmThePublisher =
+    currentParticipant?.localParticipant?.identity ===
+    currentPublisher?.identity;
+
   const [toggleMyselfFromQueue, { loading }] = useMutation(
     ToggleMyselfFromQueueDocument
   );
@@ -32,13 +56,19 @@ export function TakeMicButton({ roomId, authenticated }: TakeMicButtonProps) {
   const button = useMemo(() => {
     if (!authenticated)
       return { label: 'Connectez-vous pour prendre le micro', icon: <LogIn /> };
+    if (iAmThePublisher)
+      // should be first because user can be in the queue and the publisher at the same time
+      return {
+        label: 'Appuie ici et balance tes meilleures punchlines !',
+        icon: <Mic2 />,
+      };
     if (!iAmInTheQueue)
       return { label: "Rejoindre la file d'attente", icon: <ListPlus /> };
     if (iAmInTheQueue)
       return { label: "Se retirer de la file d'attente", icon: <ListX /> };
 
     return { label: '', icon: null };
-  }, [iAmInTheQueue, authenticated]);
+  }, [iAmInTheQueue, iAmThePublisher, authenticated]);
 
   const handleClick = async () => {
     if (!authenticated) {
@@ -48,6 +78,11 @@ export function TakeMicButton({ roomId, authenticated }: TakeMicButtonProps) {
 
     if (currentParticipant.localParticipant?.lastMicrophoneError) {
       console.log('you have to enable your mic before entering the queue');
+      return;
+    }
+
+    if (iAmThePublisher) {
+      await onPublishingClick();
       return;
     }
 

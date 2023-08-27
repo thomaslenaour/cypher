@@ -3,6 +3,7 @@ import { LivekitService } from '@cypher/api/shared/livekit';
 
 import { RoomRepository } from '../room.repository';
 import { RoomQueueService } from './queue.service';
+import { UserProfileService } from '@cypher/api/user-profile';
 
 interface StartPublishingPayload {
   userId: string;
@@ -15,7 +16,8 @@ export class RoomService {
   constructor(
     private readonly livekitService: LivekitService,
     private readonly roomRepository: RoomRepository,
-    private readonly roomQueueService: RoomQueueService
+    private readonly roomQueueService: RoomQueueService,
+    private readonly userProfileService: UserProfileService
   ) {}
 
   async getRoomAccessToken({
@@ -31,9 +33,13 @@ export class RoomService {
       throw new Error('No room found with given id');
     }
 
+    const userProfile = userId
+      ? await this.userProfileService.getUserProfile('userId', userId)
+      : null;
+
     const at = this.livekitService.createAccessToken({
       roomName: `${roomId}`,
-      participantName: userId ? 'Fecthed Participant name' : '',
+      participantName: userProfile ? userProfile?.pseudo : 'Anonymous',
       userId,
     });
 
@@ -70,10 +76,30 @@ export class RoomService {
 
     if (currentPublisher) {
       const currentPublisherMetadata = JSON.parse(currentPublisher.metadata);
-      if (currentPublisherMetadata?.startPublishAt) return;
+      const now = new Date().getTime();
+      if (currentPublisherMetadata?.startPublishAt) {
+        const canPublishTill =
+          currentPublisherMetadata.startPublishAt + 60 * 1000;
+
+        if (now >= canPublishTill) {
+          // remove current publisher from queue
+          await this.livekitService.updateParticipant(
+            room.id,
+            currentPublisher.identity,
+            {
+              ...currentPublisherMetadata,
+              canPublishAt: null,
+              inQueueAt: null,
+              startPublishAt: null,
+            },
+            { canPublish: false, canPublishData: true, canSubscribe: true }
+          );
+
+          return;
+        }
+      }
 
       const canPublishTill = currentPublisherMetadata.canPublishAt + 60 * 1000;
-      const now = new Date().getTime();
       if (now >= canPublishTill) {
         // remove current publisher from queue
         await this.livekitService.updateParticipant(

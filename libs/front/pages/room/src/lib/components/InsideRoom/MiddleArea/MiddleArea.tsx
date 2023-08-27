@@ -79,7 +79,11 @@ export function InsideRoomMiddleArea({
         <Typography>Current Publisher section</Typography>
       </Box>
       <Box sx={{ height: '50%' }}>
-        <Participants roomId={roomId} authenticated={authenticated} />
+        <Participants
+          roomId={roomId}
+          authenticated={authenticated}
+          onPublishingClick={handleStartPublishingClick}
+        />
       </Box>
     </Box>
   );

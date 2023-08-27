@@ -6,9 +6,14 @@ import { useParticipants } from '@livekit/components-react';
 interface ParticipantsProps {
   roomId: string;
   authenticated: boolean;
+  onPublishingClick: () => Promise<void>;
 }
 
-export function Participants({ roomId, authenticated }: ParticipantsProps) {
+export function Participants({
+  roomId,
+  authenticated,
+  onPublishingClick,
+}: ParticipantsProps) {
   const participants = useParticipants();
 
   return (
@@ -49,31 +54,13 @@ export function Participants({ roomId, authenticated }: ParticipantsProps) {
           {participants.map((p) => (
             <ParticipantItem key={p.sid} name={p?.name} />
           ))}
-          <ParticipantItem />
-          <ParticipantItem />
-          <ParticipantItem />
-          <ParticipantItem />
-          <ParticipantItem />
-          <ParticipantItem />
-          <ParticipantItem />
-          <ParticipantItem />
-          <ParticipantItem />
-          <ParticipantItem />
-          <ParticipantItem />
-          <ParticipantItem />
-          <ParticipantItem />
-          <ParticipantItem />
-          <ParticipantItem />
-          <ParticipantItem />
-          <ParticipantItem />
-          <ParticipantItem />
-          <ParticipantItem />
-          <ParticipantItem />
-          <ParticipantItem />
-          <ParticipantItem />
         </Box>
       </Box>
-      <TakeMicButton roomId={roomId} authenticated={authenticated} />
+      <TakeMicButton
+        roomId={roomId}
+        authenticated={authenticated}
+        onPublishingClick={onPublishingClick}
+      />
     </Box>
   );
 }
