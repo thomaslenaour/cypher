@@ -1,1 +1,6 @@
-export { signIn, signOut, useSession } from 'next-auth/react';
+export {
+  signIn,
+  signOut,
+  useSession,
+  getSession as getClientSession,
+} from 'next-auth/react';

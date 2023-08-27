@@ -4,6 +4,12 @@
   "sourceRoot": "apps/front",
   "projectType": "application",
   "targets": {
+    "pre-build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "prisma generate"
+      }
+    },
     "build": {
       "executor": "@nx/next:build",
       "outputs": ["{options.outputPath}"],
@@ -11,6 +17,7 @@
       "options": {
         "outputPath": "dist/apps/front"
       },
+      "dependsOn": ["pre-build"],
       "configurations": {
         "development": {
           "outputPath": "apps/front"

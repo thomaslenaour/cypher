@@ -1,6 +1,7 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { AccessToken, RoomServiceClient } from 'livekit-server-sdk';
 import { ConfigService } from '@nestjs/config';
+import { v4 as uuidv4 } from 'uuid';
 
 import { LivekitConfiguration } from '@cypher/api/core';
 
@@ -28,16 +29,29 @@ export class LivekitService implements OnModuleInit {
     );
   }
 
-  createAccessToken(payload: { roomName: string; participantName?: string }) {
+  createAccessToken(payload: {
+    roomName: string;
+    participantName?: string;
+    userId?: string;
+  }) {
     const at = new AccessToken(
       this.livekitConfig.apiKey,
       this.livekitConfig.apiSecret,
       {
-        name: payload.participantName || 'Anonymous',
-        identity: payload.participantName,
+        name: payload?.participantName || 'Anonymous',
+        identity: uuidv4(),
+        metadata: JSON.stringify({
+          userId: payload?.userId || '',
+        }),
       }
     );
-    at.addGrant({ roomJoin: true, room: payload.roomName, canPublish: false });
+    at.addGrant({
+      roomJoin: true,
+      room: payload.roomName,
+      canSubscribe: true,
+      canPublish: false,
+      canPublishData: true,
+    });
 
     return at.toJwt();
   }
@@ -48,5 +62,34 @@ export class LivekitService implements OnModuleInit {
     );
 
     return participants;
+  }
+
+  async getParticipant(roomName: string, identity: string) {
+    const participant = await this.roomServiceClient.getParticipant(
+      roomName,
+      identity
+    );
+
+    return participant;
+  }
+
+  async updateParticipant(
+    roomName: string,
+    identity: string,
+    metadata: Record<string, string>,
+    permission: {
+      canPublish: boolean;
+      canSubscribe: boolean;
+      canPublishData: boolean;
+    }
+  ) {
+    const newParticipant = await this.roomServiceClient.updateParticipant(
+      roomName,
+      identity,
+      JSON.stringify(metadata),
+      permission
+    );
+
+    return newParticipant;
   }
 }

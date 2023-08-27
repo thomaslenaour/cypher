@@ -9,10 +9,17 @@ export enum Environment {
 
 export type ApiConfiguration = {
   port: number;
+  security: SecurityConfiguration;
   environment: Environment;
   graphql: ApolloDriverConfig;
   authentication: AuthenticationConfiguration;
   providers: ProvidersConfiguration;
+};
+
+export type SecurityConfiguration = {
+  cors: {
+    allowedOrigins: RegExp[];
+  };
 };
 
 export type AuthenticationConfiguration = {
