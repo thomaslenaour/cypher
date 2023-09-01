@@ -107,7 +107,11 @@ export class RoomService {
         await this.livekitService.updateParticipant(
           room.id,
           currentPublisher.identity,
-          { ...currentPublisherMetadata, canPublishAt: null, inQueueAt: null },
+          {
+            ...currentPublisherMetadata,
+            canPublishAt: null,
+            inQueueAt: null,
+          },
           { canPublish: false, canPublishData: true, canSubscribe: true }
         );
 

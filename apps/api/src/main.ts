@@ -13,20 +13,20 @@ async function bootstrap() {
   );
 
   app.useGlobalPipes(new ValidationPipe());
-  // app.enableCors({
-  //   origin: (origin, callback) => {
-  //     if (
-  //       !origin ||
-  //       allowedOrigins.some((allowedOrigin) => allowedOrigin.test(origin))
-  //     ) {
-  //       callback(null, true);
-  //     } else {
-  //       callback(new Error('Not allowed by CORS'));
-  //     }
-  //   },
-  //   methods: ['GET', 'POST', 'OPTIONS'],
-  //   credentials: true,
-  // });
+  app.enableCors({
+    origin: (origin, callback) => {
+      if (
+        !origin ||
+        allowedOrigins.some((allowedOrigin) => allowedOrigin.test(origin))
+      ) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    methods: ['GET', 'POST', 'OPTIONS'],
+    credentials: true,
+  });
 
   await app.listen(port);
 

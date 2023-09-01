@@ -49,12 +49,10 @@ export class RoomResolver {
     @Args('data') data: ToggleMyselfFromQueueInput,
     @CurrentUser() user: { userId: string }
   ) {
-    const newParticipant = await this.roomQueueService.toggleMyselfFromQueue({
+    await this.roomQueueService.toggleMyselfFromQueue({
       ...data,
       userId: user.userId,
     });
-
-    console.log('newParticipant', newParticipant);
 
     return true;
   }

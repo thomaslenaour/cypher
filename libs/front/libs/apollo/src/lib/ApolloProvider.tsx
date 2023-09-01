@@ -34,6 +34,10 @@ export function ApolloProvider({
   }, [windowIsUndefined, authToken]);
 
   const makeClient = useCallback(() => {
+    console.log(
+      'process.env.NEXT_PUBLIC_API_URL',
+      process.env.NEXT_PUBLIC_API_URL
+    );
     const httpLink = new HttpLink({
       uri: `${process.env.NEXT_PUBLIC_API_URL}/graphql`,
     });

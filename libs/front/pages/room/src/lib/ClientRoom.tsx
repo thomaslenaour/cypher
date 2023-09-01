@@ -15,6 +15,11 @@ export function ClientRoom({
   roomId,
   authenticated,
 }: ClientRoomProps) {
+  console.log(
+    'process.env.NEXT_PUBLIC_API_URL',
+    process.env.NEXT_PUBLIC_API_URL
+  );
+
   return (
     <Container>
       <LiveKitRoom
