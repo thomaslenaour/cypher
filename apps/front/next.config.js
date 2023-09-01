@@ -23,6 +23,10 @@ const nextConfig = {
       '**/node_modules/@swc/core-linux-x64-musl',
     ],
   },
+  env: {
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+    NEXT_PUBLIC_LIVEKIT_SERVER_URL: process.env.NEXT_PUBLIC_LIVEKIT_SERVER_URL,
+  },
 };
 
 const plugins = [
