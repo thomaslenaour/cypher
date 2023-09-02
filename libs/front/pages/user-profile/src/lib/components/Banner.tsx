@@ -5,9 +5,9 @@ interface IBannerProps {
   bannerUrl?: string | null;
 }
 
-const styles = (bannerUrl?: string | null): SxProps => {
+const styles = (bannerUrl: string): SxProps => {
   const bannerStyles: SxProps =
-    bannerUrl != null
+    bannerUrl !== ''
       ? {
           background: `url("${bannerUrl}")`,
           backgroundSize: 'cover',
@@ -23,6 +23,6 @@ const styles = (bannerUrl?: string | null): SxProps => {
   };
 };
 
-export async function Banner({ bannerUrl }: IBannerProps) {
-  return <Box sx={styles(bannerUrl)} />;
-}
+export const Banner = async ({ bannerUrl }: IBannerProps) => (
+  <Box sx={styles(bannerUrl ?? '')} />
+);

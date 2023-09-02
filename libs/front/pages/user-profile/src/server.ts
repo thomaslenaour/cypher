@@ -1,3 +1,3 @@
 // Use this file to export React server components
 
-export * from './lib/UserProfilePage';
+export * from './lib/page';
