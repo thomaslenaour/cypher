@@ -6,11 +6,13 @@ import { Parameters } from './Parameters/Parameters';
 interface InsideRoomLeftSideProps {
   microphoneEnabled: boolean;
   onMicrophoneClick: () => void;
+  parametersDisabled: boolean;
 }
 
 export function InsideRoomLeftSide({
   microphoneEnabled,
   onMicrophoneClick,
+  parametersDisabled,
 }: InsideRoomLeftSideProps) {
   return (
     <Box
@@ -27,6 +29,7 @@ export function InsideRoomLeftSide({
       </Box>
       <Box sx={{ height: '50%' }}>
         <Parameters
+          disabled={parametersDisabled}
           microphoneEnabled={microphoneEnabled}
           onMicrophoneClick={onMicrophoneClick}
         />

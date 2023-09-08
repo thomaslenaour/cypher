@@ -15,12 +15,14 @@ interface TakeMicButtonProps {
   roomId: string;
   authenticated: boolean;
   onPublishingClick: () => Promise<void>;
+  micPermissionEnabled?: boolean;
 }
 
 export function TakeMicButton({
   roomId,
   authenticated,
   onPublishingClick,
+  micPermissionEnabled,
 }: TakeMicButtonProps) {
   const router = useRouter();
   const currentParticipant = useLocalParticipant();
@@ -103,6 +105,7 @@ export function TakeMicButton({
       loading={loading}
       size="lg"
       sx={{ borderRadius: 0 }}
+      disabled={!micPermissionEnabled}
     >
       {button.label}
     </Button>

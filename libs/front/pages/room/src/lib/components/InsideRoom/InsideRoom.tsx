@@ -16,16 +16,34 @@ interface InsideRoomProps {
 export function InsideRoom({ roomId, authenticated }: InsideRoomProps) {
   const currentRoom = useRoomContext();
   const [microphoneEnabled, setMicrophoneEnabled] = useState(false);
+  const [micPermissionEnabled, setMicPermissionEnabled] = useState(false);
 
   const handleMicrophoneOpen = useCallback(() => {
+    if (currentRoom) {
+      currentRoom.localParticipant.setMicrophoneEnabled(true);
+    }
     setMicrophoneEnabled(true);
-  }, []);
+  }, [currentRoom]);
+
+  const toggleMicrophone = useCallback(() => {
+    if (currentRoom) {
+      currentRoom.localParticipant.setMicrophoneEnabled(!microphoneEnabled);
+    }
+    setMicrophoneEnabled((prev) => !prev);
+  }, [currentRoom, microphoneEnabled]);
+
+  const askForMicPermission = async () => {
+    try {
+      await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+      setMicPermissionEnabled(true);
+    } catch (err) {
+      setMicPermissionEnabled(false);
+    }
+  };
 
   useEffect(() => {
-    if (currentRoom) {
-      currentRoom.localParticipant.setMicrophoneEnabled(microphoneEnabled);
-    }
-  }, [microphoneEnabled, currentRoom]);
+    askForMicPermission();
+  }, []);
 
   return (
     <Box
@@ -41,7 +59,8 @@ export function InsideRoom({ roomId, authenticated }: InsideRoomProps) {
     >
       <InsideRoomLeftSide
         microphoneEnabled={microphoneEnabled}
-        onMicrophoneClick={() => setMicrophoneEnabled((prev) => !prev)}
+        onMicrophoneClick={toggleMicrophone}
+        parametersDisabled={!micPermissionEnabled}
       />
       <Box
         sx={{
@@ -55,6 +74,7 @@ export function InsideRoom({ roomId, authenticated }: InsideRoomProps) {
           roomId={roomId}
           onMicrophoneOpen={handleMicrophoneOpen}
           authenticated={authenticated}
+          micPermissionEnabled={micPermissionEnabled}
         />
       </Box>
       <InsideRoomRightSide />

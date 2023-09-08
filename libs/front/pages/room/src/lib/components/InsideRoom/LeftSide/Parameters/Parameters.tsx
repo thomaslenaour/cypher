@@ -5,11 +5,13 @@ import { Mic, MicOff } from 'lucide-react';
 interface ParametersProps {
   microphoneEnabled: boolean;
   onMicrophoneClick: () => void;
+  disabled: boolean;
 }
 
 export function Parameters({
   microphoneEnabled,
   onMicrophoneClick,
+  disabled,
 }: ParametersProps) {
   return (
     <Box
@@ -32,7 +34,7 @@ export function Parameters({
         Paramètres
       </Typography>
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-        <MediaDeviceSelect />
+        <MediaDeviceSelect disabled={disabled} />
         <Button
           size="sm"
           startDecorator={microphoneEnabled ? <Mic /> : <MicOff />}
@@ -44,6 +46,7 @@ export function Parameters({
             borderTopLeftRadius: 0,
             borderBottomRightRadius: 0,
           }}
+          disabled={disabled}
           fullWidth
         >
           Mic. {microphoneEnabled ? 'ON' : 'OFF'}

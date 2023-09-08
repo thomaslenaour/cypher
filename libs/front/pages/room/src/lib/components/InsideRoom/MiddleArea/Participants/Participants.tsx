@@ -7,12 +7,14 @@ interface ParticipantsProps {
   roomId: string;
   authenticated: boolean;
   onPublishingClick: () => Promise<void>;
+  micPermissionEnabled?: boolean;
 }
 
 export function Participants({
   roomId,
   authenticated,
   onPublishingClick,
+  micPermissionEnabled,
 }: ParticipantsProps) {
   const participants = useParticipants();
 
@@ -60,6 +62,7 @@ export function Participants({
         roomId={roomId}
         authenticated={authenticated}
         onPublishingClick={onPublishingClick}
+        micPermissionEnabled={micPermissionEnabled}
       />
     </Box>
   );

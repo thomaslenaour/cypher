@@ -8,6 +8,8 @@ const withNextIntl = require('next-intl/plugin')(
   '../../libs/front/libs/i18n/src/lib/i18n.ts'
 );
 
+const isDev = process.env.NODE_EN !== 'production';
+
 /**
  * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
  **/
@@ -24,8 +26,12 @@ const nextConfig = {
     ],
   },
   env: {
-    NEXT_PUBLIC_API_URL: 'https://api.cypherapp.co',
-    NEXT_PUBLIC_LIVEKIT_SERVER_URL: 'wss://cypher.livekit.cloud',
+    NEXT_PUBLIC_API_URL: isDev
+      ? 'http://localhost:3001'
+      : 'https://api.cypherapp.co',
+    NEXT_PUBLIC_LIVEKIT_SERVER_URL: isDev
+      ? 'ws://localhost:7880'
+      : 'wss://cypher.livekit.cloud',
   },
 };
 

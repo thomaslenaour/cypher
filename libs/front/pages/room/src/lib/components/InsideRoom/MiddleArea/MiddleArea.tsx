@@ -2,6 +2,7 @@
 
 import { useMemo } from 'react';
 import {
+  StartAudio,
   useLocalParticipant,
   useParticipants,
 } from '@livekit/components-react';
@@ -15,12 +16,14 @@ interface InsideRoomMiddleProps {
   roomId: string;
   onMicrophoneOpen: () => void;
   authenticated: boolean;
+  micPermissionEnabled?: boolean;
 }
 
 export function InsideRoomMiddleArea({
   roomId,
   onMicrophoneOpen,
   authenticated,
+  micPermissionEnabled,
 }: InsideRoomMiddleProps) {
   const currentParticipant = useLocalParticipant();
   const participants = useParticipants();
@@ -77,12 +80,16 @@ export function InsideRoomMiddleArea({
     >
       <Box sx={{ height: '50%' }}>
         <Typography>Current Publisher section</Typography>
+        <div>
+          <StartAudio label="Play the room" />
+        </div>
       </Box>
       <Box sx={{ height: '50%' }}>
         <Participants
           roomId={roomId}
           authenticated={authenticated}
           onPublishingClick={handleStartPublishingClick}
+          micPermissionEnabled={micPermissionEnabled}
         />
       </Box>
     </Box>

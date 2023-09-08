@@ -1,8 +1,14 @@
 'use client';
 
 import { LiveKitRoom, RoomAudioRenderer } from '@livekit/components-react';
-import { Container } from '@cypher/front/shared/ui';
+import {
+  Box,
+  CircularProgress,
+  Container,
+  Typography,
+} from '@cypher/front/shared/ui';
 import { InsideRoom } from './components/InsideRoom/InsideRoom';
+import { useState } from 'react';
 
 interface ClientRoomProps {
   initialToken: string;
@@ -15,10 +21,7 @@ export function ClientRoom({
   roomId,
   authenticated,
 }: ClientRoomProps) {
-  console.log(
-    'process.env.NEXT_PUBLIC_API_URL',
-    process.env.NEXT_PUBLIC_API_URL
-  );
+  const [connected, setConnected] = useState(false);
 
   return (
     <Container>
@@ -28,9 +31,25 @@ export function ClientRoom({
         connect={true}
         video={false}
         audio={false}
+        onConnected={() => setConnected(true)}
       >
-        <InsideRoom roomId={roomId} authenticated={authenticated} />
-        <RoomAudioRenderer />
+        {!connected ? (
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <CircularProgress />
+            <Typography sx={{ mt: 1 }}>Connexion en cours...</Typography>
+          </Box>
+        ) : (
+          <>
+            <InsideRoom roomId={roomId} authenticated={authenticated} />
+            <RoomAudioRenderer />
+          </>
+        )}
       </LiveKitRoom>
     </Container>
   );

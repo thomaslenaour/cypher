@@ -5,13 +5,17 @@ import {
 
 import { Select, Option } from '@cypher/front/shared/ui';
 
-export function MediaDeviceSelect() {
+interface MediaDeviceSelectProps {
+  disabled: boolean;
+}
+
+export function MediaDeviceSelect({ disabled }: MediaDeviceSelectProps) {
   const room = useMaybeRoomContext();
   const { devices, activeDeviceId, setActiveMediaDevice } =
     useMediaDeviceSelect({
       kind: 'audioinput',
       room,
-      requestPermissions: false,
+      requestPermissions: true,
     });
 
   const handleActiveDeviceChange = async (deviceId: string) => {
@@ -29,12 +33,20 @@ export function MediaDeviceSelect() {
   return (
     <Select
       color="neutral"
-      variant="soft"
-      defaultValue={activeDeviceId}
+      defaultValue={activeDeviceId ?? disabled ? undefined : 'default'}
       onChange={(_, value) => {
         value && handleActiveDeviceChange(value);
       }}
-      sx={{ borderRadius: 0 }}
+      size="sm"
+      sx={{
+        borderRadius: 0,
+        borderTop: '1px #EAEEF6 solid',
+        borderBottom: 0,
+        borderLeft: 0,
+        borderRight: 0,
+      }}
+      placeholder="Choisir un périphérique"
+      disabled={disabled}
     >
       {devices.map((device) => (
         <Option key={device.deviceId} value={device.deviceId}>
