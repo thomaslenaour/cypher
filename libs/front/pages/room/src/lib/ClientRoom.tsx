@@ -22,7 +22,6 @@ export function ClientRoom({
   authenticated,
 }: ClientRoomProps) {
   const [connected, setConnected] = useState(false);
-  console.log('connected', connected);
 
   return (
     <Container>
