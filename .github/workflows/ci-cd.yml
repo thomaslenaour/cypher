@@ -60,6 +60,7 @@ jobs:
         id: apps
         run: |
           apps=$(npx nx show projects --affected | tr "\n" ",")
+          echo ${apps}
           echo "apps=${apps}" >> "$GITHUB_OUTPUT"
 
   api-deployment-prod:
