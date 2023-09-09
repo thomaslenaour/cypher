@@ -59,15 +59,13 @@ jobs:
       - name: apps
         id: apps
         run: |
-          apps=$(npx nx show projects --affected | tr "\n" ",")
-          echo ${apps}
-          echo "apps=${apps}" >> "$GITHUB_OUTPUT"
+          echo "apps=${npx nx show projects --affected --json}" >> "$GITHUB_OUTPUT"
 
   api-deployment-prod:
     name: API Deployment (Production)
     needs: pre-deploy
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push' && contains(needs.pre-deploy.outputs.apps, 'api')
+    if: (github.ref == 'refs/heads/main') && (github.event_name == 'push') && contains(needs.pre-deploy.outputs.apps, 'api')
     steps:
       - uses: actions/checkout@v3
       - name: Deploy to Heroku
@@ -81,7 +79,7 @@ jobs:
     name: Front Deployment (Production)
     needs: pre-deploy
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push' && contains(needs.pre-deploy.outputs.apps, 'front')
+    if: (github.ref == 'refs/heads/main') && (github.event_name == 'push') && contains(needs.pre-deploy.outputs.apps, 'front')
     steps:
       - uses: actions/checkout@v3
       - name: Install Vercel CLI

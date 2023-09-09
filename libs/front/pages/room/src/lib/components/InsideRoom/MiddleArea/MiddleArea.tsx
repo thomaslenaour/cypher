@@ -25,7 +25,7 @@ export function InsideRoomMiddleArea({
   authenticated,
   micPermissionEnabled,
 }: InsideRoomMiddleProps) {
-  console.log('test');
+  console.log('testt');
   const currentParticipant = useLocalParticipant();
   const participants = useParticipants();
   const currentPublisher = useMemo(() => {
