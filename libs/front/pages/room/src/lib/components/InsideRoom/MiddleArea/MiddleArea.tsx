@@ -25,7 +25,6 @@ export function InsideRoomMiddleArea({
   authenticated,
   micPermissionEnabled,
 }: InsideRoomMiddleProps) {
-  console.log('change stringd');
   const currentParticipant = useLocalParticipant();
   const participants = useParticipants();
   const currentPublisher = useMemo(() => {
@@ -58,13 +57,9 @@ export function InsideRoomMiddleArea({
         },
       });
 
-      console.log('response', response);
-
       if (response.data?.startPublishing) {
         onMicrophoneOpen();
       }
-
-      console.log('lets go');
     } catch (err) {
       console.error(err);
     }

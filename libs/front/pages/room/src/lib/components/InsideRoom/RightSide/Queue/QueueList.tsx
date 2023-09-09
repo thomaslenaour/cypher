@@ -28,7 +28,7 @@ export function QueueList({ participants }: QueueListProps) {
             height: '100%',
           }}
         >
-          <Typography level="body2" sx={{ p: 1 }}>
+          <Typography level="body-sm" sx={{ p: 1 }}>
             La file d'attente est vide
           </Typography>
         </Box>
@@ -49,11 +49,11 @@ export function QueueList({ participants }: QueueListProps) {
               <Avatar src={avatarDefault.src} />
             </Box>
             <Box>
-              <Typography level="body2" noWrap>
+              <Typography level="body-sm" noWrap>
                 {participant.name}
               </Typography>
               {participant?.inQueueAt && (
-                <Typography level="body3" noWrap>
+                <Typography level="body-xs" noWrap>
                   Joined at{' '}
                   {new Date(participant.inQueueAt).toLocaleTimeString()}
                 </Typography>
@@ -72,7 +72,7 @@ export function QueueList({ participants }: QueueListProps) {
               justifyContent: 'center',
             }}
           >
-            <Typography level="body3" fontWeight={700}>
+            <Typography level="body-xs" fontWeight={700}>
               {index + 1}
             </Typography>
           </Box>

@@ -28,7 +28,7 @@ export function Participants({
       }}
     >
       <Typography
-        level="h5"
+        level="title-lg"
         fontWeight={700}
         sx={{
           borderBottom: '1px #EAEEF6 solid',

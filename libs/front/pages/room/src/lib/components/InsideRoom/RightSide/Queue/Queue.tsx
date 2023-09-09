@@ -36,7 +36,7 @@ export function Queue() {
   return (
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <Typography
-        level="h5"
+        level="title-lg"
         fontWeight={700}
         sx={{ p: 1, borderBottom: '1px #EAEEF6 solid' }}
       >
