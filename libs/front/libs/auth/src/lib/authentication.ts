@@ -15,8 +15,10 @@ import {
 
 import { prismaClient } from './prisma';
 
+const prismaAdapter = PrismaAdapter(prismaClient);
+
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prismaClient),
+  adapter: prismaAdapter,
   providers: [
     EmailProvider({
       server: process.env.EMAIL_SERVER,
