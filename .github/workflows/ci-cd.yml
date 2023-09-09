@@ -59,7 +59,7 @@ jobs:
       - name: apps
         id: apps
         run: |
-          apps=$(npx nx show projects --affected --json)
+          apps=$(npx nx show projects --affected --exclude="api-*" --exclude="front-*" --exclude="shared-*" | tr "\n" ",")
           echo "apps=${apps}" >> "$GITHUB_OUTPUT"
 
   api-deployment-prod:
