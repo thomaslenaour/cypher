@@ -59,7 +59,8 @@ jobs:
       - name: apps
         id: apps
         run: |
-          echo "apps=${npx nx show projects --affected --json}" >> "$GITHUB_OUTPUT"
+          apps=$(npx nx show projects --affected --json)
+          echo "apps=${apps}" >> "$GITHUB_OUTPUT"
 
   api-deployment-prod:
     name: API Deployment (Production)
