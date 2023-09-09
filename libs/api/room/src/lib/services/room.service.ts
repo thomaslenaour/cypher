@@ -43,8 +43,6 @@ export class RoomService {
       userId,
     });
 
-    console.log('at', at);
-
     return at;
   }
 
@@ -172,8 +170,6 @@ export class RoomService {
       newMetadata,
       { canPublish: true, canSubscribe: true, canPublishData: true }
     );
-
-    console.log('startpublishing p', p);
 
     return p;
   }

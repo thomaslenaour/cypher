@@ -13,7 +13,7 @@ export function Footer() {
           >
             Cypher
           </Typography>
-          <Typography level="body2">&copy; 2023 Cypher</Typography>
+          <Typography level="body-sm">&copy; 2023 Cypher</Typography>
         </Stack>
       </Container>
     </Box>

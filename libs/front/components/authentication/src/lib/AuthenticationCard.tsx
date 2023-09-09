@@ -33,7 +33,7 @@ export function AuthenticationCard({
       <Typography level="h3" fontWeight={700}>
         {translations.title}
       </Typography>
-      <Typography level="body1" color="neutral">
+      <Typography level="body-md" color="neutral">
         {translations.description}
       </Typography>
       <EmailLogin />

@@ -7,7 +7,7 @@ export function Beats() {
   return (
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <Typography
-        level="h5"
+        level="title-lg"
         fontWeight={700}
         sx={{ p: 1, borderBottom: '1px #EAEEF6 solid' }}
       >
@@ -28,8 +28,8 @@ const SingleBeat = () => {
     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, p: 1 }}>
       <Disc size="32px" color="gray" />
       <Box>
-        <Typography level="body3">Type Beat "Taciturne"</Typography>
-        <Typography level="body4">Prod. by @thomaslenaour</Typography>
+        <Typography level="body-xs">Type Beat "Taciturne"</Typography>
+        <Typography level="body-xs">Prod. by @thomaslenaour</Typography>
       </Box>
     </Box>
   );

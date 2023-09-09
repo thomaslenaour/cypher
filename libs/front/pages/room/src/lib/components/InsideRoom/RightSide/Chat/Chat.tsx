@@ -30,7 +30,7 @@ export function Chat() {
       }}
     >
       <Typography
-        level="h5"
+        level="title-lg"
         fontWeight={700}
         sx={{
           borderBottom: '1px #EAEEF6 solid',
@@ -43,7 +43,7 @@ export function Chat() {
       <Box sx={{ p: 1, flex: 1, overflowY: 'auto' }}>
         {chatMessages.map((message) => (
           <Box key={message.timestamp}>
-            <Typography level="body2">
+            <Typography level="body-sm">
               <span style={{ fontWeight: 700 }}>
                 {message.from?.name || 'Anonymous'} :
               </span>{' '}
@@ -79,6 +79,7 @@ export function Chat() {
         />
         <IconButton
           variant="solid"
+          color="primary"
           sx={{
             borderTopLeftRadius: 0,
             borderTopRightRadius: 0,

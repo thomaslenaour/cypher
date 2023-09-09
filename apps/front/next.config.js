@@ -8,7 +8,7 @@ const withNextIntl = require('next-intl/plugin')(
   '../../libs/front/libs/i18n/src/lib/i18n.ts'
 );
 
-const isDev = process.env.NODE_EN !== 'production';
+const isDev = process.env.VERCEL_ENV !== 'production';
 
 /**
  * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
