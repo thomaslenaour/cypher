@@ -130,8 +130,6 @@ export class RoomService {
         newMetadata,
         { canPublish: true, canSubscribe: true, canPublishData: true }
       );
-
-      console.log('pppppp', p);
     }
 
     return;
