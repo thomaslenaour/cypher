@@ -68,7 +68,7 @@ jobs:
     runs-on: ubuntu-latest
     if: (github.ref == 'refs/heads/main') && (github.event_name == 'push') && contains(needs.pre-deploy.outputs.apps, 'api')
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3.0.2
       - name: Deploy to Heroku
         uses: akhileshns/heroku-deploy@v3.12.14
         with:
