@@ -3,7 +3,6 @@ import GoogleProvider from 'next-auth/providers/google';
 import FacebookProvider from 'next-auth/providers/facebook';
 import EmailProvider from 'next-auth/providers/email';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import { PrismaClient } from '@prisma/client';
 import jwt from 'jsonwebtoken';
 
 import {
@@ -14,10 +13,10 @@ import {
   FRONT_ACCESS_TOKEN_EXPIRES_IN_SECONDS,
 } from '@cypher/shared/config/authentication';
 
-const prisma = new PrismaClient();
+import { prismaClient } from './prisma';
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(prismaClient),
   providers: [
     EmailProvider({
       server: process.env.EMAIL_SERVER,
