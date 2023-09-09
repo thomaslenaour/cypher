@@ -6,10 +6,12 @@ import {
   useLocalParticipant,
   useParticipants,
 } from '@livekit/components-react';
+import { Info } from 'lucide-react';
 
-import { Box, Typography } from '@cypher/front/shared/ui';
+import { Box, Chip } from '@cypher/front/shared/ui';
 import { StartPublishingDocument } from '@cypher/front/shared/graphql';
 import { useMutation } from '@cypher/front/libs/apollo';
+
 import { Participants } from './Participants/Participants';
 
 interface InsideRoomMiddleProps {
@@ -27,6 +29,15 @@ export function InsideRoomMiddleArea({
 }: InsideRoomMiddleProps) {
   const currentParticipant = useLocalParticipant();
   const participants = useParticipants();
+  const participantsInQueue = useMemo(() => {
+    return participants.filter((participant) => {
+      if (participant?.metadata) {
+        const parsedMetadata = JSON.parse(participant.metadata);
+        return parsedMetadata?.inQueueAt;
+      }
+      return false;
+    });
+  }, [participants]);
   const currentPublisher = useMemo(() => {
     const publisher = participants.find((participant) => {
       if (participant?.metadata) {
@@ -38,11 +49,15 @@ export function InsideRoomMiddleArea({
 
     return publisher;
   }, [participants]);
+
+  const currentPublisherMetadata = currentPublisher?.metadata
+    ? JSON.parse(currentPublisher.metadata)
+    : {};
   const iAmThePublisher =
     currentParticipant?.localParticipant?.identity ===
     currentPublisher?.identity;
 
-  const [startPublishing, { loading }] = useMutation(StartPublishingDocument);
+  const [startPublishing] = useMutation(StartPublishingDocument);
 
   const handleStartPublishingClick = async () => {
     if (!iAmThePublisher) return;
@@ -74,11 +89,33 @@ export function InsideRoomMiddleArea({
         flexDirection: 'column',
       }}
     >
-      <Box sx={{ height: '50%' }}>
-        <Typography>Current Publisher section</Typography>
-        <div>
+      <Box sx={{ height: '50%', p: 1 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100%',
+            height: '100%',
+          }}
+        >
+          <Chip color="primary" size="lg" startDecorator={<Info />}>
+            {!currentPublisher &&
+              participantsInQueue?.length === 0 &&
+              "Aucun artiste présent dans la file d'attente..."}
+            {!currentPublisher &&
+              participantsInQueue?.length >= 1 &&
+              'Attribution du micro en cours...'}
+            {currentPublisher &&
+              !currentPublisherMetadata?.startPublishAt &&
+              `C'est au tour ${currentPublisher?.name} de s'exprimer...`}
+            {currentPublisher &&
+              currentPublisherMetadata?.startPublishAt &&
+              `${currentPublisher?.name} est en train de rapper !`}
+          </Chip>
           <StartAudio label="Play the room" />
-        </div>
+        </Box>
       </Box>
       <Box sx={{ height: '50%' }}>
         <Participants

@@ -1,6 +1,5 @@
 import { Avatar, Box, Tooltip, Typography } from '@cypher/front/shared/ui';
 import { TakeMicButton } from '../TakeMicButton';
-import avatarDefault from '../../avatar-default.png';
 import { useParticipants } from '@livekit/components-react';
 
 interface ParticipantsProps {
@@ -73,9 +72,11 @@ interface ParticipantItemProps {
 }
 
 function ParticipantItem({ name }: ParticipantItemProps) {
+  const avatarContent = name ? name[0].toUpperCase() : 'A';
+
   return (
     <Tooltip size="sm" title={name || 'Anonymous'} sx={{ cursor: 'pointer' }}>
-      <Avatar src={avatarDefault.src} />
+      <Avatar>{avatarContent}</Avatar>
     </Tooltip>
   );
 }
