@@ -1,7 +1,6 @@
-import { Header } from '@cypher/front/components/common/server';
+import { Footer, Header } from '@cypher/front/components/common/server';
 import { Container } from '@cypher/front/shared/ui';
 import { AuthenticationCard } from '@cypher/front/components/authentication/server';
-import { useServerTranslations } from '@cypher/front/libs/i18n/server';
 
 interface RegisterPageContentProps {
   providers: {
@@ -13,11 +12,11 @@ interface RegisterPageContentProps {
 export default function RegisterPageContent({
   providers,
 }: RegisterPageContentProps) {
-  const t = useServerTranslations('RegisterPage');
-  const authenticationCardTranslations = {
-    title: t('title'),
-    description: t('description'),
-    dividerText: t('divider'),
+  const authenticationCardProps = {
+    title: 'Inscription',
+    description:
+      'Bienvenue sur Cypher. Inscrivez-vous afin de rejoindre une communauté de passionnés autour de la musique urbaine.',
+    dividerText: 'ou',
   };
 
   return (
@@ -31,9 +30,10 @@ export default function RegisterPageContent({
       >
         <AuthenticationCard
           providers={providers}
-          translations={authenticationCardTranslations}
+          {...authenticationCardProps}
         />
       </Container>
+      <Footer />
     </>
   );
 }

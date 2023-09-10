@@ -7,7 +7,6 @@ export function GlobalStyles() {
     <JoyGlobalStyles
       styles={{
         a: { textDecoration: 'none', color: 'inherit' },
-        body: { backgroundColor: 'var(--joy-palette-neutral-50)' },
       }}
     />
   );

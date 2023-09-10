@@ -8,11 +8,9 @@ import {
   Input,
   Stack,
 } from '@cypher/front/shared/ui';
-import { useClientTranslations } from '@cypher/front/libs/i18n';
 import { signIn } from '@cypher/front/libs/auth';
 
 export function EmailLogin() {
-  const t = useClientTranslations('EmailLogin');
   const [value, setValue] = useState<string>('');
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,14 +31,14 @@ export function EmailLogin() {
           <Input
             size="lg"
             type="email"
-            placeholder={t('placeholder')}
+            placeholder="Entrez votre adresse email"
             value={value}
             onChange={handleChange}
             required
           />
         </FormControl>
         <Button type="submit" size="lg">
-          {t('button')}
+          Recevoir un lien de connexion
         </Button>
       </Stack>
     </form>

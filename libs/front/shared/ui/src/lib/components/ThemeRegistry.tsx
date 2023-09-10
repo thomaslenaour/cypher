@@ -14,7 +14,12 @@ export default function ThemeRegistry({
 }) {
   return (
     <NextAppDirEmotionCacheProvider options={{ key: 'joy' }}>
-      <CssVarsProvider theme={theme}>
+      <CssVarsProvider
+        defaultMode="system"
+        theme={theme}
+        modeStorageKey="cypher-system-mode"
+        disableNestedContext
+      >
         <CssBaseline />
         <GlobalStyles />
         {children}

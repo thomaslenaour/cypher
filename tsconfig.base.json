@@ -53,8 +53,6 @@
       ],
       "@cypher/front/libs/auth": ["libs/front/libs/auth/src/index.ts"],
       "@cypher/front/libs/auth/server": ["libs/front/libs/auth/src/server.ts"],
-      "@cypher/front/libs/i18n": ["libs/front/libs/i18n/src/index.ts"],
-      "@cypher/front/libs/i18n/server": ["libs/front/libs/i18n/src/server.ts"],
       "@cypher/front/pages/login": ["libs/front/pages/login/src/index.ts"],
       "@cypher/front/pages/login/server": [
         "libs/front/pages/login/src/server.ts"

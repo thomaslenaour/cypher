@@ -7,7 +7,6 @@ import {
 import { Users2 } from 'lucide-react';
 import Image from 'next/image';
 import roomBackgroundDefault from './room-background.default.jpg';
-import { useServerTranslations } from '@cypher/front/libs/i18n/server';
 
 interface RoomCardProps {
   name: string;
@@ -15,8 +14,6 @@ interface RoomCardProps {
 }
 
 export function RoomCard({ name, participantNumber }: RoomCardProps) {
-  const t = useServerTranslations('RoomCard');
-
   return (
     <Card sx={{ minHeight: '280px', width: '100%' }}>
       <CardCover>
@@ -37,7 +34,7 @@ export function RoomCard({ name, participantNumber }: RoomCardProps) {
           fontSize="sm"
           textColor="neutral.300"
         >
-          {t('participants', { count: participantNumber || 0 })}
+          participants
         </Typography>
       </CardContent>
     </Card>
