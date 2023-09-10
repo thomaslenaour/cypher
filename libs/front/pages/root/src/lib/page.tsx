@@ -13,6 +13,7 @@ import { RecordingAnimation } from './components/RecordingAnimation';
 import { PresentationSection } from './components/PresentationSection';
 import { SvgBackground } from './components/SvgBackground';
 import { ChevronsDown } from 'lucide-react';
+import Link from 'next/link';
 
 export async function HomePage() {
   const response = await getClient().query({
@@ -25,6 +26,8 @@ export async function HomePage() {
       },
     },
   });
+
+  const roomId = response?.data?.rooms?.[0]?.id;
 
   return (
     <>
@@ -100,9 +103,11 @@ export async function HomePage() {
                 votre chemin pour devenir une légende du freestyle.
               </Typography>
             </Stack>
-            <Button size="lg" fullWidth sx={{ maxWidth: { md: '500px' } }}>
-              Prêt à briller ? Rejoignez le Cypher maintenant !
-            </Button>
+            <Link href={`/rooms/${roomId}`}>
+              <Button size="lg" fullWidth sx={{ maxWidth: { md: '500px' } }}>
+                Prêt à briller ? Rejoignez le Cypher maintenant !
+              </Button>
+            </Link>
           </Stack>
         </Container>
       </Box>

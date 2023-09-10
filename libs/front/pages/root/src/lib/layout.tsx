@@ -1,14 +1,8 @@
-import { notFound } from 'next/navigation';
-
-import { I18nProvider, useServerLocale } from '@cypher/front/libs/i18n/server';
 import { Providers } from '@cypher/front/core';
 import { authOptions, getServerSession } from '@cypher/front/libs/auth/server';
 
 interface RootLayoutProps {
   children: React.ReactNode;
-  params: {
-    locale: string;
-  };
 }
 
 export const metadata = {
@@ -16,22 +10,14 @@ export const metadata = {
   description: 'Welcome to Cypher App!',
 };
 
-export async function RootLayout({ children, params }: RootLayoutProps) {
-  const locale = useServerLocale();
-
-  if (params.locale !== locale) {
-    notFound();
-  }
-
+export async function RootLayout({ children }: RootLayoutProps) {
   const session = await getServerSession(authOptions);
   const token = session?.accessToken || '';
 
   return (
-    <html lang={locale}>
+    <html lang="fr">
       <body>
-        <I18nProvider locale={locale}>
-          <Providers authToken={token}>{children}</Providers>
-        </I18nProvider>
+        <Providers authToken={token}>{children}</Providers>
       </body>
     </html>
   );

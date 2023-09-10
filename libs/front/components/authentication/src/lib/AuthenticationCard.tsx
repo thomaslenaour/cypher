@@ -5,11 +5,9 @@ import { EmailLogin } from './EmailLogin';
 import { ProvidersLogin } from './ProvidersLogin';
 
 interface AuthenticationCardProps {
-  translations: {
-    title: string;
-    description: string;
-    dividerText: string;
-  };
+  title: string;
+  description: string;
+  dividerText: string;
   providers: {
     id: string;
     name: string;
@@ -17,7 +15,9 @@ interface AuthenticationCardProps {
 }
 
 export function AuthenticationCard({
-  translations,
+  title,
+  description,
+  dividerText,
   providers,
 }: AuthenticationCardProps) {
   return (
@@ -34,13 +34,13 @@ export function AuthenticationCard({
       }}
     >
       <Typography level="h3" fontWeight={700}>
-        {translations.title}
+        {title}
       </Typography>
       <Typography level="body-md" color="neutral">
-        {translations.description}
+        {description}
       </Typography>
       <EmailLogin />
-      <Divider>{translations.dividerText}</Divider>
+      <Divider>{dividerText}</Divider>
       <ProvidersLogin providers={providers} />
     </Stack>
   );
