@@ -23,6 +23,7 @@ export { default as IconButton } from '@mui/joy/IconButton';
 export { default as Tooltip } from '@mui/joy/Tooltip';
 export { default as CircularProgress } from '@mui/joy/CircularProgress';
 export { default as Chip } from '@mui/joy/Chip';
+export { useColorScheme, useTheme } from '@mui/joy/styles';
 
 // Custom UI Components
 export { Box } from './Box';

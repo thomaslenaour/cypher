@@ -2,7 +2,6 @@ import { notFound } from 'next/navigation';
 
 import { I18nProvider, useServerLocale } from '@cypher/front/libs/i18n/server';
 import { Providers } from '@cypher/front/core';
-import { Footer } from '@cypher/front/components/common/server';
 import { authOptions, getServerSession } from '@cypher/front/libs/auth/server';
 
 interface RootLayoutProps {
@@ -31,10 +30,7 @@ export async function RootLayout({ children, params }: RootLayoutProps) {
     <html lang={locale}>
       <body>
         <I18nProvider locale={locale}>
-          <Providers authToken={token}>
-            {children}
-            <Footer />
-          </Providers>
+          <Providers authToken={token}>{children}</Providers>
         </I18nProvider>
       </body>
     </html>
