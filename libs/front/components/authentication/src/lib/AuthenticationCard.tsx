@@ -1,3 +1,5 @@
+'use client';
+
 import { Divider, Stack, Typography } from '@cypher/front/shared/ui';
 import { EmailLogin } from './EmailLogin';
 import { ProvidersLogin } from './ProvidersLogin';
@@ -23,11 +25,12 @@ export function AuthenticationCard({
       direction="column"
       gap={2}
       sx={{
-        backgroundColor: 'common.white',
         border: '1px solid',
-        borderColor: 'neutral.100',
-        borderRadius: '16px',
         p: 4,
+        borderColor: (theme) =>
+          theme.palette.mode === 'dark' ? 'neutral.700' : 'neutral.200',
+        borderRadius: '1px',
+        width: '100%',
       }}
     >
       <Typography level="h3" fontWeight={700}>

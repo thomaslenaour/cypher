@@ -1,4 +1,4 @@
-import { Header } from '@cypher/front/components/common/server';
+import { Footer, Header } from '@cypher/front/components/common/server';
 import { Container } from '@cypher/front/shared/ui';
 import { AuthenticationCard } from '@cypher/front/components/authentication/server';
 import { useServerTranslations } from '@cypher/front/libs/i18n/server';
@@ -34,6 +34,7 @@ export default function RegisterPageContent({
           translations={authenticationCardTranslations}
         />
       </Container>
+      <Footer />
     </>
   );
 }

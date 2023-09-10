@@ -1,5 +1,5 @@
 import { AuthenticationCard } from '@cypher/front/components/authentication/server';
-import { Header } from '@cypher/front/components/common/server';
+import { Footer, Header } from '@cypher/front/components/common/server';
 import { useServerTranslations } from '@cypher/front/libs/i18n/server';
 import { Container } from '@cypher/front/shared/ui';
 
@@ -32,6 +32,7 @@ export function LoginPageContent({ providers }: LoginPageContentProps) {
           translations={authenticationCardTranslations}
         />
       </Container>
+      <Footer />
     </>
   );
 }
