@@ -1,4 +1,5 @@
 import { getProviders } from '@cypher/front/libs/auth/server';
+
 import { LoginPageContent } from './LoginPageContent';
 
 export default async function LoginPage() {
