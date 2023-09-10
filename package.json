@@ -121,6 +121,7 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
     "tslib": "^2.6.2",
+    "unique-username-generator": "^1.2.0",
     "uuid": "^9.0.0"
   },
   "config": {

@@ -20,7 +20,7 @@ export function SvgBackground() {
         version="1.1"
         viewBox="0 0 800 450"
         opacity="0.27"
-        preserveAspectRatio="true"
+        preserveAspectRatio=""
       >
         <defs>
           <filter

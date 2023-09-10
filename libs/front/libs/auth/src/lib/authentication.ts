@@ -4,6 +4,7 @@ import FacebookProvider from 'next-auth/providers/facebook';
 import EmailProvider from 'next-auth/providers/email';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import jwt from 'jsonwebtoken';
+import { generateUsername } from 'unique-username-generator';
 
 import {
   API_ACCESS_TOKEN_EXPIRES_IN_MILLISECONDS,
@@ -14,11 +15,32 @@ import {
 } from '@cypher/shared/config/authentication';
 
 import { prismaClient } from './prisma';
+import { Adapter } from 'next-auth/adapters';
 
-const prismaAdapter = PrismaAdapter(prismaClient);
+const prismaAdapter = {
+  ...PrismaAdapter(prismaClient),
+  createUser(data) {
+    const pseudo = generateUsername();
+
+    return prismaClient.user.create({
+      data: {
+        profile: {
+          create: {
+            pseudo,
+          },
+        },
+        ...data,
+      },
+    });
+  },
+} as Adapter;
 
 export const authOptions: NextAuthOptions = {
   adapter: prismaAdapter,
+  pages: {
+    signIn: '/login',
+    newUser: '/',
+  },
   providers: [
     EmailProvider({
       server: process.env.EMAIL_SERVER,
