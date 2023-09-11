@@ -29,7 +29,6 @@
       "options": {
         "buildTarget": "api:build"
       },
-      "dependsOn": ["database"],
       "configurations": {
         "development": {
           "buildTarget": "api:build:development"
@@ -58,13 +57,6 @@
           "ci": true,
           "codeCoverage": true
         }
-      }
-    },
-    "database": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "docker-compose up -d",
-        "cwd": "apps/api"
       }
     }
   },

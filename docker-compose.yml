@@ -4,7 +4,7 @@ services:
   cypher-database:
     image: postgres:15-alpine
     env_file:
-      - ../../.env
+      - .env
     restart: always
     ports:
       - 5432:5432
@@ -14,9 +14,10 @@ services:
   livekit-server:
     build:
       context: .
-      dockerfile: ../../services/livekit/Dockerfile # Path to your Dockerfile
+      dockerfile: services/livekit/Dockerfile # Path to your Dockerfile
     ports:
-      - '7880:7880'
+      - 7880:7880
+    command: ['livekit-server', '--dev', '--bind', '0.0.0.0']
 
 volumes:
   cypher-postgres:
