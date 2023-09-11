@@ -1,11 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import {
-  RoomAudioRenderer,
-  useDataChannel,
-  useRoomContext,
-} from '@livekit/components-react';
+import { RoomAudioRenderer, useRoomContext } from '@livekit/components-react';
 
 import { Box } from '@cypher/front/shared/ui';
 
@@ -14,15 +10,13 @@ import { InsideRoomRightSide } from './RightSide/RightSide';
 import { InsideRoomMiddleArea } from './MiddleArea/MiddleArea';
 import { BeatStreaming } from './BeatStreaming';
 import { ReadyToGo } from './ReadyToGo';
-import { DataPacket_Kind } from 'livekit-client';
+
+const BEAT_DURATION_IN_SECONDS = 183;
 
 interface InsideRoomProps {
   roomId: string;
   authenticated: boolean;
 }
-
-const encoder = new TextEncoder();
-const decoder = new TextDecoder();
 
 export function InsideRoom({ roomId, authenticated }: InsideRoomProps) {
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -31,7 +25,10 @@ export function InsideRoom({ roomId, authenticated }: InsideRoomProps) {
   const [micPermissionEnabled, setMicPermissionEnabled] = useState(false);
 
   const currentRoom = useRoomContext();
-  const { message, send } = useDataChannel();
+
+  const roomCreatedAt = currentRoom?.metadata
+    ? JSON.parse(currentRoom?.metadata)?.createdAt
+    : null;
 
   const handleMicrophoneOpen = useCallback(() => {
     if (currentRoom) {
@@ -60,25 +57,13 @@ export function InsideRoom({ roomId, authenticated }: InsideRoomProps) {
     askForMicPermission();
   }, []);
 
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.addEventListener('timeupdate', () => {
-        const position = audioRef.current?.currentTime;
-
-        if (position) {
-          send(encoder.encode(position.toString()), {
-            kind: DataPacket_Kind.LOSSY,
-          });
-        }
-      });
-    }
-  }, [send]);
-
   const handleReady = () => {
     setReadyToGo(true);
 
     if (audioRef.current) {
-      const beatPosition = decoder.decode(message?.payload);
+      const now = new Date().getTime();
+      const beatPosition =
+        ((now - roomCreatedAt) / 1000) % BEAT_DURATION_IN_SECONDS;
       audioRef.current.currentTime = Number(beatPosition) || 0;
       audioRef.current.play();
     }

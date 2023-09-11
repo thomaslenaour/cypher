@@ -29,17 +29,34 @@ export class LivekitService implements OnModuleInit {
     );
   }
 
+  async createRoom(roomName: string) {
+    const room = await this.roomServiceClient.createRoom({
+      name: roomName,
+      metadata: JSON.stringify({
+        createdAt: new Date().getTime(),
+      }),
+    });
+
+    return room;
+  }
+
   async roomExists(roomName: string) {
     const rooms = await this.roomServiceClient.listRooms([roomName]);
 
     return rooms?.length > 0;
   }
 
-  createAccessToken(payload: {
+  async createAccessToken(payload: {
     roomName: string;
     participantName?: string;
     userId?: string;
   }) {
+    const roomExists = await this.roomExists(payload.roomName);
+
+    if (!roomExists) {
+      await this.createRoom(payload.roomName);
+    }
+
     const at = new AccessToken(
       this.livekitConfig.apiKey,
       this.livekitConfig.apiSecret,
