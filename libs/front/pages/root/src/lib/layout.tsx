@@ -6,8 +6,11 @@ interface RootLayoutProps {
 }
 
 export const metadata = {
-  title: 'Cypher App',
-  description: 'Welcome to Cypher App!',
+  title: {
+    template: '%s | Cypher',
+    default: 'Cypher | Exprime ta créativité',
+  },
+  description: 'Bienvenue sur Cypher!',
 };
 
 export async function RootLayout({ children }: RootLayoutProps) {

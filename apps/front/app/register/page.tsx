@@ -1,1 +1,4 @@
-export { RegisterPage as default } from '@cypher/front/pages/register/server';
+export {
+  RegisterPage as default,
+  metadata,
+} from '@cypher/front/pages/register/server';

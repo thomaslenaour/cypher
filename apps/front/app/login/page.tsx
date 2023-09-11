@@ -1,1 +1,4 @@
-export { LoginPage as default } from '@cypher/front/pages/login/server';
+export {
+  LoginPage as default,
+  metadata,
+} from '@cypher/front/pages/login/server';

@@ -67,9 +67,11 @@ export class RoomQueueService {
   async getParticipantsInQueue(roomName: string) {
     const participants = await this.livekitService.getParticipants(roomName);
     const participantsInQueue = participants?.filter((participant) => {
-      const participantMetadata = JSON.parse(participant.metadata);
+      const participantMetadata = participant?.metadata
+        ? JSON.parse(participant.metadata)
+        : undefined;
 
-      return participantMetadata?.inQueueAt;
+      return !!participantMetadata?.inQueueAt;
     });
 
     participantsInQueue?.sort((a, b) => {

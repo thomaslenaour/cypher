@@ -1,1 +1,4 @@
-export { RootLayout as default } from '@cypher/front/pages/root/server';
+export {
+  RootLayout as default,
+  metadata,
+} from '@cypher/front/pages/root/server';

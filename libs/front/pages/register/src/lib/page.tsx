@@ -1,5 +1,12 @@
 import { getProviders } from '@cypher/front/libs/auth/server';
+
 import RegisterPageContent from './RegisterPageContent';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "S'inscrire",
+  description: 'Inscrivez-vous sur Cypher',
+};
 
 export default async function RegisterPage() {
   const providers = await getProviders();
