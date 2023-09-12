@@ -7,10 +7,26 @@ git clone https://github.com/thomaslenaour/cypher
 cd cypher
 npm install
 npm install -g nx # if not already installed
-brew install livekit
 ```
 
 ## Applications
+
+### Dev Services
+
+#### Services
+
+- PostgreSQL
+- Livekit server in dev mode
+
+#### Pre-requisites
+
+- Docker installed and running
+
+#### Run
+
+```sh
+docker-compose up -d
+```
 
 ### Front (Next.js)
 
@@ -22,18 +38,7 @@ nx serve front
 
 ### API (Nest.js)
 
-#### Pre-requisites
-
-- Docker installed and running
-- LiveKit server installed and running
-
 #### Run
-
-In the first terminal:
-
-```sh
-livekit-server --dev
-```
 
 In the second terminal:
 
