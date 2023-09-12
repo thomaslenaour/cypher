@@ -80,11 +80,16 @@ export class LivekitService implements OnModuleInit {
   }
 
   async getParticipants(roomName: string) {
-    const participants = await this.roomServiceClient.listParticipants(
-      roomName
-    );
+    try {
+      const participants = await this.roomServiceClient.listParticipants(
+        roomName
+      );
 
-    return participants;
+      return participants;
+    } catch (err) {
+      console.error(err);
+      return [];
+    }
   }
 
   async getParticipant(roomName: string, identity: string) {

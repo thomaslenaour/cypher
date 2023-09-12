@@ -1,7 +1,6 @@
 'use client';
 
 import { useMemo } from 'react';
-import { StartAudio } from '@livekit/components-react';
 import { Info } from 'lucide-react';
 
 import { Box, Chip } from '@cypher/front/shared/ui';
@@ -74,7 +73,7 @@ export function InsideRoomMiddleArea({
               currentPublisherMetadata?.startPublishAt &&
               `${currentPublisher?.name} est en train de rapper !`}
           </Chip>
-          <StartAudio label="Play the room" />
+          {/* <StartAudio label="Play the room" /> */}
         </Box>
       </Box>
       <Box sx={{ height: '50%' }}>

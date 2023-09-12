@@ -21,7 +21,11 @@ export class RoomCronService {
         const roomExists = await this.livekitService.roomExists(room.id);
         if (!roomExists) return;
 
-        await this.roomService.defineCurrentPublisher({ roomId: room.id });
+        try {
+          await this.roomService.defineCurrentPublisher({ roomId: room.id });
+        } catch (err) {
+          console.error(err);
+        }
       })
     );
   }

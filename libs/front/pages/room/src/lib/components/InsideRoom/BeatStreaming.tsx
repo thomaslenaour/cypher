@@ -9,8 +9,8 @@ interface BeatStreamingProps {
 export const BeatStreaming = forwardRef<HTMLAudioElement, BeatStreamingProps>(
   ({ beatMuted }, ref) => {
     return (
-      <audio ref={ref} muted={beatMuted} controls loop>
-        <source src="/audios/beat.ogg" type="audio/ogg" />
+      <audio ref={ref} muted={beatMuted} preload="auto" controls loop>
+        <source src="/audios/beat.mp3" type="audio/mp3" />
       </audio>
     );
   }

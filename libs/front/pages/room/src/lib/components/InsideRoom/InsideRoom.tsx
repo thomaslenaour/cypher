@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   RoomAudioRenderer,
+  useDataChannel,
   useLocalParticipant,
   useParticipants,
   useRoomContext,
@@ -13,27 +14,43 @@ import { Box } from '@cypher/front/shared/ui';
 import { InsideRoomLeftSide } from './LeftSide/LeftSide';
 import { InsideRoomRightSide } from './RightSide/RightSide';
 import { InsideRoomMiddleArea } from './MiddleArea/MiddleArea';
-import { BeatStreaming } from './BeatStreaming';
+
 import { ReadyToGo } from './ReadyToGo';
 import { useMutation } from '@cypher/front/libs/apollo';
 import { StartPublishingDocument } from '@cypher/front/shared/graphql';
+import { DataPacket_Kind } from 'livekit-client';
+import { JingleStreaming } from './JingleStreaming';
+import { BeatStreaming } from './BeatStreaming';
 
 const BEAT_DURATION_IN_SECONDS = 183;
+
+enum JingleStatus {
+  Play = 'Play',
+  Stop = 'Stop',
+}
 
 interface InsideRoomProps {
   roomId: string;
   authenticated: boolean;
 }
 
+const encoder = new TextEncoder();
+const decoder = new TextDecoder();
+
 export function InsideRoom({ roomId, authenticated }: InsideRoomProps) {
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const beatElRef = useRef<HTMLAudioElement | null>(null);
+  const jingleElRef = useRef<HTMLAudioElement | null>(null);
   const [readyToGo, setReadyToGo] = useState(false);
   const [microphoneEnabled, setMicrophoneEnabled] = useState(false);
   const [micPermissionEnabled, setMicPermissionEnabled] = useState(false);
+  const [jingleStatus, setJingleStatus] = useState<JingleStatus>(
+    JingleStatus.Stop
+  );
 
   const currentRoom = useRoomContext();
   const participants = useParticipants();
   const currentParticipant = useLocalParticipant();
+  const { send, message } = useDataChannel();
 
   const currentPublisher = useMemo(() => {
     const publisher = participants.find((participant) => {
@@ -61,7 +78,7 @@ export function InsideRoom({ roomId, authenticated }: InsideRoomProps) {
   const [startPublishing] = useMutation(StartPublishingDocument);
 
   const handleStartPublishingClick = async () => {
-    if (!iAmThePublisher) return;
+    if (!iAmThePublisher || !currentRoom) return;
 
     try {
       const response = await startPublishing({
@@ -74,19 +91,17 @@ export function InsideRoom({ roomId, authenticated }: InsideRoomProps) {
       });
 
       if (response.data?.startPublishing) {
-        handleMicrophoneOpen();
+        send(encoder.encode(JingleStatus.Play), {
+          kind: DataPacket_Kind.LOSSY,
+        });
+        currentRoom.localParticipant.setMicrophoneEnabled(true);
+        // publish the beat
+        setMicPermissionEnabled(true);
       }
     } catch (err) {
       console.error(err);
     }
   };
-
-  const handleMicrophoneOpen = useCallback(() => {
-    if (currentRoom) {
-      currentRoom.localParticipant.setMicrophoneEnabled(true);
-      setMicrophoneEnabled(true);
-    }
-  }, [currentRoom]);
 
   const toggleMicrophone = useCallback(() => {
     if (currentRoom) {
@@ -104,21 +119,40 @@ export function InsideRoom({ roomId, authenticated }: InsideRoomProps) {
     }
   };
 
+  const handleReady = () => {
+    setReadyToGo(true);
+
+    if (beatElRef.current) {
+      const now = new Date().getTime();
+      const beatPosition =
+        ((now - roomCreatedAt) / 1000) % BEAT_DURATION_IN_SECONDS;
+      beatElRef.current.currentTime = Number(beatPosition) || 0;
+      beatElRef.current.play().catch((err) => {
+        console.error(err);
+      });
+    }
+  };
+
   useEffect(() => {
     askForMicPermission();
   }, []);
 
-  const handleReady = () => {
-    setReadyToGo(true);
+  useEffect(() => {
+    const status = message?.payload
+      ? (decoder.decode(message?.payload) as JingleStatus)
+      : JingleStatus.Stop;
 
-    if (audioRef.current) {
-      const now = new Date().getTime();
-      const beatPosition =
-        ((now - roomCreatedAt) / 1000) % BEAT_DURATION_IN_SECONDS;
-      audioRef.current.currentTime = Number(beatPosition) || 0;
-      audioRef.current.play();
+    setJingleStatus(status);
+  }, [message]);
+
+  useEffect(() => {
+    if (jingleElRef.current) {
+      if (jingleStatus === JingleStatus.Play) {
+        jingleElRef.current.play();
+        setJingleStatus(JingleStatus.Stop);
+      }
     }
-  };
+  }, [jingleStatus]);
 
   return (
     <>
@@ -128,7 +162,11 @@ export function InsideRoom({ roomId, authenticated }: InsideRoomProps) {
           micPermissionEnabled={micPermissionEnabled}
         />
       )}
-      <BeatStreaming ref={audioRef} beatMuted={beatMuted} />
+      <BeatStreaming
+        ref={beatElRef}
+        beatMuted={iAmThePublisher ? false : beatMuted}
+      />
+      <JingleStreaming ref={jingleElRef} />
       <Box sx={{ display: readyToGo ? 'block' : 'none' }}>
         <Box
           sx={{
