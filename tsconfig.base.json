@@ -33,6 +33,12 @@
       "@cypher/front/components/authentication/server": [
         "libs/front/components/authentication/src/server.ts"
       ],
+      "@cypher/front/components/blog": [
+        "libs/front/components/blog/src/index.ts"
+      ],
+      "@cypher/front/components/blog/server": [
+        "libs/front/components/blog/src/server.ts"
+      ],
       "@cypher/front/components/common": [
         "libs/front/components/common/src/index.ts"
       ],
