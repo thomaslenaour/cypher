@@ -12,6 +12,9 @@ export function HeaderRightComponent({
 }: HeaderRightComponentProps) {
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+      <Link href="/blog">
+        <Button variant="soft">Blog</Button>
+      </Link>
       {authenticated ? (
         <LogoutButton label={'Se déconnecter'} />
       ) : (
