@@ -1,10 +1,13 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { LiveKitRoom } from '@livekit/components-react';
+
 import { Box, Container } from '@cypher/front/shared/ui';
+
 import { InsideRoom } from './components/InsideRoom/InsideRoom';
-import { useState } from 'react';
 import { RoomLoader } from './components/RoomLoader';
+import { WebAudioContext } from './context/web-audio';
 
 interface ClientRoomProps {
   initialToken: string;
@@ -18,6 +21,18 @@ export function ClientRoom({
   authenticated,
 }: ClientRoomProps) {
   const [connected, setConnected] = useState(false);
+  const [audioContext, setAudioContext] = useState<AudioContext | null>(null);
+
+  useEffect(() => {
+    setAudioContext(new AudioContext());
+
+    return () => {
+      setAudioContext((prev) => {
+        prev?.close();
+        return null;
+      });
+    };
+  }, []);
 
   return (
     <Container>
@@ -35,12 +50,17 @@ export function ClientRoom({
           video={false}
           audio={false}
           onConnected={() => setConnected(true)}
+          options={{
+            expWebAudioMix: { audioContext: audioContext as AudioContext },
+          }}
         >
-          {!connected ? (
-            <RoomLoader />
-          ) : (
-            <InsideRoom roomId={roomId} authenticated={authenticated} />
-          )}
+          <WebAudioContext.Provider value={audioContext as AudioContext}>
+            {!connected ? (
+              <RoomLoader />
+            ) : (
+              <InsideRoom roomId={roomId} authenticated={authenticated} />
+            )}
+          </WebAudioContext.Provider>
         </LiveKitRoom>
       </Box>
     </Container>
