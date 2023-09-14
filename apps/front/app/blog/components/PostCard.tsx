@@ -34,8 +34,16 @@ export function PostCard(post: Post) {
             spacing={1.5}
             sx={{ mb: 5 }}
           >
-            <Chip sx={{ backgroundColor: 'neutral.50' }}>
-              <Typography sx={{ color: 'neutral.900' }}>
+            <Chip
+              sx={{
+                backgroundColor: 'neutral.50',
+              }}
+            >
+              <Typography
+                sx={{
+                  color: 'black',
+                }}
+              >
                 <time dateTime={post.date}>
                   {format(parseISO(post.date), 'd LLL, yyyy')}
                 </time>
@@ -60,9 +68,12 @@ export function PostCard(post: Post) {
             <Typography
               level="h2"
               sx={{
+                color: (theme) =>
+                  theme.palette.mode === 'dark' ? 'white' : 'black',
                 display: 'inline',
                 padding: '6px 12px',
-                backgroundColor: 'white',
+                backgroundColor: (theme) =>
+                  theme.palette.mode === 'dark' ? 'neutral.800' : 'white',
                 boxDecorationBreak: 'clone',
                 filter: 'url(#instagram)',
                 fontSize: '34px',
