@@ -1,10 +1,10 @@
 ---
-title: Bienvenue sur Cypher !
-date: 2023-09-11
-description: Le rythme palpite, les mots fusent et la créativité s'envole - Bienvenue dans l'univers du cypher !
+title: Comment performer en improvisation
+date: 2023-09-14
+description: Savoir comment performer lors d'une improvisation
 tag: Article
-highlight: true
-image: https://images.pexels.com/photos/3101522/pexels-photo-3101522.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1
+highlight: false
+image: https://images.pexels.com/photos/7955076/pexels-photo-7955076.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1
 ---
 
 # Bienvenue dans l'Ère du Cypher Virtuel : Découvrez Notre Plateforme Musicale Unique

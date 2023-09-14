@@ -1,23 +1,21 @@
-import { compareDesc } from 'date-fns'
-import { allPosts } from '../../.contentlayer/generated'
 import {Footer, Header} from "@cypher/front/components/common";
 import React from "react";
-import {PostCard} from "../../../../libs/front/components/blog/src/lib/PostCard";
-import {Container} from "@cypher/front/shared/ui";
-
+import { Box, Grid, Stack } from "@cypher/front/shared/ui";
+import { LeftSide } from "./components/LeftSide";
+import { RightSide } from "./components/RightSide";
+import { SvgBackground } from "../../../../libs/front/pages/root/src/lib/components/SvgBackground";
 export default function Home() {
-  const posts = allPosts.sort((a: any, b: any) => compareDesc(new Date(a.date), new Date(b.date)))
-
   return (
     <>
-      <Header/>
-      <Container>
-        <h1 className="mb-8 text-center text-2xl font-black">Next.js + Contentlayer Example</h1>
-        {posts.map((post: any, idx: any) => (
-          <PostCard key={idx} {...post} />
-        ))}
-      </Container>
-      <Footer/>
+      <Header />
+      <Box mx={{ xs: 3, sm: 8, md: 10, lg: 15 }} >
+        <SvgBackground />
+        <Stack direction="row" spacing={4} sx={{ mt: 10, minHeight: "80vh" }}>
+          <LeftSide />
+          <RightSide />
+        </Stack>
+      </Box>
+      <Footer />
     </>
   )
 }
