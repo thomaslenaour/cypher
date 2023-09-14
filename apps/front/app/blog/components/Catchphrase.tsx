@@ -1,7 +1,7 @@
 'use client';
 
-import { Box, Typography } from "@cypher/front/shared/ui";
-import React from "react";
+import { Box, Typography } from '@cypher/front/shared/ui';
+import React from 'react';
 
 export function Catchphrase() {
   return (
@@ -19,19 +19,12 @@ export function Catchphrase() {
           },
         }}
       >
-      <Typography sx={{ color: 'primary.500' }}>
-        Retrouvez{' '}
+        <Typography sx={{ color: 'primary.500' }}>Retrouvez </Typography>
+        toutes les dernières{' '}
+        <Typography sx={{ color: 'primary.500' }}>actualités </Typography>
+        sur l'
+        <Typography sx={{ color: 'primary.500' }}>univers du rap </Typography>!{' '}
       </Typography>
-      toutes les dernières{' '}
-      <Typography sx={{ color: 'primary.500' }}>
-        actualités{' '}
-      </Typography>
-      sur l'
-      <Typography sx={{ color: 'primary.500' }}>
-        univers du rap{' '}
-      </Typography>
-      !{' '}
-    </Typography>
-  </Box>
-  )
+    </Box>
+  );
 }
