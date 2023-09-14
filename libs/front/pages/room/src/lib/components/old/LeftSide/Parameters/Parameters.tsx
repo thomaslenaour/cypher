@@ -1,5 +1,5 @@
 import { Box, Button, Typography } from '@cypher/front/shared/ui';
-import { MediaDeviceSelect } from './MediaDeviceSelect';
+import { MediaDeviceSelect } from '../../../InsideRoom/LeftSide/Footer/Controls/MediaDeviceSelect/MediaDeviceSelect';
 import { Mic, MicOff } from 'lucide-react';
 
 interface ParametersProps {

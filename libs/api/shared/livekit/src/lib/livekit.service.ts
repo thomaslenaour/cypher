@@ -5,6 +5,21 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { LivekitConfiguration } from '@cypher/api/core';
 
+function getRandomHexColor(): string {
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+
+  for (let i = 0; i < 6; i++) {
+    // Pick a random index from the 'letters' string
+    const randomIndex = Math.floor(Math.random() * letters.length);
+
+    // Add the randomly selected character to the color string
+    color += letters.charAt(randomIndex);
+  }
+
+  return color;
+}
+
 @Injectable()
 export class LivekitService implements OnModuleInit {
   private livekitConfig!: LivekitConfiguration;
@@ -65,6 +80,7 @@ export class LivekitService implements OnModuleInit {
         identity: uuidv4(),
         metadata: JSON.stringify({
           userId: payload?.userId || '',
+          color: getRandomHexColor(),
         }),
       }
     );

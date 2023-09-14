@@ -2,14 +2,14 @@
 
 import { RecordingAnimation } from '@cypher/front/components/common';
 import { Button, Box, Typography, Chip, Stack } from '@cypher/front/shared/ui';
-import { Check, Info, X } from 'lucide-react';
+import { Info } from 'lucide-react';
 
-interface ReadyToGoProps {
+interface ReadyProps {
   onReady: () => void;
-  micPermissionEnabled: boolean;
+  // micPermissionStatus?: 'granted' | 'denied' | 'prompt';
 }
 
-export function ReadyToGo({ onReady, micPermissionEnabled }: ReadyToGoProps) {
+export function Ready({ onReady }: ReadyProps) {
   return (
     <Box
       sx={{
@@ -50,13 +50,13 @@ export function ReadyToGo({ onReady, micPermissionEnabled }: ReadyToGoProps) {
           <Chip variant="soft" startDecorator={<Info />}>
             Respectez les autres utilisateurs
           </Chip>
-          <Chip
+          {/* <Chip
             variant="soft"
             color={micPermissionEnabled ? 'success' : 'primary'}
             startDecorator={micPermissionEnabled ? <Check /> : <X />}
           >
             Statut du micro : {micPermissionEnabled ? 'autorisé' : 'bloqué'}
-          </Chip>
+          </Chip> */}
         </Stack>
         <Button size="lg" fullWidth sx={{ mt: 2 }} onClick={onReady}>
           Rejoindre le Cypher

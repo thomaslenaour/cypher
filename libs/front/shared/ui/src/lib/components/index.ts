@@ -25,6 +25,7 @@ export { default as CircularProgress } from '@mui/joy/CircularProgress';
 export { default as Chip } from '@mui/joy/Chip';
 export { default as Skeleton } from '@mui/joy/Skeleton';
 export { default as Alert } from '@mui/joy/Alert';
+export { default as Switch } from '@mui/joy/Switch';
 export { useColorScheme, useTheme } from '@mui/joy/styles';
 export { getInitColorSchemeScript } from '@mui/joy';
 

@@ -41,6 +41,7 @@ export function ClientRoom({
           position: 'relative',
           width: '100%',
           height: 'calc(100vh - 73px)',
+          marginTop: 2,
         }}
       >
         <LiveKitRoom
@@ -53,6 +54,7 @@ export function ClientRoom({
           options={{
             expWebAudioMix: { audioContext: audioContext as AudioContext },
           }}
+          style={{ height: '100%' }}
         >
           <WebAudioContext.Provider value={audioContext as AudioContext}>
             {!connected ? (

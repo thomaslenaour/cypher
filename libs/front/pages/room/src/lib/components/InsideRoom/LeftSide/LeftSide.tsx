@@ -1,39 +1,58 @@
-import { Box } from '@cypher/front/shared/ui';
+'use client';
 
-import { Beats } from './Beats/Beats';
-import { Parameters } from './Parameters/Parameters';
+import { Box } from '@cypher/front/shared/ui';
+import { InsideRoomLeftSideFooter } from './Footer/Footer';
+import { InsideRoomLeftSideHeader } from './Header/Header';
 
 interface InsideRoomLeftSideProps {
-  microphoneEnabled: boolean;
-  onMicrophoneClick: () => void;
-  parametersDisabled: boolean;
+  header: {
+    participants: number;
+    waitingArtists: number;
+    nextArtist?: string;
+  };
+  footer: {
+    controls: {
+      mic: {
+        disabled: boolean;
+        value: boolean;
+        onToggle: () => void;
+      };
+      mediaDeviceSelect: {
+        disabled: boolean;
+      };
+    };
+    mainButton: {
+      label: string;
+      onClick: () => Promise<void>;
+      loading: boolean;
+    };
+  };
 }
 
 export function InsideRoomLeftSide({
-  microphoneEnabled,
-  onMicrophoneClick,
-  parametersDisabled,
+  header,
+  footer,
 }: InsideRoomLeftSideProps) {
   return (
     <Box
-      sx={{
-        height: '100%',
-        width: '200px',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-      }}
+      sx={{ height: '100%', p: 2, display: 'flex', flexDirection: 'column' }}
     >
-      <Box sx={{ height: '50%' }}>
-        <Beats />
+      <InsideRoomLeftSideHeader
+        participants={header.participants}
+        waitingArtists={header.waitingArtists}
+        nextArtist={header.nextArtist}
+      />
+      <Box sx={{ flex: 1 }}>
+        <Main />
       </Box>
-      <Box sx={{ height: '50%' }}>
-        <Parameters
-          disabled={parametersDisabled}
-          microphoneEnabled={microphoneEnabled}
-          onMicrophoneClick={onMicrophoneClick}
-        />
-      </Box>
+      <InsideRoomLeftSideFooter
+        mainButton={footer.mainButton}
+        controls={footer.controls}
+      />
     </Box>
   );
+}
+
+function Main() {
+  return <Box />;
 }
