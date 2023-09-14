@@ -73,7 +73,7 @@ export function PostCard(post: Post) {
                 display: 'inline',
                 padding: '6px 12px',
                 backgroundColor: (theme) =>
-                  theme.palette.mode === 'dark' ? 'neutral.800' : 'white',
+                  theme.palette.mode === 'dark' ? 'black' : 'white',
                 boxDecorationBreak: 'clone',
                 filter: 'url(#instagram)',
                 fontSize: '34px',
