@@ -31,6 +31,11 @@ export type Scalars = {
   DateTime: { input: any; output: any };
 };
 
+export type FollowArgs = {
+  followed: Scalars['String']['input'];
+  following: Scalars['String']['input'];
+};
+
 export type JoinRoomInput = {
   roomId: Scalars['String']['input'];
 };
@@ -47,8 +52,7 @@ export type Mutation = {
 };
 
 export type MutationFollowArgs = {
-  followed: Scalars['String']['input'];
-  following: Scalars['String']['input'];
+  data: FollowArgs;
 };
 
 export type MutationJoinPublicRoomArgs = {
@@ -72,8 +76,7 @@ export type MutationToggleMyselfFromQueueArgs = {
 };
 
 export type MutationUnfollowArgs = {
-  unfollowed: Scalars['String']['input'];
-  unfollowing: Scalars['String']['input'];
+  data: UnfollowArgs;
 };
 
 export type Query = {
@@ -111,6 +114,11 @@ export type ToggleMyselfFromQueueInput = {
   roomId: Scalars['String']['input'];
 };
 
+export type UnfollowArgs = {
+  unfollowed: Scalars['String']['input'];
+  unfollowing: Scalars['String']['input'];
+};
+
 export type UserObjectType = {
   __typename?: 'UserObjectType';
   email?: Maybe<Scalars['String']['output']>;
@@ -133,6 +141,24 @@ export type UserProfileObjectType = {
   punchline?: Maybe<Scalars['String']['output']>;
   userId: Scalars['String']['output'];
   userName?: Maybe<Scalars['String']['output']>;
+};
+
+export type FollowMutationVariables = Exact<{
+  data: FollowArgs;
+}>;
+
+export type FollowMutation = {
+  __typename?: 'Mutation';
+  follow: { __typename?: 'UserObjectType'; id: string };
+};
+
+export type UnfollowMutationVariables = Exact<{
+  data: UnfollowArgs;
+}>;
+
+export type UnfollowMutation = {
+  __typename?: 'Mutation';
+  unfollow: { __typename?: 'UserObjectType'; id: string };
 };
 
 export type ToggleMyselfFromQueueMutationVariables = Exact<{

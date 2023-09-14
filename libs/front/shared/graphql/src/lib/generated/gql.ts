@@ -42,6 +42,12 @@ export function graphql(source: string): unknown;
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
+  source: 'mutation Follow($data: FollowArgs!) {\n  follow(data: $data) {\n    id\n  }\n}\n\nmutation Unfollow($data: UnfollowArgs!) {\n  unfollow(data: $data) {\n    id\n  }\n}'
+): (typeof documents)['mutation Follow($data: FollowArgs!) {\n  follow(data: $data) {\n    id\n  }\n}\n\nmutation Unfollow($data: UnfollowArgs!) {\n  unfollow(data: $data) {\n    id\n  }\n}'];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
   source: 'mutation ToggleMyselfFromQueue($data: ToggleMyselfFromQueueInput!) {\n  toggleMyselfFromQueue(data: $data)\n}\n\nmutation JoinPublicRoom($roomId: String!) {\n  joinPublicRoom(data: {roomId: $roomId})\n}\n\nmutation JoinRoom($roomId: String!) {\n  joinRoom(data: {roomId: $roomId})\n}\n\nmutation StartPublishing($data: StartPublishingInput!) {\n  startPublishing(data: $data)\n}'
 ): (typeof documents)['mutation ToggleMyselfFromQueue($data: ToggleMyselfFromQueueInput!) {\n  toggleMyselfFromQueue(data: $data)\n}\n\nmutation JoinPublicRoom($roomId: String!) {\n  joinPublicRoom(data: {roomId: $roomId})\n}\n\nmutation JoinRoom($roomId: String!) {\n  joinRoom(data: {roomId: $roomId})\n}\n\nmutation StartPublishing($data: StartPublishingInput!) {\n  startPublishing(data: $data)\n}'];
 /**

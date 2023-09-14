@@ -16,7 +16,7 @@ export async function UserProfile({ profile, user }: IUserProfileProps) {
       <Banner bannerUrl={profile.bannerUrl} />
       <Container className="user-profile-header">
         <PictureAndFollow
-          userId={user.id}
+          user={user}
           pseudo={profile.pseudo}
           profileUrl={profile.profileUrl}
         />

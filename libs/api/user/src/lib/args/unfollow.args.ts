@@ -1,6 +1,6 @@
-import { ArgsType, Field } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
 
-@ArgsType()
+@InputType()
 export class UnfollowArgs {
   @Field({ nullable: false })
   unfollowed!: string;

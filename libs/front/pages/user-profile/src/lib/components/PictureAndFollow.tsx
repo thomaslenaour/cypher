@@ -1,9 +1,13 @@
 'use client';
+import { useMutation } from '@cypher/front/libs/apollo';
+import { FollowDocument, UnfollowDocument } from '@cypher/front/shared/graphql';
 import { Box, Button, SxProps, Typography } from '@cypher/front/shared/ui';
 import { useSession } from 'next-auth/react';
+import { IUser } from '../interfaces';
+import { useEffect, useState } from 'react';
 
 interface IPictureAndFollowProps {
-  userId: string;
+  user: IUser;
   pseudo: string;
   profileUrl?: string | null;
 }
@@ -44,14 +48,51 @@ const styles = (profileUrl?: string | null): SxProps => {
 };
 
 export function PictureAndFollow({
-  userId,
+  user,
   pseudo,
   profileUrl,
 }: IPictureAndFollowProps) {
   const { data, status } = useSession();
+  const [followMutation] = useMutation(FollowDocument);
+  const [unfollowMutation] = useMutation(UnfollowDocument);
 
-  const handleFollowClick = () => {
-    console.log(`${data?.user?.id} start to follow ${userId}`);
+  const [currentUserFollowUser, setCurrentUserFollowUser] =
+    useState<boolean>(false);
+
+  useEffect(() => {
+    setCurrentUserFollowUser(() => {
+      return Boolean(user.followedBy?.find((u) => u.id === data?.user.id));
+    });
+  }, [user.followedBy, data?.user.id]);
+
+  const handleFollowClick = async () => {
+    console.log(`${data?.user?.id} start to follow ${user.id}`);
+
+    if (data?.user?.id == null) return;
+
+    if (!currentUserFollowUser) {
+      await followMutation({
+        variables: {
+          data: {
+            followed: user.id,
+            following: data?.user?.id,
+          },
+        },
+      }).then(() => {
+        setCurrentUserFollowUser(true);
+      });
+    } else {
+      await unfollowMutation({
+        variables: {
+          data: {
+            unfollowed: user.id,
+            unfollowing: data?.user?.id,
+          },
+        },
+      }).then(() => {
+        setCurrentUserFollowUser(false);
+      });
+    }
   };
 
   return (
@@ -70,7 +111,7 @@ export function PictureAndFollow({
         color="primary"
         onClick={handleFollowClick}
       >
-        Follow
+        {currentUserFollowUser ? 'Unfollow' : 'Follow'}
       </Button>
     </Box>
   );

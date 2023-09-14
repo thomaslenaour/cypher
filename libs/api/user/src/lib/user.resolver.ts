@@ -27,7 +27,7 @@ export class UserResolver {
 
   @Mutation(() => UserObjectType)
   async follow(
-    @Args()
+    @Args('data')
     { followed, following }: FollowArgs
   ) {
     return await this.service.follow(followed, following);
@@ -35,7 +35,7 @@ export class UserResolver {
 
   @Mutation(() => UserObjectType)
   async unfollow(
-    @Args()
+    @Args('data')
     { unfollowed, unfollowing }: UnfollowArgs
   ) {
     return await this.service.unfollow(unfollowed, unfollowing);

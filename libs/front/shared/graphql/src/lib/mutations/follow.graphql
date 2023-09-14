@@ -1,0 +1,11 @@
+mutation Follow($data: FollowArgs!) {
+  follow(data: $data) {
+    id
+  }
+}
+
+mutation Unfollow($data: UnfollowArgs!) {
+  unfollow(data: $data) {
+    id
+  }
+}
