@@ -42,7 +42,6 @@ const styles = (profileUrl?: string | null): SxProps => {
       width: '8.125rem',
       borderRadius: '6.25rem',
       marginTop: `-${profilePictureHeight / 2}rem`,
-      border: 'solid .3125rem white',
     },
   };
 };
@@ -60,14 +59,12 @@ export function PictureAndFollow({
     useState<boolean>(false);
 
   useEffect(() => {
-    setCurrentUserFollowUser(() => {
-      return Boolean(user.followedBy?.find((u) => u.id === data?.user.id));
-    });
+    setCurrentUserFollowUser(() =>
+      Boolean(user.followedBy?.find((u) => u.id === data?.user.id))
+    );
   }, [user.followedBy, data?.user.id]);
 
   const handleFollowClick = async () => {
-    console.log(`${data?.user?.id} start to follow ${user.id}`);
-
     if (data?.user?.id == null) return;
 
     if (!currentUserFollowUser) {
