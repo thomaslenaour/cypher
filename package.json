@@ -7,9 +7,9 @@
     "node": "18.x"
   },
   "scripts": {
-    "cl-dev": "cd ./apps/front && contentlayer dev -c ./contentlayer.config.ts",
+    "cl-build": "cd ./apps/front && contentlayer build -c ./contentlayer.config.ts",
     "cm": "cz",
-    "build:front": "prisma generate && nx build front --prod",
+    "build:front": "npm run cl-build && prisma generate && nx build front --prod",
     "build:api": "nx build api --prod",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
