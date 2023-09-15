@@ -1,15 +1,12 @@
 'use client';
-import { useMutation } from '@cypher/front/libs/apollo';
-import { FollowDocument, UnfollowDocument } from '@cypher/front/shared/graphql';
 import { Box, Button, SxProps, Typography } from '@cypher/front/shared/ui';
 import { useSession } from 'next-auth/react';
-import { IUser } from '../interfaces';
-import { useEffect, useState } from 'react';
 
 interface IPictureAndFollowProps {
-  user: IUser;
   pseudo: string;
   profileUrl?: string | null;
+  followButtonLabel: string;
+  handleFollowClick: () => Promise<void>;
 }
 
 const styles = (profileUrl?: string | null): SxProps => {
@@ -47,50 +44,12 @@ const styles = (profileUrl?: string | null): SxProps => {
 };
 
 export function PictureAndFollow({
-  user,
   pseudo,
   profileUrl,
+  followButtonLabel,
+  handleFollowClick,
 }: IPictureAndFollowProps) {
-  const { data, status } = useSession();
-  const [followMutation] = useMutation(FollowDocument);
-  const [unfollowMutation] = useMutation(UnfollowDocument);
-
-  const [currentUserFollowUser, setCurrentUserFollowUser] =
-    useState<boolean>(false);
-
-  useEffect(() => {
-    setCurrentUserFollowUser(() =>
-      Boolean(user.followedBy?.find((u) => u.id === data?.user.id))
-    );
-  }, [user.followedBy, data?.user.id]);
-
-  const handleFollowClick = async () => {
-    if (data?.user?.id == null) return;
-
-    if (!currentUserFollowUser) {
-      await followMutation({
-        variables: {
-          data: {
-            followed: user.id,
-            following: data?.user?.id,
-          },
-        },
-      }).then(() => {
-        setCurrentUserFollowUser(true);
-      });
-    } else {
-      await unfollowMutation({
-        variables: {
-          data: {
-            unfollowed: user.id,
-            unfollowing: data?.user?.id,
-          },
-        },
-      }).then(() => {
-        setCurrentUserFollowUser(false);
-      });
-    }
-  };
+  const { status } = useSession();
 
   return (
     <Box sx={styles(profileUrl)}>
@@ -104,11 +63,11 @@ export function PictureAndFollow({
         </Box>
       )}
       <Button
-        disabled={status !== 'authenticated' || data.user?.id == null}
+        disabled={status !== 'authenticated'}
         color="primary"
         onClick={handleFollowClick}
       >
-        {currentUserFollowUser ? 'Unfollow' : 'Follow'}
+        {followButtonLabel}
       </Button>
     </Box>
   );

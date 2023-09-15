@@ -13,6 +13,8 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
+  'mutation Follow($data: FollowArgs!) {\n  follow(data: $data) {\n    id\n  }\n}\n\nmutation Unfollow($data: UnfollowArgs!) {\n  unfollow(data: $data) {\n    id\n  }\n}':
+    types.FollowDocument,
   'mutation ToggleMyselfFromQueue($data: ToggleMyselfFromQueueInput!) {\n  toggleMyselfFromQueue(data: $data)\n}\n\nmutation JoinPublicRoom($roomId: String!) {\n  joinPublicRoom(data: {roomId: $roomId})\n}\n\nmutation JoinRoom($roomId: String!) {\n  joinRoom(data: {roomId: $roomId})\n}\n\nmutation StartPublishing($data: StartPublishingInput!) {\n  startPublishing(data: $data)\n}':
     types.ToggleMyselfFromQueueDocument,
   'query GetRooms {\n  rooms {\n    id\n    name\n    participantsNumber\n  }\n}':

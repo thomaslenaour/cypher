@@ -1,11 +1,17 @@
 mutation Follow($data: FollowArgs!) {
   follow(data: $data) {
     id
+    followedBy {
+      id
+    }
   }
 }
 
 mutation Unfollow($data: UnfollowArgs!) {
   unfollow(data: $data) {
     id
+    followedBy {
+      id
+    }
   }
 }

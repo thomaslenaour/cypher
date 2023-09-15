@@ -1,7 +1,7 @@
 import { Box } from '@cypher/front/shared/ui';
 import { SxProps } from '@mui/joy/styles/types';
 
-interface IBannerProps {
+interface BannerProps {
   bannerUrl?: string | null;
 }
 
@@ -23,6 +23,6 @@ const styles = (bannerUrl: string): SxProps => {
   };
 };
 
-export const Banner = async ({ bannerUrl }: IBannerProps) => (
+export const Banner = ({ bannerUrl }: BannerProps) => (
   <Box sx={styles(bannerUrl ?? '')} />
 );

@@ -1,11 +1,11 @@
 import { Container, Stack, Typography } from '@cypher/front/shared/ui';
 import { SearchX } from 'lucide-react';
 
-interface INotFoundProps {
+interface NotFoundProps {
   pseudo: string;
 }
 
-export const NotFound = ({ pseudo }: INotFoundProps) => (
+export const NotFound = ({ pseudo }: NotFoundProps) => (
   <Container>
     <Stack direction={'row'} gap={'.625rem'} justifyContent={'center'}>
       <SearchX />
