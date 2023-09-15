@@ -14,11 +14,12 @@ import {
 } from '@livekit/components-react';
 
 import { getCurrentPublisher, getParticipantsInQueue } from './utils/room';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Ready } from './Ready/Ready';
 import { useRouter } from 'next/navigation';
 import {
   StartPublishingDocument,
+  StopPublishingDocument,
   ToggleMyselfFromQueueDocument,
 } from '@cypher/front/shared/graphql';
 import { useWebAudioContext } from '../../context/web-audio';
@@ -35,6 +36,7 @@ interface InsideRoomProps {
 }
 
 const BEAT_DURATION_IN_SECONDS = 183;
+export const PUBLISH_DURATION_SECONDS = 45;
 
 function isLocal(p: Participant) {
   return p instanceof LocalParticipant;
@@ -71,9 +73,12 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
     : null;
   const participantsInQueue = getParticipantsInQueue(participants);
   const currentPublisher = getCurrentPublisher(participants);
-  const currentPublisherMetadata = currentPublisher?.metadata
-    ? JSON.parse(currentPublisher.metadata)
-    : {};
+  const currentPublisherMetadata = useMemo(() => {
+    if (currentPublisher?.metadata) {
+      return JSON.parse(currentPublisher.metadata);
+    }
+    return {};
+  }, [currentPublisher?.metadata]);
   const iAmInTheQueue = !!participantsInQueue?.find(
     (p) => p.identity === currentParticipant.localParticipant.identity
   );
@@ -94,6 +99,7 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
   // GraphQL Requests
   const [toggleMyselfFromQueue] = useMutation(ToggleMyselfFromQueueDocument);
   const [startPublishing] = useMutation(StartPublishingDocument);
+  const [stopPublishing] = useMutation(StopPublishingDocument);
 
   // Handlers
   async function handleReady() {
@@ -109,7 +115,12 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
 
     audioEl.current = new Audio('/audios/beat.mp3');
     audioEl.current.currentTime = Number(beatPosition) || 0;
-    audioEl.current.setAttribute('muted', 'false');
+    console.log('handleReady', isCurrentlyPublishing);
+    audioEl.current.setAttribute(
+      'muted',
+      isCurrentlyPublishing ? 'true' : 'false'
+    );
+    audioEl.current.muted = !!isCurrentlyPublishing;
     audioEl.current.setAttribute('loop', 'true');
     audioEl.current.setAttribute('autoplay', 'true');
     audioEl.current.setAttribute('controls', 'true');
@@ -121,6 +132,32 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
 
     setReady(true);
   }
+
+  const handleStopPublishing = useCallback(async () => {
+    if (iAmThePublisher) {
+      if (sink.current) {
+        room.localParticipant.setMicrophoneEnabled(false);
+        room.localParticipant.unpublishTrack(
+          sink.current.stream.getAudioTracks()[0],
+          false
+        );
+      }
+      await stopPublishing({
+        variables: {
+          data: {
+            identity: currentParticipant.localParticipant.identity,
+            roomId,
+          },
+        },
+      });
+    }
+  }, [
+    room.localParticipant,
+    roomId,
+    stopPublishing,
+    currentParticipant.localParticipant.identity,
+    iAmThePublisher,
+  ]);
 
   async function handleMainButtonClick() {
     if (!authenticated) {
@@ -152,12 +189,9 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
     try {
       if (iAmThePublisher) {
         if (isCurrentlyPublishing) {
-          // unpublish
-          console.log('unpublish');
+          await handleStopPublishing();
         } else {
-          await startPublishing({
-            variables,
-          });
+          await startPublishing({ variables });
 
           if (sink.current) {
             room.localParticipant.setMicrophoneEnabled(micOpen);
@@ -183,7 +217,7 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
   }
 
   function toggleMicrophone() {
-    if (currentParticipantPermissions?.canPublish) {
+    if (currentParticipantPermissions?.canPublish && isCurrentlyPublishing) {
       room.localParticipant.setMicrophoneEnabled(!micOpen);
     }
     setMicOpen((prev) => !prev);
@@ -236,6 +270,12 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
               participants: participants.length,
               waitingArtists: participantsInQueue.length,
               nextArtist: participantsInQueue?.[0]?.name,
+            }}
+            main={{
+              timer: {
+                enabled: !!currentPublisherMetadata?.startPublishAt,
+                timeRemaining: 45,
+              },
             }}
             footer={{
               controls: {

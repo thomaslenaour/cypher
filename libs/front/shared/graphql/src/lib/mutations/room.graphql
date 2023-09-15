@@ -10,6 +10,10 @@ mutation JoinRoom($roomId: String!) {
   joinRoom(data: { roomId: $roomId })
 }
 
-mutation StartPublishing($data: StartPublishingInput!) {
+mutation StartPublishing($data: StartStopPublishingInput!) {
   startPublishing(data: $data)
+}
+
+mutation StopPublishing($data: StartStopPublishingInput!) {
+  stopPublishing(data: $data)
 }

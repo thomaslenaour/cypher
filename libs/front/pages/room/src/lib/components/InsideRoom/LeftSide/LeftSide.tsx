@@ -3,12 +3,19 @@
 import { Box } from '@cypher/front/shared/ui';
 import { InsideRoomLeftSideFooter } from './Footer/Footer';
 import { InsideRoomLeftSideHeader } from './Header/Header';
+import { InsideRoomLeftSideMain } from './Main/Main';
 
 interface InsideRoomLeftSideProps {
   header: {
     participants: number;
     waitingArtists: number;
     nextArtist?: string;
+  };
+  main: {
+    timer: {
+      enabled: boolean;
+      timeRemaining: number;
+    };
   };
   footer: {
     controls: {
@@ -31,28 +38,27 @@ interface InsideRoomLeftSideProps {
 
 export function InsideRoomLeftSide({
   header,
+  main,
   footer,
 }: InsideRoomLeftSideProps) {
   return (
     <Box
       sx={{ height: '100%', p: 2, display: 'flex', flexDirection: 'column' }}
     >
-      <InsideRoomLeftSideHeader
-        participants={header.participants}
-        waitingArtists={header.waitingArtists}
-        nextArtist={header.nextArtist}
-      />
-      <Box sx={{ flex: 1 }}>
-        <Main />
+      <InsideRoomLeftSideHeader {...header} />
+      <Box
+        sx={{
+          flex: 1,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100%',
+          width: '100%',
+        }}
+      >
+        <InsideRoomLeftSideMain {...main} />
       </Box>
-      <InsideRoomLeftSideFooter
-        mainButton={footer.mainButton}
-        controls={footer.controls}
-      />
+      <InsideRoomLeftSideFooter {...footer} />
     </Box>
   );
-}
-
-function Main() {
-  return <Box />;
 }

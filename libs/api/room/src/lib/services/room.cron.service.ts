@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Cron } from '@nestjs/schedule';
+import { Cron, CronExpression } from '@nestjs/schedule';
 import { RoomService } from './room.service';
 import { RoomRepository } from '../room.repository';
 import { LivekitService } from '@cypher/api/shared/livekit';
@@ -12,7 +12,7 @@ export class RoomCronService {
     private readonly livekitService: LivekitService
   ) {}
 
-  @Cron('*/10 * * * * *')
+  @Cron(CronExpression.EVERY_10_SECONDS)
   async handleCron() {
     const rooms = await this.roomRepository.getRooms();
 
