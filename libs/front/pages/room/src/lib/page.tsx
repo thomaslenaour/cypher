@@ -1,5 +1,4 @@
 import { Header } from '@cypher/front/components/common/server';
-import { Typography, Box } from '@cypher/front/shared/ui';
 import ClientRoom from './ClientRoom';
 import { getClient } from '@cypher/front/libs/apollo/server';
 import {
@@ -53,16 +52,11 @@ export async function RoomPage({ params }: RoomPageProps) {
   return (
     <>
       <Header />
-      <Box sx={{ py: 5 }}>
-        <Typography level="h3" fontWeight={700} textAlign="center" mb={2}>
-          Room name
-        </Typography>
-        <ClientRoom
-          initialToken={token}
-          roomId={params.id}
-          authenticated={!!session}
-        />
-      </Box>
+      <ClientRoom
+        initialToken={token}
+        roomId={params.id}
+        authenticated={!!session}
+      />
     </>
   );
 }

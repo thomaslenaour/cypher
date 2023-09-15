@@ -1,4 +1,4 @@
-import { Header } from '@cypher/front/components/common';
+import { RecordingAnimation } from '@cypher/front/components/common';
 import { getClient } from '@cypher/front/libs/apollo/server';
 import { GetRoomsDocument } from '@cypher/front/shared/graphql';
 import {
@@ -8,8 +8,7 @@ import {
   Stack,
   Typography,
 } from '@cypher/front/shared/ui';
-import { Footer } from '@cypher/front/components/common';
-import { RecordingAnimation } from './components/RecordingAnimation';
+import { Footer, Header } from '@cypher/front/components/common/server';
 import { PresentationSection } from './components/PresentationSection';
 import { SvgBackground } from './components/SvgBackground';
 import { ChevronsDown } from 'lucide-react';

@@ -27,6 +27,8 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean };
   Int: { input: number; output: number };
   Float: { input: number; output: number };
+  /** A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format. */
+  DateTime: { input: any; output: any };
 };
 
 export type JoinRoomInput = {
@@ -35,10 +37,18 @@ export type JoinRoomInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  follow: UserObjectType;
   joinPublicRoom: Scalars['String']['output'];
   joinRoom: Scalars['String']['output'];
   startPublishing: Scalars['Boolean']['output'];
+  stopPublishing: Scalars['Boolean']['output'];
   toggleMyselfFromQueue: Scalars['Boolean']['output'];
+  unfollow: UserObjectType;
+};
+
+export type MutationFollowArgs = {
+  followed: Scalars['String']['input'];
+  following: Scalars['String']['input'];
 };
 
 export type MutationJoinPublicRoomArgs = {
@@ -50,27 +60,42 @@ export type MutationJoinRoomArgs = {
 };
 
 export type MutationStartPublishingArgs = {
-  data: StartPublishingInput;
+  data: StartStopPublishingInput;
+};
+
+export type MutationStopPublishingArgs = {
+  data: StartStopPublishingInput;
 };
 
 export type MutationToggleMyselfFromQueueArgs = {
   data: ToggleMyselfFromQueueInput;
 };
 
+export type MutationUnfollowArgs = {
+  unfollowed: Scalars['String']['input'];
+  unfollowing: Scalars['String']['input'];
+};
+
 export type Query = {
   __typename?: 'Query';
   rooms: Array<RoomObjectType>;
   test: Scalars['String']['output'];
+  userProfile: UserProfileObjectType;
+};
+
+export type QueryUserProfileArgs = {
+  key: Scalars['String']['input'];
+  value: Scalars['String']['input'];
 };
 
 export type RoomObjectType = {
   __typename?: 'RoomObjectType';
   id: Scalars['String']['output'];
   name: Scalars['String']['output'];
-  participantsNumber: Scalars['Float']['output'];
+  participantsNumber?: Maybe<Scalars['Float']['output']>;
 };
 
-export type StartPublishingInput = {
+export type StartStopPublishingInput = {
   identity: Scalars['String']['input'];
   roomId: Scalars['String']['input'];
 };
@@ -78,6 +103,29 @@ export type StartPublishingInput = {
 export type ToggleMyselfFromQueueInput = {
   identity: Scalars['String']['input'];
   roomId: Scalars['String']['input'];
+};
+
+export type UserObjectType = {
+  __typename?: 'UserObjectType';
+  email?: Maybe<Scalars['String']['output']>;
+  emailVerified?: Maybe<Scalars['DateTime']['output']>;
+  followedBy?: Maybe<Array<UserObjectType>>;
+  following?: Maybe<Array<UserObjectType>>;
+  id: Scalars['String']['output'];
+  image?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  profile: UserProfileObjectType;
+};
+
+export type UserProfileObjectType = {
+  __typename?: 'UserProfileObjectType';
+  bannerUrl?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
+  profileUrl?: Maybe<Scalars['String']['output']>;
+  pseudo: Scalars['String']['output'];
+  punchline?: Maybe<Scalars['String']['output']>;
+  userId: Scalars['String']['output'];
+  userName?: Maybe<Scalars['String']['output']>;
 };
 
 export type ToggleMyselfFromQueueMutationVariables = Exact<{
@@ -105,12 +153,21 @@ export type JoinRoomMutationVariables = Exact<{
 export type JoinRoomMutation = { __typename?: 'Mutation'; joinRoom: string };
 
 export type StartPublishingMutationVariables = Exact<{
-  data: StartPublishingInput;
+  data: StartStopPublishingInput;
 }>;
 
 export type StartPublishingMutation = {
   __typename?: 'Mutation';
   startPublishing: boolean;
+};
+
+export type StopPublishingMutationVariables = Exact<{
+  data: StartStopPublishingInput;
+}>;
+
+export type StopPublishingMutation = {
+  __typename?: 'Mutation';
+  stopPublishing: boolean;
 };
 
 export type GetRoomsQueryVariables = Exact<{ [key: string]: never }>;
@@ -121,7 +178,7 @@ export type GetRoomsQuery = {
     __typename?: 'RoomObjectType';
     id: string;
     name: string;
-    participantsNumber: number;
+    participantsNumber?: number | null;
   }>;
 };
 
@@ -300,7 +357,7 @@ export const StartPublishingDocument = {
             kind: 'NonNullType',
             type: {
               kind: 'NamedType',
-              name: { kind: 'Name', value: 'StartPublishingInput' },
+              name: { kind: 'Name', value: 'StartStopPublishingInput' },
             },
           },
         },
@@ -329,6 +386,51 @@ export const StartPublishingDocument = {
 } as unknown as DocumentNode<
   StartPublishingMutation,
   StartPublishingMutationVariables
+>;
+export const StopPublishingDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'StopPublishing' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'data' } },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'StartStopPublishingInput' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'stopPublishing' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'data' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'data' },
+                },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  StopPublishingMutation,
+  StopPublishingMutationVariables
 >;
 export const GetRoomsDocument = {
   kind: 'Document',
