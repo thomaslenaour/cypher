@@ -9,7 +9,7 @@ export function RightSide() {
   const highlightPost = PostsHelper.getAllPostsSortedByDate();
 
   return (
-    <Box>
+    <Box sx={{ minWidth: '35%' }}>
       <Stack direction="column" spacing={4} sx={{ height: '100%' }}>
         <PostCard {...highlightPost[0]} />
         <PostCard {...highlightPost[1]} />

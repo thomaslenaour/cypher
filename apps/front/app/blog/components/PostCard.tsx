@@ -7,13 +7,17 @@ import {
   Chip,
   Stack,
   Box,
+  IconButton,
 } from '@cypher/front/shared/ui';
 import { Post } from '../../../.contentlayer/generated';
 import { Typography } from '@mui/joy';
 import { format, parseISO } from 'date-fns';
 import Link from 'next/link';
+import { Plus } from 'lucide-react';
+import React from 'react';
 
 export function PostCard(post: Post) {
+  // #231717
   return (
     <Card
       variant="solid"
@@ -23,57 +27,72 @@ export function PostCard(post: Post) {
         borderRadius: '20px',
       }}
     >
-      <Link href={`/blog/${post.url}`}>
+      <Link href={`/blog/${post.url}`} style={{ height: '100%' }}>
         <CardCover>
           <img src={post.image} alt="image" />
         </CardCover>
-        <CardContent>
+        <CardContent sx={{ justifyContent: 'space-between', height: '100%' }}>
           <Stack
-            direction="column"
+            direction="row"
             alignItems="flex-start"
-            spacing={1.5}
-            sx={{ mb: 5 }}
+            justifyContent="space-between"
           >
-            <Chip
-              sx={{
-                backgroundColor: 'neutral.50',
-              }}
+            <Stack
+              direction="column"
+              alignItems="flex-start"
+              spacing={1.5}
+              sx={{ mb: 5 }}
             >
-              <Typography
+              <Chip
                 sx={{
-                  color: 'black',
+                  backgroundColor: 'neutral.50',
                 }}
               >
-                <time dateTime={post.date}>
-                  {format(parseISO(post.date), 'd LLL, yyyy')}
-                </time>
-              </Typography>
-            </Chip>
-            <Chip
-              variant="solid"
-              sx={{
-                backgroundColor: 'primary.500',
-              }}
-            >
-              <Typography
+                <Typography
+                  sx={{
+                    color: '#231717',
+                  }}
+                >
+                  <time dateTime={post.date}>
+                    {format(parseISO(post.date), 'd LLL, yyyy')}
+                  </time>
+                </Typography>
+              </Chip>
+              <Chip
+                variant="solid"
                 sx={{
-                  color: 'neutral.50',
+                  backgroundColor: 'primary.500',
                 }}
               >
-                {post.tag}
-              </Typography>
-            </Chip>
+                <Typography
+                  sx={{
+                    color: 'neutral.50',
+                  }}
+                >
+                  {post.tag}
+                </Typography>
+              </Chip>
+            </Stack>
+            <IconButton
+              variant="outlined"
+              color="neutral"
+              sx={{
+                color: 'white',
+                borderRadius: '50%',
+                border: 'solid 2px white',
+              }}
+            >
+              <Plus />
+            </IconButton>
           </Stack>
-          <Box sx={{ zIndex: 1 }}>
+          <Box sx={{ zIndex: 1, textAlign: 'right' }}>
             <Typography
               level="h2"
               sx={{
-                color: (theme) =>
-                  theme.palette.mode === 'dark' ? 'white' : 'black',
+                color: '#231717',
                 display: 'inline',
                 padding: '6px 12px',
-                backgroundColor: (theme) =>
-                  theme.palette.mode === 'dark' ? 'black' : 'white',
+                backgroundColor: 'white',
                 boxDecorationBreak: 'clone',
                 filter: 'url(#instagram)',
                 fontSize: '34px',
