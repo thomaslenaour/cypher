@@ -28,6 +28,7 @@ export { default as Alert } from '@mui/joy/Alert';
 export { default as Switch } from '@mui/joy/Switch';
 export { useColorScheme, useTheme } from '@mui/joy/styles';
 export { getInitColorSchemeScript } from '@mui/joy';
+export * from '@mui/joy/styles/types';
 
 // Custom UI Components
 export { Box } from './Box';

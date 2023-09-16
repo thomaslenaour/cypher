@@ -71,6 +71,12 @@
       "@cypher/front/pages/root/server": [
         "libs/front/pages/root/src/server.ts"
       ],
+      "@cypher/front/pages/user-profile": [
+        "libs/front/pages/user-profile/src/index.ts"
+      ],
+      "@cypher/front/pages/user-profile/server": [
+        "libs/front/pages/user-profile/src/server.ts"
+      ],
       "@cypher/front/shared/graphql": [
         "libs/front/shared/graphql/src/index.ts"
       ],
