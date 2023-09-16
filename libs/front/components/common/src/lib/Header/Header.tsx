@@ -36,7 +36,6 @@ function HeaderContent({ authenticated }: HeaderProps) {
             Cypher
           </Typography>
         </Link>
-
         <HeaderRightComponent authenticated={authenticated} />
       </Box>
       <Divider />
