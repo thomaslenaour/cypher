@@ -42,6 +42,8 @@ function isLocal(p: Participant) {
   return p instanceof LocalParticipant;
 }
 
+let interval: NodeJS.Timeout | null = null;
+
 export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
   // Audio
   const audioContext = useWebAudioContext();
@@ -49,6 +51,11 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
   const audioEl = useRef<HTMLAudioElement | null>(null);
   const source = useRef<MediaElementAudioSourceNode | null>(null);
   const sink = useRef<MediaStreamAudioDestinationNode | null>(null);
+
+  // Timer
+  const [remainingSeconds, setRemainingSeconds] = useState(
+    PUBLISH_DURATION_SECONDS
+  );
 
   // React
   const router = useRouter();
@@ -95,6 +102,18 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
     if (!iAmInTheQueue) return "Appuie ici pour rejoindre la file d'attente";
     return "Appuie ici pour quitter la file d'attente";
   }, [authenticated, iAmInTheQueue, iAmThePublisher, isCurrentlyPublishing]);
+  const statusText = useMemo(() => {
+    if (currentPublisher) {
+      if (isCurrentlyPublishing)
+        return `${currentPublisher.name} est en train de rapper !`;
+      else
+        return `${currentPublisher.name} a le micro en main, c'est quand tu veux !`;
+    } else {
+      if (participantsInQueue?.length === 0)
+        return "Aucun artiste présent dans la file d'attente...";
+      else return "Le micro est en cours d'attribution";
+    }
+  }, [currentPublisher, participantsInQueue, isCurrentlyPublishing]);
 
   // GraphQL Requests
   const [toggleMyselfFromQueue] = useMutation(ToggleMyselfFromQueueDocument);
@@ -123,7 +142,6 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
     audioEl.current.muted = !!isCurrentlyPublishing;
     audioEl.current.setAttribute('loop', 'true');
     audioEl.current.setAttribute('autoplay', 'true');
-    audioEl.current.setAttribute('controls', 'true');
     audioElContainer.current.appendChild(audioEl.current);
     source.current = audioContext.createMediaElementSource(audioEl.current);
     sink.current = audioContext.createMediaStreamDestination();
@@ -150,6 +168,11 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
           },
         },
       });
+    }
+    if (interval) {
+      clearInterval(interval);
+      interval = null;
+      setRemainingSeconds(PUBLISH_DURATION_SECONDS);
     }
   }, [
     room.localParticipant,
@@ -240,6 +263,30 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
     }
   }, [isCurrentlyPublishing, iAmThePublisher]);
 
+  useEffect(() => {
+    if (currentPublisherMetadata?.startPublishAt) {
+      interval = setInterval(async () => {
+        const now = new Date().getTime();
+        const diff = Math.floor(
+          (now - currentPublisherMetadata.startPublishAt) / 1000
+        );
+        const remaining = PUBLISH_DURATION_SECONDS - diff;
+
+        if (remaining <= 0) {
+          await handleStopPublishing();
+          setRemainingSeconds(PUBLISH_DURATION_SECONDS);
+          return;
+        }
+
+        setRemainingSeconds(remaining);
+      }, 1000);
+    } else {
+      if (interval) clearInterval(interval);
+      interval = null;
+      setRemainingSeconds(PUBLISH_DURATION_SECONDS);
+    }
+  }, [currentPublisherMetadata?.startPublishAt, handleStopPublishing]);
+
   return (
     <>
       {!ready && <Ready onReady={handleReady} />}
@@ -272,9 +319,12 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
               nextArtist: participantsInQueue?.[0]?.name,
             }}
             main={{
+              status: {
+                text: statusText,
+              },
               timer: {
                 enabled: !!currentPublisherMetadata?.startPublishAt,
-                timeRemaining: 45,
+                timeRemaining: remainingSeconds,
               },
             }}
             footer={{

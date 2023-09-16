@@ -183,9 +183,7 @@ export class RoomService {
       throw new Error('No participant found with given identity');
     }
 
-    const isAllowed =
-      currentParticipantMetadata?.userId === userId &&
-      participant.permission?.canPublish;
+    const isAllowed = currentParticipantMetadata?.userId === userId;
     if (!isAllowed) {
       throw new Error('You are not allowed to toggle this participant');
     }
