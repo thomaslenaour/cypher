@@ -24,6 +24,7 @@ import {
 } from '@cypher/front/shared/graphql';
 import { useWebAudioContext } from '../../context/web-audio';
 import {
+  AudioPresets,
   LocalParticipant,
   Participant,
   RemoteTrackPublication,
@@ -142,6 +143,7 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
     audioEl.current.muted = !!isCurrentlyPublishing;
     audioEl.current.setAttribute('loop', 'true');
     audioEl.current.setAttribute('autoplay', 'true');
+    audioEl.current.volume = 0.5;
     audioElContainer.current.appendChild(audioEl.current);
     source.current = audioContext.createMediaElementSource(audioEl.current);
     sink.current = audioContext.createMediaStreamDestination();
@@ -223,6 +225,9 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
               {
                 name: 'beat',
                 source: Track.Source.Unknown,
+                audioPreset: AudioPresets.musicStereo,
+                dtx: true,
+                red: true,
               }
             );
           }
