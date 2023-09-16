@@ -1,4 +1,4 @@
-import { Stack } from '@cypher/front/shared/ui';
+import { Divider, Stack } from '@cypher/front/shared/ui';
 import { Insight } from './Insight';
 
 interface InsightsProps {
@@ -11,7 +11,11 @@ export const Insights = ({ contributions, followers }: InsightsProps) => {
   const followersLabel = `Abonné${followers > 1 ? 's' : ''}`;
 
   return (
-    <Stack direction={'row'} gap={2}>
+    <Stack
+      direction={'row'}
+      gap={2}
+      divider={<Divider orientation="vertical" />}
+    >
       <Insight label={contributionsLabel} value={contributions} />
       <Insight label={followersLabel} value={followers} />
     </Stack>

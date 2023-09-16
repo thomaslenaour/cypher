@@ -1,32 +1,25 @@
 import { Header } from '@cypher/front/components/common/server';
-import { NotFound } from './components/NotFound';
 import { getProfile } from './queries/getUserProfile';
 import { getUser } from './queries/getUser';
-import { IUser, IUserProfile } from './interfaces';
 import { UserProfile } from './components/UserProfile';
+import { UserNotFound } from './components/UserNotFound';
 
-type UserProfilePageParams = {
-  pseudo: string;
-};
+interface UserProfilePageProps {
+  params: {
+    pseudo: string;
+  };
+}
 
-export async function UserProfilePage({
-  params,
-}: {
-  params: UserProfilePageParams;
-}) {
-  const profile: IUserProfile | null = await getProfile(params.pseudo).catch(
-    () => null
-  );
-
-  const user: IUser | null = profile
-    ? await getUser(profile.userId).catch(() => null)
-    : null;
+export async function UserProfilePage({ params }: UserProfilePageProps) {
+  const profile = await getProfile(params.pseudo).catch(() => null);
+  const user = profile ? await getUser(profile.userId).catch(() => null) : null;
+  const displayNotFoundPage = profile === null || user === null;
 
   return (
     <>
       <Header />
-      {profile === null || user === null ? (
-        <NotFound pseudo={params.pseudo} />
+      {displayNotFoundPage ? (
+        <UserNotFound pseudo={params.pseudo} />
       ) : (
         <UserProfile profile={profile} user={user} />
       )}

@@ -5,16 +5,10 @@ import { format } from 'date-fns';
 interface InformationProps {
   createdAt: Date;
   pseudo: string;
-  punchline?: string;
-  userName?: string;
+  punchline?: string | null;
+  userName?: string | null;
   sx?: SxProps;
 }
-
-const styles: SxProps = {
-  '& > .sub-information': {
-    margin: '.625rem 0',
-  },
-};
 
 export const Information = ({
   createdAt,
@@ -26,22 +20,16 @@ export const Information = ({
   const formattedDate = format(new Date(createdAt), 'yyyy');
 
   return (
-    <Box
-      sx={{
-        ...styles,
-        ...sx,
-      }}
-    >
-      <Typography level="title-lg">{userName ?? pseudo} HA</Typography>
-      {punchline && <Typography className="punchline">{punchline}</Typography>}
+    <Box {...{ sx }}>
+      <Typography level="h3">{userName ?? pseudo}</Typography>
+      {punchline && <Typography>{punchline}</Typography>}
       <Stack
         direction="row"
         alignItems="center"
         divider={<Divider orientation="vertical" />}
         spacing={1}
-        className="sub-information"
       >
-        <Typography level="body-md" color="primary">
+        <Typography fontStyle={'italic'} level="body-sm" color="primary">
           @{pseudo}
         </Typography>
         <Typography level="body-sm">

@@ -1,28 +1,25 @@
 import { Box } from '@cypher/front/shared/ui';
-import { SxProps } from '@mui/joy/styles/types';
 
 interface BannerProps {
-  bannerUrl?: string | null;
+  bannerUrl: string | null;
 }
-
-const styles = (bannerUrl: string): SxProps => {
-  const bannerStyles: SxProps =
-    bannerUrl !== ''
-      ? {
-          background: `url("${bannerUrl}")`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }
-      : {
-          backgroundColor: 'primary.900',
-        };
-
-  return {
-    ...bannerStyles,
-    height: '18.75rem',
-  };
-};
-
 export const Banner = ({ bannerUrl }: BannerProps) => (
-  <Box sx={styles(bannerUrl ?? '')} />
+  <Box
+    sx={{
+      ...(bannerUrl
+        ? {
+            background: `url("${bannerUrl}")`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }
+        : {
+            backgroundColor: (theme) =>
+              theme.palette.mode === 'dark' ? 'neutral.800' : 'neutral.400',
+          }),
+      height: {
+        sm: '18.75rem',
+        xs: '12.5rem',
+      },
+    }}
+  />
 );
