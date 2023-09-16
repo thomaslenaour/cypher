@@ -8,6 +8,7 @@ import { Box, Container } from '@cypher/front/shared/ui';
 import { InsideRoom } from './components/InsideRoom/InsideRoom';
 import { RoomLoader } from './components/RoomLoader';
 import { WebAudioContext } from './context/web-audio';
+import { AudioPresets } from 'livekit-client';
 
 interface ClientRoomProps {
   initialToken: string;
@@ -53,6 +54,17 @@ export function ClientRoom({
           onConnected={() => setConnected(true)}
           options={{
             expWebAudioMix: { audioContext: audioContext as AudioContext },
+            audioCaptureDefaults: {
+              noiseSuppression: true,
+              echoCancellation: true,
+              autoGainControl: true,
+            },
+            publishDefaults: {
+              audioPreset: AudioPresets.musicStereo,
+              dtx: true,
+              red: true,
+              forceStereo: true,
+            },
           }}
           style={{ height: '100%' }}
         >
