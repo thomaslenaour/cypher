@@ -42,6 +42,8 @@ function isLocal(p: Participant) {
   return p instanceof LocalParticipant;
 }
 
+let interval: NodeJS.Timeout | null = null;
+
 export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
   // Audio
   const audioContext = useWebAudioContext();
@@ -49,6 +51,11 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
   const audioEl = useRef<HTMLAudioElement | null>(null);
   const source = useRef<MediaElementAudioSourceNode | null>(null);
   const sink = useRef<MediaStreamAudioDestinationNode | null>(null);
+
+  // Timer
+  const [remainingSeconds, setRemainingSeconds] = useState(
+    PUBLISH_DURATION_SECONDS
+  );
 
   // React
   const router = useRouter();
@@ -151,6 +158,11 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
         },
       });
     }
+    if (interval) {
+      clearInterval(interval);
+      interval = null;
+      setRemainingSeconds(PUBLISH_DURATION_SECONDS);
+    }
   }, [
     room.localParticipant,
     roomId,
@@ -240,6 +252,30 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
     }
   }, [isCurrentlyPublishing, iAmThePublisher]);
 
+  useEffect(() => {
+    if (currentPublisherMetadata?.startPublishAt) {
+      interval = setInterval(async () => {
+        const now = new Date().getTime();
+        const diff = Math.floor(
+          (now - currentPublisherMetadata.startPublishAt) / 1000
+        );
+        const remaining = PUBLISH_DURATION_SECONDS - diff;
+
+        if (remaining <= 0) {
+          await handleStopPublishing();
+          setRemainingSeconds(PUBLISH_DURATION_SECONDS);
+          return;
+        }
+
+        setRemainingSeconds(remaining);
+      }, 1000);
+    } else {
+      if (interval) clearInterval(interval);
+      interval = null;
+      setRemainingSeconds(PUBLISH_DURATION_SECONDS);
+    }
+  }, [currentPublisherMetadata?.startPublishAt, handleStopPublishing]);
+
   return (
     <>
       {!ready && <Ready onReady={handleReady} />}
@@ -274,7 +310,7 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
             main={{
               timer: {
                 enabled: !!currentPublisherMetadata?.startPublishAt,
-                timeRemaining: 45,
+                timeRemaining: remainingSeconds,
               },
             }}
             footer={{
