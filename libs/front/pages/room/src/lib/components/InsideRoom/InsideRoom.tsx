@@ -102,6 +102,18 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
     if (!iAmInTheQueue) return "Appuie ici pour rejoindre la file d'attente";
     return "Appuie ici pour quitter la file d'attente";
   }, [authenticated, iAmInTheQueue, iAmThePublisher, isCurrentlyPublishing]);
+  const statusText = useMemo(() => {
+    if (currentPublisher) {
+      if (isCurrentlyPublishing)
+        return `${currentPublisher.name} est en train de rapper !`;
+      else
+        return `${currentPublisher.name} a le micro en main, c'est quand tu veux !`;
+    } else {
+      if (participantsInQueue?.length === 0)
+        return "Aucun artiste présent dans la file d'attente...";
+      else return "Le micro est en cours d'attribution";
+    }
+  }, [currentPublisher, participantsInQueue, isCurrentlyPublishing]);
 
   // GraphQL Requests
   const [toggleMyselfFromQueue] = useMutation(ToggleMyselfFromQueueDocument);
@@ -130,7 +142,6 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
     audioEl.current.muted = !!isCurrentlyPublishing;
     audioEl.current.setAttribute('loop', 'true');
     audioEl.current.setAttribute('autoplay', 'true');
-    audioEl.current.setAttribute('controls', 'true');
     audioElContainer.current.appendChild(audioEl.current);
     source.current = audioContext.createMediaElementSource(audioEl.current);
     sink.current = audioContext.createMediaStreamDestination();
@@ -308,6 +319,9 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
               nextArtist: participantsInQueue?.[0]?.name,
             }}
             main={{
+              status: {
+                text: statusText,
+              },
               timer: {
                 enabled: !!currentPublisherMetadata?.startPublishAt,
                 timeRemaining: remainingSeconds,

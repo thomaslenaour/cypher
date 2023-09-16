@@ -60,7 +60,17 @@ export function InsideRoomLeftSideHeader({
             {c.icon}
             <Typography level="title-lg">{c.title}</Typography>
           </Stack>
-          <Typography mt={1} level="h2" textAlign="center" color="primary">
+          <Typography
+            mt={1}
+            level="h2"
+            textAlign="center"
+            color="primary"
+            sx={{
+              maxWidth: '220px',
+              textOverflow: 'ellipsis',
+              overflow: 'hidden',
+            }}
+          >
             {c.value}
           </Typography>
         </Box>

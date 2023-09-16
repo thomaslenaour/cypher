@@ -12,6 +12,7 @@ interface InsideRoomLeftSideProps {
     nextArtist?: string;
   };
   main: {
+    status: { text: string };
     timer: {
       enabled: boolean;
       timeRemaining: number;

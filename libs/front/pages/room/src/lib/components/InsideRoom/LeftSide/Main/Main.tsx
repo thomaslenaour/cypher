@@ -3,16 +3,33 @@ import { Box, Typography } from '@cypher/front/shared/ui';
 import { PUBLISH_DURATION_SECONDS } from '../../InsideRoom';
 
 interface InsideRoomLeftSideMainProps {
+  status: {
+    text: string;
+  };
   timer: { timeRemaining: number; enabled: boolean };
 }
 
-export function InsideRoomLeftSideMain({ timer }: InsideRoomLeftSideMainProps) {
+export function InsideRoomLeftSideMain({
+  timer,
+  status,
+}: InsideRoomLeftSideMainProps) {
   const strokeDasharray = `${
     (((timer.timeRemaining * 100) / PUBLISH_DURATION_SECONDS) * 283) / 100
   }, 283`;
 
   return (
-    <Box>
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: 1,
+      }}
+    >
+      <Typography level="h2" textAlign="center">
+        {status.text}
+      </Typography>
       {timer.enabled && (
         <Box
           sx={{
