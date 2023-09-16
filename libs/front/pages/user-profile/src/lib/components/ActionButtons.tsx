@@ -14,7 +14,7 @@ export const ActionButtons = ({
   sessionStatus,
   handleFollowClick,
 }: ActionButtonsProps) => {
-  if (sessionStatus !== 'authenticated') return <></>;
+  if (sessionStatus !== 'authenticated') return;
 
   return !currentUserIsOnHisProfilePage ? (
     <Button
