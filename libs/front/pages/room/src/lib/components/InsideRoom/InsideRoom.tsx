@@ -143,7 +143,7 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
     audioEl.current.muted = !!isCurrentlyPublishing;
     audioEl.current.setAttribute('loop', 'true');
     audioEl.current.setAttribute('autoplay', 'true');
-    audioEl.current.volume = 0.5;
+    audioEl.current.volume = 0.25;
     audioElContainer.current.appendChild(audioEl.current);
     source.current = audioContext.createMediaElementSource(audioEl.current);
     sink.current = audioContext.createMediaStreamDestination();
@@ -225,7 +225,7 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
               {
                 name: 'beat',
                 source: Track.Source.Unknown,
-                audioPreset: AudioPresets.musicStereo,
+                audioPreset: AudioPresets.musicHighQualityStereo,
                 dtx: true,
                 red: true,
               }

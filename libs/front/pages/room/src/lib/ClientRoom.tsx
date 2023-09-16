@@ -60,7 +60,7 @@ export function ClientRoom({
               autoGainControl: true,
             },
             publishDefaults: {
-              audioPreset: AudioPresets.musicStereo,
+              audioPreset: AudioPresets.musicHighQualityStereo,
               dtx: true,
               red: true,
               forceStereo: true,
