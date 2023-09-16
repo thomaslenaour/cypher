@@ -5,10 +5,7 @@ import { Banner } from './Banner';
 import { PictureAndFollow } from './PictureAndFollow';
 import { Information } from './Information';
 import { Insights } from './Insights';
-import { useSession } from 'next-auth/react';
-import { useEffect, useState } from 'react';
-import { useMutation } from '@apollo/client';
-import { FollowDocument, UnfollowDocument } from '@cypher/front/shared/graphql';
+import { useUserProfile } from '../hooks/useUserProfile';
 
 interface UserProfileProps {
   profile: IUserProfile;
@@ -16,54 +13,8 @@ interface UserProfileProps {
 }
 
 export function UserProfile({ profile, user: defaultUser }: UserProfileProps) {
-  const [user, setUser] = useState<IUser>(defaultUser);
-  const { data: sessionData } = useSession();
-  const [currentUserFollowUser, setCurrentUserFollowUser] =
-    useState<boolean>(false);
-  const [followMutation] = useMutation(FollowDocument);
-  const [unfollowMutation] = useMutation(UnfollowDocument);
-
-  useEffect(() => {
-    setCurrentUserFollowUser(() =>
-      Boolean(user.followedBy?.find((u) => u.id === sessionData?.user.id))
-    );
-  }, [user.followedBy, sessionData?.user.id]);
-
-  const handleFollowClick = async () => {
-    if (sessionData?.user?.id == null) return;
-
-    if (!currentUserFollowUser) {
-      await followMutation({
-        variables: {
-          data: {
-            followed: user.id,
-            following: sessionData?.user?.id,
-          },
-        },
-      }).then((u) => {
-        if (u.data) {
-          setUser(u.data?.follow);
-        }
-
-        setCurrentUserFollowUser(true);
-      });
-    } else {
-      await unfollowMutation({
-        variables: {
-          data: {
-            unfollowed: user.id,
-            unfollowing: sessionData?.user?.id,
-          },
-        },
-      }).then((u) => {
-        if (u.data) {
-          setUser(u.data?.unfollow);
-        }
-
-        setCurrentUserFollowUser(false);
-      });
-    }
-  };
+  const { handleFollowClick, currentUserFollowUser, user } =
+    useUserProfile(defaultUser);
 
   return (
     <Box>
