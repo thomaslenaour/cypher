@@ -13,8 +13,10 @@ export const ActionButtons = ({
   currentUserIsOnHisProfilePage,
   sessionStatus,
   handleFollowClick,
-}: ActionButtonsProps) =>
-  !currentUserIsOnHisProfilePage ? (
+}: ActionButtonsProps) => {
+  if (sessionStatus !== 'authenticated') return <></>;
+
+  return !currentUserIsOnHisProfilePage ? (
     <Button
       disabled={sessionStatus !== 'authenticated'}
       color="primary"
@@ -33,3 +35,4 @@ export const ActionButtons = ({
       Modifier mon profil
     </Button>
   );
+};
