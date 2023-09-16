@@ -4,15 +4,18 @@ import { Box, Stack } from '@cypher/front/shared/ui';
 import React from 'react';
 import { PostCard } from './PostCard';
 import { PostsHelper } from '../utils/PostsHelper';
+import { Post } from '../../../.contentlayer/generated';
 
 export function RightSide() {
-  const highlightPost = PostsHelper.getAllPostsSortedByDate();
+  const lastTwoPostsNotHighlighted =
+    PostsHelper.getLastTwoPostsNotHighlighted();
 
   return (
     <Box sx={{ minWidth: '35%' }}>
       <Stack direction="column" spacing={4} sx={{ height: '100%' }}>
-        <PostCard {...highlightPost[0]} />
-        <PostCard {...highlightPost[1]} />
+        {lastTwoPostsNotHighlighted.map((post: Post, idx) => (
+          <PostCard key={idx} {...post} />
+        ))}
       </Stack>
     </Box>
   );
