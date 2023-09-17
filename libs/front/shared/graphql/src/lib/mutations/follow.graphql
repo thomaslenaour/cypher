@@ -1,5 +1,5 @@
-mutation Follow($data: FollowArgs!) {
-  follow(data: $data) {
+mutation Follow($followed: String!) {
+  follow(followed: $followed) {
     id
     followedBy {
       id
@@ -7,8 +7,8 @@ mutation Follow($data: FollowArgs!) {
   }
 }
 
-mutation Unfollow($data: UnfollowArgs!) {
-  unfollow(data: $data) {
+mutation Unfollow($unfollowed: String!) {
+  unfollow(unfollowed: $unfollowed) {
     id
     followedBy {
       id
