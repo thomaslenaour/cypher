@@ -12,11 +12,10 @@ import {
   UserProfileObjectType,
   UserProfileService,
 } from '@cypher/api/user-profile';
-import { FollowArgs } from './args/follow.args';
-import { UnfollowArgs } from './args/unfollow.args';
 import { UserUniqueFields } from './types';
 import { USER_UNIQUE_FIELDS } from './constants';
-import { BadRequestException } from '@nestjs/common';
+import { BadRequestException, UseGuards } from '@nestjs/common';
+import { CurrentUser, GqlAuthGuard } from '@cypher/api/authentication';
 
 @Resolver(() => UserObjectType)
 export class UserResolver {
@@ -25,20 +24,24 @@ export class UserResolver {
     private readonly userProfileService: UserProfileService
   ) {}
 
+  @UseGuards(GqlAuthGuard)
   @Mutation(() => UserObjectType)
   async follow(
-    @Args('data')
-    { followed, following }: FollowArgs
+    @Args('followed')
+    followed: string,
+    @CurrentUser() user: { userId: string }
   ) {
-    return await this.service.follow(followed, following);
+    return await this.service.follow(followed, user.userId);
   }
 
+  @UseGuards(GqlAuthGuard)
   @Mutation(() => UserObjectType)
   async unfollow(
-    @Args('data')
-    { unfollowed, unfollowing }: UnfollowArgs
+    @Args('unfollowed')
+    unfollowed: string,
+    @CurrentUser() user: { userId: string }
   ) {
-    return await this.service.unfollow(unfollowed, unfollowing);
+    return await this.service.unfollow(unfollowed, user.userId);
   }
 
   @Query(() => UserObjectType)

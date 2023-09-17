@@ -31,11 +31,6 @@ export type Scalars = {
   DateTime: { input: any; output: any };
 };
 
-export type FollowArgs = {
-  followed: Scalars['String']['input'];
-  following: Scalars['String']['input'];
-};
-
 export type JoinRoomInput = {
   roomId: Scalars['String']['input'];
 };
@@ -52,7 +47,7 @@ export type Mutation = {
 };
 
 export type MutationFollowArgs = {
-  data: FollowArgs;
+  followed: Scalars['String']['input'];
 };
 
 export type MutationJoinPublicRoomArgs = {
@@ -76,7 +71,7 @@ export type MutationToggleMyselfFromQueueArgs = {
 };
 
 export type MutationUnfollowArgs = {
-  data: UnfollowArgs;
+  unfollowed: Scalars['String']['input'];
 };
 
 export type Query = {
@@ -114,11 +109,6 @@ export type ToggleMyselfFromQueueInput = {
   roomId: Scalars['String']['input'];
 };
 
-export type UnfollowArgs = {
-  unfollowed: Scalars['String']['input'];
-  unfollowing: Scalars['String']['input'];
-};
-
 export type UserObjectType = {
   __typename?: 'UserObjectType';
   email?: Maybe<Scalars['String']['output']>;
@@ -144,7 +134,7 @@ export type UserProfileObjectType = {
 };
 
 export type FollowMutationVariables = Exact<{
-  data: FollowArgs;
+  followed: Scalars['String']['input'];
 }>;
 
 export type FollowMutation = {
@@ -157,7 +147,7 @@ export type FollowMutation = {
 };
 
 export type UnfollowMutationVariables = Exact<{
-  data: UnfollowArgs;
+  unfollowed: Scalars['String']['input'];
 }>;
 
 export type UnfollowMutation = {
@@ -271,12 +261,15 @@ export const FollowDocument = {
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'data' } },
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'followed' },
+          },
           type: {
             kind: 'NonNullType',
             type: {
               kind: 'NamedType',
-              name: { kind: 'Name', value: 'FollowArgs' },
+              name: { kind: 'Name', value: 'String' },
             },
           },
         },
@@ -290,10 +283,10 @@ export const FollowDocument = {
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'data' },
+                name: { kind: 'Name', value: 'followed' },
                 value: {
                   kind: 'Variable',
-                  name: { kind: 'Name', value: 'data' },
+                  name: { kind: 'Name', value: 'followed' },
                 },
               },
             ],
@@ -329,12 +322,15 @@ export const UnfollowDocument = {
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'data' } },
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'unfollowed' },
+          },
           type: {
             kind: 'NonNullType',
             type: {
               kind: 'NamedType',
-              name: { kind: 'Name', value: 'UnfollowArgs' },
+              name: { kind: 'Name', value: 'String' },
             },
           },
         },
@@ -348,10 +344,10 @@ export const UnfollowDocument = {
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'data' },
+                name: { kind: 'Name', value: 'unfollowed' },
                 value: {
                   kind: 'Variable',
-                  name: { kind: 'Name', value: 'data' },
+                  name: { kind: 'Name', value: 'unfollowed' },
                 },
               },
             ],
