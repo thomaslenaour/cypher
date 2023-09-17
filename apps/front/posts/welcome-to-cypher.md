@@ -1,6 +1,6 @@
 ---
 title: Bienvenue sur Cypher !
-date: 2023-09-11
+date: 2023-09-11 14:26:00
 description: Le rythme palpite, les mots fusent et la créativité s'envole - Bienvenue dans l'univers du cypher !
 tag: Article
 highlight: true
@@ -16,6 +16,10 @@ Au cœur de la culture musicale contemporaine, les cyphers sont devenus un terra
 ## Qu'est-ce que Cypher ?
 
 Cypher est bien plus qu'une simple plateforme en ligne. C'est un lieu de rencontre virtuel où les amateurs de rap et de musique peuvent se réunir, collaborer et s'exprimer. Notre vision est de créer une communauté dynamique où l'art du cypher est à l'honneur, un endroit où les frontières géographiques s'effacent et où la créativité est sans limites.
+
+  
+---
+  
 
 ## Découvrez nos Salles Virtuelles de Cyphers
 

@@ -23,4 +23,41 @@ export class PostsHelper {
     const allPostsNotHighlighted = PostsHelper.getAllPostsNotHighlighted();
     return [allPostsNotHighlighted[0], allPostsNotHighlighted[1]];
   }
+
+  static getRestNonSpecialPosts(): Post[] {
+    const twoLastPostsNotHighlighted =
+      PostsHelper.getLastTwoPostsNotHighlighted();
+    const thirdHighlightedPosts = [
+      PostsHelper.getHighlightPost(),
+      twoLastPostsNotHighlighted[0],
+      twoLastPostsNotHighlighted[1],
+    ];
+    const allPostsSortedByDate = PostsHelper.getAllPostsSortedByDate();
+
+    return allPostsSortedByDate.filter(
+      (post) =>
+        !thirdHighlightedPosts.some(
+          (highlightPost) => highlightPost.title === post.title
+        )
+    );
+  }
+
+  static getAllPostsTags(): string[] {
+    const allTags = PostsHelper.getRestNonSpecialPosts().map(
+      (post: Post) => post.tag
+    );
+    // remove duplicates
+    return [...new Set(allTags)];
+  }
+
+  static getAllPostsMatchWithTags(
+    tags: string[] = PostsHelper.getAllPostsTags()
+  ): Post[] {
+    if (tags.length === 1 && tags[0] === 'Tous') {
+      return PostsHelper.getRestNonSpecialPosts();
+    }
+    return PostsHelper.getRestNonSpecialPosts().filter((post: Post) =>
+      tags.some((tag: string) => post.tag === tag)
+    );
+  }
 }

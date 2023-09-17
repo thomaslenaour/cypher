@@ -45,12 +45,14 @@ export function PostCard(post: Post) {
             >
               <Chip
                 sx={{
-                  backgroundColor: 'neutral.50',
+                  backgroundColor: (theme) =>
+                    theme.palette.mode === 'dark' ? '#231717' : 'neutral.50',
                 }}
               >
                 <Typography
                   sx={{
-                    color: '#231717',
+                    color: (theme) =>
+                      theme.palette.mode === 'dark' ? 'neutral.50' : '#231717',
                   }}
                 >
                   <time dateTime={post.date}>
@@ -89,13 +91,15 @@ export function PostCard(post: Post) {
             <Typography
               level="h2"
               sx={{
-                color: '#231717',
+                color: (theme) =>
+                  theme.palette.mode === 'dark' ? 'neutral.50' : '#231717',
                 display: 'inline',
                 padding: '6px 12px',
-                backgroundColor: 'white',
+                backgroundColor: (theme) =>
+                  theme.palette.mode === 'dark' ? '#231717' : 'neutral.50',
                 boxDecorationBreak: 'clone',
                 filter: 'url(#instagram)',
-                fontSize: '34px',
+                fontSize: { xs: '28px', md: '34px' },
                 lineHeight: '1.3',
               }}
             >

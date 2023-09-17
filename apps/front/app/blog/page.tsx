@@ -1,9 +1,14 @@
 import { Footer, Header } from '@cypher/front/components/common';
 import React from 'react';
-import { Box, Container, Stack } from '@cypher/front/shared/ui';
-import { LeftSide } from './components/LeftSide';
-import { RightSide } from './components/RightSide';
+import { Box, Container, Divider, Stack } from '@cypher/front/shared/ui';
 import { SvgBackground } from '../../../../libs/front/pages/root/src/lib/components/SvgBackground';
+import { HighlightedPosts } from './components/HighlightedPosts';
+import { SeeMoreText } from './components/StyledText';
+import { PostsHelper } from './utils/PostsHelper';
+import { Post } from '../../.contentlayer/generated';
+import { PostCard } from './components/PostCard';
+import { AllOthersPosts } from './components/AllOthersPosts';
+
 export default function Home() {
   return (
     <>
@@ -11,10 +16,9 @@ export default function Home() {
       <Container>
         <Box>
           <SvgBackground />
-          <Stack direction="row" spacing={4} sx={{ mt: 10, minHeight: '80vh' }}>
-            <LeftSide />
-            <RightSide />
-          </Stack>
+          <HighlightedPosts />
+          <Divider sx={{ my: 10 }} />
+          <AllOthersPosts />
         </Box>
       </Container>
       <Footer />

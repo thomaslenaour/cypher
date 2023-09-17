@@ -1,10 +1,10 @@
 ---
-title: Les différents types de rap
-date: 2023-09-14 13:57:00
-description: Les différents types de rap
-tag: Article
+title: Post numéro 6
+date: 2023-09-15 18:36:00
+description: Post 5
+tag: Studio
 highlight: false
-image: https://images.pexels.com/photos/1762578/pexels-photo-1762578.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1
+image: https://images.pexels.com/photos/7586689/pexels-photo-7586689.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1
 ---
 
 # Bienvenue dans l'Ère du Cypher Virtuel : Découvrez Notre Plateforme Musicale Unique

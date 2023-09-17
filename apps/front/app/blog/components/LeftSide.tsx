@@ -2,7 +2,7 @@
 
 import { Box, Stack } from '@cypher/front/shared/ui';
 import React from 'react';
-import { Catchphrase } from './Catchphrase';
+import { CatchPhrase } from './StyledText';
 import { PostsHelper } from '../utils/PostsHelper';
 import { PostCard } from './PostCard';
 
@@ -19,7 +19,7 @@ export function LeftSide() {
           height: '100%',
         }}
       >
-        <Catchphrase />
+        <CatchPhrase />
         <PostCard {...highlightPost} />
       </Stack>
     </Box>

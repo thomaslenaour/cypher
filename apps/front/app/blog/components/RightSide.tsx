@@ -13,7 +13,7 @@ export function RightSide() {
   return (
     <Box sx={{ minWidth: '35%' }}>
       <Stack direction="column" spacing={4} sx={{ height: '100%' }}>
-        {lastTwoPostsNotHighlighted.map((post: Post, idx) => (
+        {lastTwoPostsNotHighlighted.map((post: Post, idx: number) => (
           <PostCard key={idx} {...post} />
         ))}
       </Stack>
