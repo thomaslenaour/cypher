@@ -21,6 +21,12 @@ export function ModeToggle() {
       variant="soft"
       color="neutral"
       onClick={() => setMode(mode === 'dark' ? 'light' : 'dark')}
+      sx={{
+        width: {
+          xs: '100%',
+          md: 'auto',
+        },
+      }}
     >
       {mode === 'dark' ? <Moon /> : <Sun />}
     </IconButton>
