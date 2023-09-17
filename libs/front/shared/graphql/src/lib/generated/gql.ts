@@ -13,7 +13,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-  'mutation Follow($data: FollowArgs!) {\n  follow(data: $data) {\n    id\n    followedBy {\n      id\n    }\n  }\n}\n\nmutation Unfollow($data: UnfollowArgs!) {\n  unfollow(data: $data) {\n    id\n    followedBy {\n      id\n    }\n  }\n}':
+  'mutation Follow($followed: String!) {\n  follow(followed: $followed) {\n    id\n    followedBy {\n      id\n    }\n  }\n}\n\nmutation Unfollow($unfollowed: String!) {\n  unfollow(unfollowed: $unfollowed) {\n    id\n    followedBy {\n      id\n    }\n  }\n}':
     types.FollowDocument,
   'mutation ToggleMyselfFromQueue($data: ToggleMyselfFromQueueInput!) {\n  toggleMyselfFromQueue(data: $data)\n}\n\nmutation JoinPublicRoom($roomId: String!) {\n  joinPublicRoom(data: {roomId: $roomId})\n}\n\nmutation JoinRoom($roomId: String!) {\n  joinRoom(data: {roomId: $roomId})\n}\n\nmutation StartPublishing($data: StartStopPublishingInput!) {\n  startPublishing(data: $data)\n}\n\nmutation StopPublishing($data: StartStopPublishingInput!) {\n  stopPublishing(data: $data)\n}':
     types.ToggleMyselfFromQueueDocument,
@@ -44,8 +44,8 @@ export function graphql(source: string): unknown;
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'mutation Follow($data: FollowArgs!) {\n  follow(data: $data) {\n    id\n    followedBy {\n      id\n    }\n  }\n}\n\nmutation Unfollow($data: UnfollowArgs!) {\n  unfollow(data: $data) {\n    id\n    followedBy {\n      id\n    }\n  }\n}'
-): (typeof documents)['mutation Follow($data: FollowArgs!) {\n  follow(data: $data) {\n    id\n    followedBy {\n      id\n    }\n  }\n}\n\nmutation Unfollow($data: UnfollowArgs!) {\n  unfollow(data: $data) {\n    id\n    followedBy {\n      id\n    }\n  }\n}'];
+  source: 'mutation Follow($followed: String!) {\n  follow(followed: $followed) {\n    id\n    followedBy {\n      id\n    }\n  }\n}\n\nmutation Unfollow($unfollowed: String!) {\n  unfollow(unfollowed: $unfollowed) {\n    id\n    followedBy {\n      id\n    }\n  }\n}'
+): (typeof documents)['mutation Follow($followed: String!) {\n  follow(followed: $followed) {\n    id\n    followedBy {\n      id\n    }\n  }\n}\n\nmutation Unfollow($unfollowed: String!) {\n  unfollow(unfollowed: $unfollowed) {\n    id\n    followedBy {\n      id\n    }\n  }\n}'];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

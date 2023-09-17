@@ -25,30 +25,34 @@ export const useUserProfile = (defaultUser: IUser) => {
 
   // Handlers
   const handleFollowClick = async () => {
-    if (sessionData?.user?.id == null) return;
+    if (!sessionData?.user?.id) return;
 
-    if (!currentUserFollowUser) {
-      followMutation({
-        variables: {
-          data: {
+    try {
+      let resultData = null;
+
+      if (!currentUserFollowUser) {
+        const res = await followMutation({
+          variables: {
             followed: user.id,
-            following: sessionData.user.id,
           },
-        },
-      }).then((res) => {
-        if (res.data) setUser(res.data.follow);
-      });
-    } else {
-      unfollowMutation({
-        variables: {
-          data: {
+        });
+
+        if (res.data) resultData = res.data.follow;
+      } else {
+        const res = await unfollowMutation({
+          variables: {
             unfollowed: user.id,
-            unfollowing: sessionData.user.id,
           },
-        },
-      }).then((res) => {
-        if (res.data) setUser(res.data.unfollow);
-      });
+        });
+
+        if (res.data) resultData = res.data.unfollow;
+      }
+
+      if (resultData) setUser(resultData);
+      else console.error('Failed to process follow/unfollow.');
+    } catch (error: any) {
+      // Handle any errors from the API call
+      console.error('An error occurred:', error.message);
     }
   };
 
