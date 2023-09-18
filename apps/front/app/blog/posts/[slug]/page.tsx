@@ -1,13 +1,7 @@
 import { format, parseISO } from 'date-fns';
 import { allPosts, Post } from '../../../../.contentlayer/generated';
 import { Footer, Header } from '@cypher/front/components/common';
-import {
-  Box,
-  Container,
-  Grid,
-  Typography,
-} from '@cypher/front/shared/ui';
-import Link from 'next/link';
+import { Box, Container, Grid, Typography } from '@cypher/front/shared/ui';
 import React from 'react';
 import { RecordingAnimation } from '../../../../../../libs/front/pages/root/src/lib/components/RecordingAnimation';
 import { fr } from 'date-fns/locale';
