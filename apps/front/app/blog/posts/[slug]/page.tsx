@@ -1,10 +1,11 @@
 import { format, parseISO } from 'date-fns';
-import {allPosts, Post} from '../../../../.contentlayer/generated';
+import { allPosts, Post } from '../../../../.contentlayer/generated';
 import { Footer, Header } from '@cypher/front/components/common';
 import {
   Box,
   Button,
-  Container, Grid,
+  Container,
+  Grid,
   Stack,
   Typography,
 } from '@cypher/front/shared/ui';
@@ -13,8 +14,8 @@ import { SvgBackground } from '../../../../../../libs/front/pages/root/src/lib/c
 import React from 'react';
 import { RecordingAnimation } from '../../../../../../libs/front/pages/root/src/lib/components/RecordingAnimation';
 import { fr } from 'date-fns/locale';
-import {PostsHelper} from "../../utils/PostsHelper";
-import {PostCard} from "../../components/PostCard";
+import { PostsHelper } from '../../utils/PostsHelper';
+import { PostCard } from '../../components/PostCard';
 
 export const generateStaticParams = async () =>
   allPosts.map((post) => ({ slug: post._raw.flattenedPath }));
@@ -41,14 +42,14 @@ const PostLayout = ({ params }: { params: { slug: string } }) => {
             <RecordingAnimation />
           </Box>
         </Box>
-        <Grid container spacing={3}>
+        <Typography level="body-sm">
+          <time dateTime={post.date}>
+            {format(parseISO(post.date), 'dd MMMM yyyy', { locale: fr })}
+          </time>
+        </Typography>
+        <Grid container spacing={5}>
           <Grid xs={12} md={8}>
-            <Typography level="body-sm">
-              <time dateTime={post.date}>
-                {format(parseISO(post.date), 'dd MMMM yyyy', { locale: fr })}
-              </time>
-            </Typography>
-            <Typography my={4} level="h1" fontSize={50}>
+            <Typography my={4} level="h1" fontSize={{ sm: 40, md: 50 }}>
               {post.title}
             </Typography>
             <Typography>
@@ -56,12 +57,24 @@ const PostLayout = ({ params }: { params: { slug: string } }) => {
             </Typography>
           </Grid>
           <Grid xs={12} md={4}>
-            <Typography level="h3">A voir aussi</Typography>
-            <Grid container spacing={3} sx={{ flexGrow: 1 }}>
+            <Grid
+              container
+              spacing={3}
+              sx={{
+                flexGrow: 1,
+                position: 'sticky',
+                top: '2rem',
+                justifyContent: 'center',
+              }}
+              flexWrap="wrap"
+            >
+              <Typography level="h2" mb={1}>
+                Les dernières news
+              </Typography>
               {PostsHelper.getThreeHighlightedPosts().map(
                 (post: Post, idx: number) => (
-                  <Grid xs={4} md={12}>
-                    <PostCard key={idx} {...post} />
+                  <Grid key={idx} xs={12}>
+                    <PostCard {...post} />
                   </Grid>
                 )
               )}
