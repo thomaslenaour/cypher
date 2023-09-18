@@ -27,6 +27,8 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean };
   Int: { input: number; output: number };
   Float: { input: number; output: number };
+  /** A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format. */
+  DateTime: { input: any; output: any };
 };
 
 export type JoinRoomInput = {
@@ -35,10 +37,18 @@ export type JoinRoomInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  follow: UserObjectType;
   joinPublicRoom: Scalars['String']['output'];
   joinRoom: Scalars['String']['output'];
   startPublishing: Scalars['Boolean']['output'];
+  stopPublishing: Scalars['Boolean']['output'];
   toggleMyselfFromQueue: Scalars['Boolean']['output'];
+  unfollow: UserObjectType;
+  updateUserProfile: UserProfileObjectType;
+};
+
+export type MutationFollowArgs = {
+  followed: Scalars['String']['input'];
 };
 
 export type MutationJoinPublicRoomArgs = {
@@ -50,27 +60,51 @@ export type MutationJoinRoomArgs = {
 };
 
 export type MutationStartPublishingArgs = {
-  data: StartPublishingInput;
+  data: StartStopPublishingInput;
+};
+
+export type MutationStopPublishingArgs = {
+  data: StartStopPublishingInput;
 };
 
 export type MutationToggleMyselfFromQueueArgs = {
   data: ToggleMyselfFromQueueInput;
 };
 
+export type MutationUnfollowArgs = {
+  unfollowed: Scalars['String']['input'];
+};
+
+export type MutationUpdateUserProfileArgs = {
+  data: UpdateUserProfileInput;
+};
+
 export type Query = {
   __typename?: 'Query';
   rooms: Array<RoomObjectType>;
   test: Scalars['String']['output'];
+  user: UserObjectType;
+  userProfile: UserProfileObjectType;
+};
+
+export type QueryUserArgs = {
+  key: Scalars['String']['input'];
+  value: Scalars['String']['input'];
+};
+
+export type QueryUserProfileArgs = {
+  key: Scalars['String']['input'];
+  value: Scalars['String']['input'];
 };
 
 export type RoomObjectType = {
   __typename?: 'RoomObjectType';
   id: Scalars['String']['output'];
   name: Scalars['String']['output'];
-  participantsNumber: Scalars['Float']['output'];
+  participantsNumber?: Maybe<Scalars['Float']['output']>;
 };
 
-export type StartPublishingInput = {
+export type StartStopPublishingInput = {
   identity: Scalars['String']['input'];
   roomId: Scalars['String']['input'];
 };
@@ -78,6 +112,61 @@ export type StartPublishingInput = {
 export type ToggleMyselfFromQueueInput = {
   identity: Scalars['String']['input'];
   roomId: Scalars['String']['input'];
+};
+
+export type UpdateUserProfileInput = {
+  punchline: Scalars['String']['input'];
+  userName: Scalars['String']['input'];
+};
+
+export type UserObjectType = {
+  __typename?: 'UserObjectType';
+  email?: Maybe<Scalars['String']['output']>;
+  emailVerified?: Maybe<Scalars['DateTime']['output']>;
+  followedBy?: Maybe<Array<UserObjectType>>;
+  following?: Maybe<Array<UserObjectType>>;
+  id: Scalars['String']['output'];
+  image?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  profile: UserProfileObjectType;
+};
+
+export type UserProfileObjectType = {
+  __typename?: 'UserProfileObjectType';
+  bannerUrl?: Maybe<Scalars['String']['output']>;
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['String']['output'];
+  profileUrl?: Maybe<Scalars['String']['output']>;
+  pseudo: Scalars['String']['output'];
+  punchline?: Maybe<Scalars['String']['output']>;
+  userId: Scalars['String']['output'];
+  userName?: Maybe<Scalars['String']['output']>;
+};
+
+export type FollowMutationVariables = Exact<{
+  followed: Scalars['String']['input'];
+}>;
+
+export type FollowMutation = {
+  __typename?: 'Mutation';
+  follow: {
+    __typename?: 'UserObjectType';
+    id: string;
+    followedBy?: Array<{ __typename?: 'UserObjectType'; id: string }> | null;
+  };
+};
+
+export type UnfollowMutationVariables = Exact<{
+  unfollowed: Scalars['String']['input'];
+}>;
+
+export type UnfollowMutation = {
+  __typename?: 'Mutation';
+  unfollow: {
+    __typename?: 'UserObjectType';
+    id: string;
+    followedBy?: Array<{ __typename?: 'UserObjectType'; id: string }> | null;
+  };
 };
 
 export type ToggleMyselfFromQueueMutationVariables = Exact<{
@@ -105,12 +194,34 @@ export type JoinRoomMutationVariables = Exact<{
 export type JoinRoomMutation = { __typename?: 'Mutation'; joinRoom: string };
 
 export type StartPublishingMutationVariables = Exact<{
-  data: StartPublishingInput;
+  data: StartStopPublishingInput;
 }>;
 
 export type StartPublishingMutation = {
   __typename?: 'Mutation';
   startPublishing: boolean;
+};
+
+export type StopPublishingMutationVariables = Exact<{
+  data: StartStopPublishingInput;
+}>;
+
+export type StopPublishingMutation = {
+  __typename?: 'Mutation';
+  stopPublishing: boolean;
+};
+
+export type UpdateUserProfileMutationVariables = Exact<{
+  data: UpdateUserProfileInput;
+}>;
+
+export type UpdateUserProfileMutation = {
+  __typename?: 'Mutation';
+  updateUserProfile: {
+    __typename?: 'UserProfileObjectType';
+    userName?: string | null;
+    punchline?: string | null;
+  };
 };
 
 export type GetRoomsQueryVariables = Exact<{ [key: string]: never }>;
@@ -121,7 +232,7 @@ export type GetRoomsQuery = {
     __typename?: 'RoomObjectType';
     id: string;
     name: string;
-    participantsNumber: number;
+    participantsNumber?: number | null;
   }>;
 };
 
@@ -129,6 +240,162 @@ export type GetTestQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetTestQuery = { __typename?: 'Query'; test: string };
 
+export type GetUserProfileQueryVariables = Exact<{
+  key: Scalars['String']['input'];
+  value: Scalars['String']['input'];
+}>;
+
+export type GetUserProfileQuery = {
+  __typename?: 'Query';
+  userProfile: {
+    __typename?: 'UserProfileObjectType';
+    id: string;
+    createdAt: any;
+    bannerUrl?: string | null;
+    profileUrl?: string | null;
+    pseudo: string;
+    punchline?: string | null;
+    userName?: string | null;
+    userId: string;
+  };
+};
+
+export type GetUserQueryVariables = Exact<{
+  key: Scalars['String']['input'];
+  value: Scalars['String']['input'];
+}>;
+
+export type GetUserQuery = {
+  __typename?: 'Query';
+  user: {
+    __typename?: 'UserObjectType';
+    id: string;
+    followedBy?: Array<{ __typename?: 'UserObjectType'; id: string }> | null;
+  };
+};
+
+export const FollowDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'Follow' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'followed' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'follow' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'followed' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'followed' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'followedBy' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<FollowMutation, FollowMutationVariables>;
+export const UnfollowDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'Unfollow' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'unfollowed' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'unfollow' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'unfollowed' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'unfollowed' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'followedBy' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<UnfollowMutation, UnfollowMutationVariables>;
 export const ToggleMyselfFromQueueDocument = {
   kind: 'Document',
   definitions: [
@@ -300,7 +567,7 @@ export const StartPublishingDocument = {
             kind: 'NonNullType',
             type: {
               kind: 'NamedType',
-              name: { kind: 'Name', value: 'StartPublishingInput' },
+              name: { kind: 'Name', value: 'StartStopPublishingInput' },
             },
           },
         },
@@ -329,6 +596,103 @@ export const StartPublishingDocument = {
 } as unknown as DocumentNode<
   StartPublishingMutation,
   StartPublishingMutationVariables
+>;
+export const StopPublishingDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'StopPublishing' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'data' } },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'StartStopPublishingInput' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'stopPublishing' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'data' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'data' },
+                },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  StopPublishingMutation,
+  StopPublishingMutationVariables
+>;
+export const UpdateUserProfileDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'UpdateUserProfile' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'data' } },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'UpdateUserProfileInput' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'updateUserProfile' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'data' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'data' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'userName' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'punchline' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  UpdateUserProfileMutation,
+  UpdateUserProfileMutationVariables
 >;
 export const GetRoomsDocument = {
   kind: 'Document',
@@ -374,3 +738,160 @@ export const GetTestDocument = {
     },
   ],
 } as unknown as DocumentNode<GetTestQuery, GetTestQueryVariables>;
+export const GetUserProfileDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'getUserProfile' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'key' } },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'value' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'userProfile' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'key' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'key' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'value' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'value' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'bannerUrl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'profileUrl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pseudo' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'punchline' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'userName' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'userId' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<GetUserProfileQuery, GetUserProfileQueryVariables>;
+export const GetUserDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'getUser' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'key' } },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'value' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'user' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'key' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'key' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'value' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'value' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'followedBy' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<GetUserQuery, GetUserQueryVariables>;

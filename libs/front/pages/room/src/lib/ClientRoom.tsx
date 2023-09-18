@@ -1,14 +1,14 @@
 'use client';
 
-import { LiveKitRoom, RoomAudioRenderer } from '@livekit/components-react';
-import {
-  Box,
-  CircularProgress,
-  Container,
-  Typography,
-} from '@cypher/front/shared/ui';
+import { useEffect, useState } from 'react';
+import { LiveKitRoom } from '@livekit/components-react';
+
+import { Box, Container } from '@cypher/front/shared/ui';
+
 import { InsideRoom } from './components/InsideRoom/InsideRoom';
-import { useState } from 'react';
+import { RoomLoader } from './components/RoomLoader';
+import { WebAudioContext } from './context/web-audio';
+import { AudioPresets } from 'livekit-client';
 
 interface ClientRoomProps {
   initialToken: string;
@@ -22,35 +22,60 @@ export function ClientRoom({
   authenticated,
 }: ClientRoomProps) {
   const [connected, setConnected] = useState(false);
+  const [audioContext, setAudioContext] = useState<AudioContext | null>(null);
+
+  useEffect(() => {
+    setAudioContext(new AudioContext());
+
+    return () => {
+      setAudioContext((prev) => {
+        prev?.close();
+        return null;
+      });
+    };
+  }, []);
 
   return (
     <Container>
-      <LiveKitRoom
-        token={initialToken}
-        serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_SERVER_URL}
-        connect={true}
-        video={false}
-        audio={false}
-        onConnected={() => setConnected(true)}
+      <Box
+        sx={{
+          position: 'relative',
+          width: '100%',
+          height: 'calc(100vh - 73px)',
+        }}
       >
-        {!connected ? (
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
-            <CircularProgress />
-            <Typography sx={{ mt: 1 }}>Connexion en cours...</Typography>
-          </Box>
-        ) : (
-          <>
-            <InsideRoom roomId={roomId} authenticated={authenticated} />
-            <RoomAudioRenderer />
-          </>
-        )}
-      </LiveKitRoom>
+        <LiveKitRoom
+          token={initialToken}
+          serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_SERVER_URL}
+          connect={true}
+          video={false}
+          audio={false}
+          onConnected={() => setConnected(true)}
+          options={{
+            expWebAudioMix: { audioContext: audioContext as AudioContext },
+            audioCaptureDefaults: {
+              noiseSuppression: true,
+              echoCancellation: true,
+              autoGainControl: true,
+            },
+            publishDefaults: {
+              audioPreset: AudioPresets.musicHighQualityStereo,
+              dtx: true,
+              red: true,
+              forceStereo: true,
+            },
+          }}
+          style={{ height: '100%' }}
+        >
+          <WebAudioContext.Provider value={audioContext as AudioContext}>
+            {!connected ? (
+              <RoomLoader />
+            ) : (
+              <InsideRoom roomId={roomId} authenticated={authenticated} />
+            )}
+          </WebAudioContext.Provider>
+        </LiveKitRoom>
+      </Box>
     </Container>
   );
 }

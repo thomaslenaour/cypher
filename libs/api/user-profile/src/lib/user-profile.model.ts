@@ -5,6 +5,9 @@ export class UserProfileObjectType {
   @Field()
   id!: string;
 
+  @Field()
+  createdAt!: Date;
+
   @Field({ nullable: true })
   bannerUrl!: string | null;
 

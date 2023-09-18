@@ -15,7 +15,7 @@ import { ToggleMyselfFromQueueInput } from './dtos/toggle-myself-from-queue.inpu
 import { CurrentUser, GqlAuthGuard } from '@cypher/api/authentication';
 import { UseGuards } from '@nestjs/common';
 import { RoomQueueService } from './services/queue.service';
-import { StartPublishingInput } from './dtos/start-publishing.input';
+import { StartStopPublishingInput } from './dtos/start-stop-publishing.input';
 
 @Resolver(() => RoomObjectType)
 export class RoomResolver {
@@ -60,10 +60,24 @@ export class RoomResolver {
   @UseGuards(GqlAuthGuard)
   @Mutation(() => Boolean)
   async startPublishing(
-    @Args('data') data: StartPublishingInput,
+    @Args('data') data: StartStopPublishingInput,
     @CurrentUser() user: { userId: string }
   ) {
     const participant = await this.roomService.startPublishing({
+      ...data,
+      userId: user.userId,
+    });
+
+    return !!participant;
+  }
+
+  @UseGuards(GqlAuthGuard)
+  @Mutation(() => Boolean)
+  async stopPublishing(
+    @Args('data') data: StartStopPublishingInput,
+    @CurrentUser() user: { userId: string }
+  ) {
+    const participant = await this.roomService.stopPublishing({
       ...data,
       userId: user.userId,
     });

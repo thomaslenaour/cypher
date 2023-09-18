@@ -1,0 +1,17 @@
+mutation Follow($followed: String!) {
+  follow(followed: $followed) {
+    id
+    followedBy {
+      id
+    }
+  }
+}
+
+mutation Unfollow($unfollowed: String!) {
+  unfollow(unfollowed: $unfollowed) {
+    id
+    followedBy {
+      id
+    }
+  }
+}

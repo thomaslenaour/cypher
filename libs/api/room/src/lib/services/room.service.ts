@@ -5,7 +5,7 @@ import { RoomRepository } from '../room.repository';
 import { RoomQueueService } from './queue.service';
 import { UserProfileService } from '@cypher/api/user-profile';
 
-interface StartPublishingPayload {
+interface StartStopPublishingPayload {
   userId: string;
   identity: string;
   roomId: string;
@@ -76,30 +76,12 @@ export class RoomService {
 
     if (currentPublisher) {
       const currentPublisherMetadata = JSON.parse(currentPublisher.metadata);
-      const now = new Date().getTime();
       if (currentPublisherMetadata?.startPublishAt) {
-        const canPublishTill =
-          currentPublisherMetadata.startPublishAt + 60 * 1000;
-
-        if (now >= canPublishTill) {
-          // remove current publisher from queue
-          await this.livekitService.updateParticipant(
-            room.id,
-            currentPublisher.identity,
-            {
-              ...currentPublisherMetadata,
-              canPublishAt: null,
-              inQueueAt: null,
-              startPublishAt: null,
-            },
-            { canPublish: false, canPublishData: true, canSubscribe: true }
-          );
-
-          return;
-        }
+        return;
       }
+      const now = new Date().getTime();
 
-      const canPublishTill = currentPublisherMetadata.canPublishAt + 60 * 1000;
+      const canPublishTill = currentPublisherMetadata.canPublishAt + 30 * 1000;
       if (now >= canPublishTill) {
         // remove current publisher from queue
         await this.livekitService.updateParticipant(
@@ -122,7 +104,7 @@ export class RoomService {
         canPublishAt: new Date().getTime(),
       };
 
-      const p = await this.livekitService.updateParticipant(
+      await this.livekitService.updateParticipant(
         room.id,
         nextPublisher.identity,
         newMetadata,
@@ -133,7 +115,11 @@ export class RoomService {
     return;
   }
 
-  async startPublishing({ userId, identity, roomId }: StartPublishingPayload) {
+  async startPublishing({
+    userId,
+    identity,
+    roomId,
+  }: StartStopPublishingPayload) {
     const room = await this.roomRepository.getRoom(roomId);
 
     if (!room) {
@@ -169,6 +155,51 @@ export class RoomService {
       identity,
       newMetadata,
       { canPublish: true, canSubscribe: true, canPublishData: true }
+    );
+
+    return p;
+  }
+
+  async stopPublishing({
+    userId,
+    identity,
+    roomId,
+  }: StartStopPublishingPayload) {
+    const room = await this.roomRepository.getRoom(roomId);
+
+    if (!room) {
+      throw new Error('No room found with given id');
+    }
+
+    const participant = await this.livekitService.getParticipant(
+      roomId,
+      identity
+    );
+    const currentParticipantMetadata = participant?.metadata
+      ? JSON.parse(participant.metadata)
+      : {};
+
+    if (!participant) {
+      throw new Error('No participant found with given identity');
+    }
+
+    const isAllowed = currentParticipantMetadata?.userId === userId;
+    if (!isAllowed) {
+      throw new Error('You are not allowed to toggle this participant');
+    }
+
+    const newMetadata = {
+      ...currentParticipantMetadata,
+      startPublishAt: null,
+      inQueueAt: null,
+      canPublishAt: null,
+    };
+
+    const p = await this.livekitService.updateParticipant(
+      roomId,
+      identity,
+      newMetadata,
+      { canPublish: false, canSubscribe: true, canPublishData: true }
     );
 
     return p;

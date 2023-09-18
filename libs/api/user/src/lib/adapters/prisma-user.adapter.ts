@@ -18,6 +18,10 @@ export class PrismaUserAdapter implements UserRepository {
           in: values,
         },
       },
+      include: {
+        followedBy: true,
+        following: true,
+      },
     });
   }
 

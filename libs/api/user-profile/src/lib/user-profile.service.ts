@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { UserProfileRepository } from './user-profile.repository';
 import { UserProfileUniqueFields } from './types';
 import { UserProfileObjectType } from './user-profile.model';
+import { UpdateUserProfileInput } from './inputs/UpdateUserProfileInput';
 
 @Injectable()
 export class UserProfileService {
@@ -22,5 +23,17 @@ export class UserProfileService {
       );
 
     return userProfile;
+  }
+
+  async updateUserProfile(
+    userId: string,
+    input: UpdateUserProfileInput
+  ): Promise<UserProfileObjectType | null> {
+    const userProfile = await this.getUserProfile('userId', userId);
+
+    return await this.userProfileRepository.updateUserProfile(
+      userProfile.id,
+      input
+    );
   }
 }
