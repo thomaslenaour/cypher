@@ -53,7 +53,7 @@ export function SeeMoreText() {
       >
         <Typography sx={{ color: 'primary.500' }}>Psst </Typography>! Pour
         encore{' '}
-        <Typography sx={{ color: 'primary.500' }}>plus d'articles </Typography>,
+        <Typography sx={{ color: 'primary.500' }}>plus d'articles</Typography>,
         c'est par <Typography sx={{ color: 'primary.500' }}>ici </Typography>!
       </Typography>
     </Box>
