@@ -1,7 +1,7 @@
 'use client';
 
 import { SeeMoreText } from './StyledText';
-import { Box, IconButton, Stack, Typography } from '@cypher/front/shared/ui';
+import { Box, Grid, IconButton, Stack, Typography } from '@cypher/front/shared/ui';
 import { PostsHelper } from '../utils/PostsHelper';
 import { Post } from '../../../.contentlayer/generated';
 import { PostCard } from './PostCard';
@@ -75,15 +75,15 @@ export function AllOthersPosts() {
           </IconButton>
         ))}
       </Stack>
-      <Stack direction="row" flexWrap="wrap" spacing={3}>
+      <Grid container spacing={3} sx={{ flexGrow: 1 }}>
         {PostsHelper.getAllPostsMatchWithTags(selectedTags).map(
           (post: Post, idx: number) => (
-            <Box key={idx} width={{ xs: '100%', md: '48%', lg: '31%' }} mb={3}>
+            <Grid key={idx} xs={12} md={6} lg={4}>
               <PostCard key={idx} {...post} />
-            </Box>
+            </Grid>
           )
         )}
-      </Stack>
+      </Grid>
     </Box>
   );
 }

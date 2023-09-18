@@ -1,10 +1,10 @@
 ---
-title: Post numéro 4
-date: 2023-09-15  18:35:00
-description: Post 4
+title: Post numéro 7
+date: 2023-09-18 14:16:00
+description: Post 7
 tag: Studio
 highlight: false
-image: https://images.pexels.com/photos/2479312/pexels-photo-2479312.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1
+image: https://images.pexels.com/photos/7971865/pexels-photo-7971865.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1
 ---
 
 # Bienvenue dans l'Ère du Cypher Virtuel : Découvrez Notre Plateforme Musicale Unique
