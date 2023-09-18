@@ -17,6 +17,8 @@ const documents = {
     types.FollowDocument,
   'mutation ToggleMyselfFromQueue($data: ToggleMyselfFromQueueInput!) {\n  toggleMyselfFromQueue(data: $data)\n}\n\nmutation JoinPublicRoom($roomId: String!) {\n  joinPublicRoom(data: {roomId: $roomId})\n}\n\nmutation JoinRoom($roomId: String!) {\n  joinRoom(data: {roomId: $roomId})\n}\n\nmutation StartPublishing($data: StartStopPublishingInput!) {\n  startPublishing(data: $data)\n}\n\nmutation StopPublishing($data: StartStopPublishingInput!) {\n  stopPublishing(data: $data)\n}':
     types.ToggleMyselfFromQueueDocument,
+  'mutation UpdateUserProfile($data: UpdateUserProfileInput!) {\n  updateUserProfile(data: $data) {\n    userName\n    punchline\n  }\n}':
+    types.UpdateUserProfileDocument,
   'query GetRooms {\n  rooms {\n    id\n    name\n    participantsNumber\n  }\n}':
     types.GetRoomsDocument,
   'query GetTest {\n  test\n}': types.GetTestDocument,
@@ -52,6 +54,12 @@ export function graphql(
 export function graphql(
   source: 'mutation ToggleMyselfFromQueue($data: ToggleMyselfFromQueueInput!) {\n  toggleMyselfFromQueue(data: $data)\n}\n\nmutation JoinPublicRoom($roomId: String!) {\n  joinPublicRoom(data: {roomId: $roomId})\n}\n\nmutation JoinRoom($roomId: String!) {\n  joinRoom(data: {roomId: $roomId})\n}\n\nmutation StartPublishing($data: StartStopPublishingInput!) {\n  startPublishing(data: $data)\n}\n\nmutation StopPublishing($data: StartStopPublishingInput!) {\n  stopPublishing(data: $data)\n}'
 ): (typeof documents)['mutation ToggleMyselfFromQueue($data: ToggleMyselfFromQueueInput!) {\n  toggleMyselfFromQueue(data: $data)\n}\n\nmutation JoinPublicRoom($roomId: String!) {\n  joinPublicRoom(data: {roomId: $roomId})\n}\n\nmutation JoinRoom($roomId: String!) {\n  joinRoom(data: {roomId: $roomId})\n}\n\nmutation StartPublishing($data: StartStopPublishingInput!) {\n  startPublishing(data: $data)\n}\n\nmutation StopPublishing($data: StartStopPublishingInput!) {\n  stopPublishing(data: $data)\n}'];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'mutation UpdateUserProfile($data: UpdateUserProfileInput!) {\n  updateUserProfile(data: $data) {\n    userName\n    punchline\n  }\n}'
+): (typeof documents)['mutation UpdateUserProfile($data: UpdateUserProfileInput!) {\n  updateUserProfile(data: $data) {\n    userName\n    punchline\n  }\n}'];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

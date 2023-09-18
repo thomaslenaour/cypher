@@ -44,6 +44,7 @@ export type Mutation = {
   stopPublishing: Scalars['Boolean']['output'];
   toggleMyselfFromQueue: Scalars['Boolean']['output'];
   unfollow: UserObjectType;
+  updateUserProfile: UserProfileObjectType;
 };
 
 export type MutationFollowArgs = {
@@ -72,6 +73,10 @@ export type MutationToggleMyselfFromQueueArgs = {
 
 export type MutationUnfollowArgs = {
   unfollowed: Scalars['String']['input'];
+};
+
+export type MutationUpdateUserProfileArgs = {
+  data: UpdateUserProfileInput;
 };
 
 export type Query = {
@@ -107,6 +112,11 @@ export type StartStopPublishingInput = {
 export type ToggleMyselfFromQueueInput = {
   identity: Scalars['String']['input'];
   roomId: Scalars['String']['input'];
+};
+
+export type UpdateUserProfileInput = {
+  punchline: Scalars['String']['input'];
+  userName: Scalars['String']['input'];
 };
 
 export type UserObjectType = {
@@ -199,6 +209,19 @@ export type StopPublishingMutationVariables = Exact<{
 export type StopPublishingMutation = {
   __typename?: 'Mutation';
   stopPublishing: boolean;
+};
+
+export type UpdateUserProfileMutationVariables = Exact<{
+  data: UpdateUserProfileInput;
+}>;
+
+export type UpdateUserProfileMutation = {
+  __typename?: 'Mutation';
+  updateUserProfile: {
+    __typename?: 'UserProfileObjectType';
+    userName?: string | null;
+    punchline?: string | null;
+  };
 };
 
 export type GetRoomsQueryVariables = Exact<{ [key: string]: never }>;
@@ -618,6 +641,58 @@ export const StopPublishingDocument = {
 } as unknown as DocumentNode<
   StopPublishingMutation,
   StopPublishingMutationVariables
+>;
+export const UpdateUserProfileDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'UpdateUserProfile' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'data' } },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'UpdateUserProfileInput' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'updateUserProfile' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'data' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'data' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'userName' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'punchline' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  UpdateUserProfileMutation,
+  UpdateUserProfileMutationVariables
 >;
 export const GetRoomsDocument = {
   kind: 'Document',

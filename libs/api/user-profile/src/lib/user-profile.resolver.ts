@@ -1,10 +1,12 @@
-import { Args, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UserProfileService } from './user-profile.service';
 import { UserProfileObjectType } from './user-profile.model';
 import { UserProfileArgs } from './args/user-profile.args';
 import { UserProfileUniqueFields } from './types';
 import { USER_PROFILE_UNIQUE_FIELDS } from './constants';
-import { BadRequestException } from '@nestjs/common';
+import { BadRequestException, UseGuards } from '@nestjs/common';
+import { CurrentUser, GqlAuthGuard } from '@cypher/api/authentication';
+import { UpdateUserProfileInput } from './inputs/UpdateUserProfileInput';
 
 @Resolver()
 export class UserProfileResolver {
@@ -24,5 +26,16 @@ export class UserProfileResolver {
       key as UserProfileUniqueFields,
       value
     );
+  }
+
+  @UseGuards(GqlAuthGuard)
+  @Mutation(() => UserProfileObjectType)
+  async updateUserProfile(
+    @Args('data') data: UpdateUserProfileInput,
+    @CurrentUser() user: { userId: string }
+  ) {
+    return await this.userProfileService.updateUserProfile(user.userId, {
+      ...data,
+    });
   }
 }

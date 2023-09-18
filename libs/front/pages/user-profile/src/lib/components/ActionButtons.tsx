@@ -6,6 +6,7 @@ interface ActionButtonsProps {
   currentUserFollowUser: boolean;
   sessionStatus: 'loading' | 'authenticated' | 'unauthenticated';
   handleFollowClick: () => Promise<void>;
+  handleOpenUpdateModal: () => void;
 }
 
 export const ActionButtons = ({
@@ -13,6 +14,7 @@ export const ActionButtons = ({
   currentUserIsOnHisProfilePage,
   sessionStatus,
   handleFollowClick,
+  handleOpenUpdateModal,
 }: ActionButtonsProps) => {
   if (sessionStatus !== 'authenticated') return;
 
@@ -31,6 +33,7 @@ export const ActionButtons = ({
         backgroundColor: (theme) =>
           theme.palette.mode === 'dark' ? 'neutral.800' : 'neutral.400',
       }}
+      onClick={handleOpenUpdateModal}
     >
       Modifier mon profil
     </Button>
