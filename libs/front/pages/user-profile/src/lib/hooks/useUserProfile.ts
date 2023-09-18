@@ -3,6 +3,7 @@ import { IUser } from '../interfaces';
 import { useSession } from 'next-auth/react';
 import { useMutation } from '@apollo/client';
 import { FollowDocument, UnfollowDocument } from '@cypher/front/shared/graphql';
+import { UpdateProfileInput } from '../components/UpdateProfile/Form';
 
 export const useUserProfile = (defaultUser: IUser) => {
   // Next Auth
@@ -14,6 +15,7 @@ export const useUserProfile = (defaultUser: IUser) => {
 
   // React State
   const [user, setUser] = useState<IUser>(defaultUser);
+  const [openUpdateModal, setOpenUpdateModal] = useState<boolean>(true);
   const currentUserFollowUser = useMemo(
     () => Boolean(user.followedBy?.find((u) => u.id === sessionData?.user.id)),
     [user.followedBy, sessionData?.user.id]
@@ -56,8 +58,24 @@ export const useUserProfile = (defaultUser: IUser) => {
     }
   };
 
+  const handleUpdateProfileSubmit = async (data: UpdateProfileInput) => {
+    console.log('data : ', data);
+  };
+
+  const handleOpenUpdateModal = () => {
+    setOpenUpdateModal(true);
+  };
+
+  const handleCloseUpdateModal = () => {
+    setOpenUpdateModal(false);
+  };
+
   return {
     handleFollowClick,
+    handleOpenUpdateModal,
+    handleCloseUpdateModal,
+    handleUpdateProfileSubmit,
+    openUpdateModal,
     currentUserFollowUser,
     currentUserIsOnHisProfilePage,
     user,
