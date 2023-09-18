@@ -24,6 +24,11 @@ export class PostsHelper {
     return [allPostsNotHighlighted[0], allPostsNotHighlighted[1]];
   }
 
+  static getThreeHighlightedPosts(): Post[] {
+    const allPostsNotHighlighted = PostsHelper.getAllPostsNotHighlighted();
+    return [PostsHelper.getHighlightPost(), allPostsNotHighlighted[0], allPostsNotHighlighted[1]];
+  }
+
   static getRestNonSpecialPosts(): Post[] {
     const twoLastPostsNotHighlighted =
       PostsHelper.getLastTwoPostsNotHighlighted();

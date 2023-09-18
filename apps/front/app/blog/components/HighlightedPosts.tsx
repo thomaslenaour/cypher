@@ -1,3 +1,5 @@
+'use client';
+
 import { LeftSide } from './LeftSide';
 import { RightSide } from './RightSide';
 import { Stack } from '@cypher/front/shared/ui';
