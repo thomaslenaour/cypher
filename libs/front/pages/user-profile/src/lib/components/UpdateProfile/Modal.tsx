@@ -12,7 +12,7 @@ interface UpdateProfileModalProps {
   userName: string;
   punchline: string;
   handleClose: () => void;
-  handleSubmit: (data: UpdateProfileInput) => Promise<void>;
+  handleSubmit: (data: UpdateProfileInput) => Promise<boolean>;
 }
 
 export const UpdateProfileModal = ({
@@ -21,16 +21,16 @@ export const UpdateProfileModal = ({
   punchline,
   handleClose,
   handleSubmit,
-}: UpdateProfileModalProps) => {
-  return (
-    <Modal open={open} onClose={handleClose}>
-      <ModalDialog>
-        <Typography p={0} m={0} level="h3">
-          Mettre à jour mes informations
-        </Typography>
-        <Divider />
-        <UpdateProfileForm {...{ userName, punchline, handleSubmit }} />
-      </ModalDialog>
-    </Modal>
-  );
-};
+}: UpdateProfileModalProps) => (
+  <Modal open={open} onClose={handleClose}>
+    <ModalDialog sx={{ minWidth: '34.375rem' }}>
+      <Typography p={0} m={0} level="h3">
+        Mettre à jour mes informations
+      </Typography>
+      <Divider />
+      <UpdateProfileForm
+        {...{ userName, punchline, handleSubmit, handleClose }}
+      />
+    </ModalDialog>
+  </Modal>
+);

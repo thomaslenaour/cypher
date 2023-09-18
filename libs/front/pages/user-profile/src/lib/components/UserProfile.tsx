@@ -25,23 +25,24 @@ export function UserProfile({ profile, user: defaultUser }: UserProfileProps) {
     currentUserFollowUser,
     currentUserIsOnHisProfilePage,
     user,
+    userProfile,
     sessionStatus,
     openUpdateModal,
     handleCloseUpdateModal,
     handleFollowClick,
     handleOpenUpdateModal,
     handleUpdateProfileSubmit,
-  } = useUserProfile(defaultUser);
+  } = useUserProfile(defaultUser, profile);
 
   return (
     <>
       <Box>
-        <Banner bannerUrl={profile.bannerUrl ?? null} />
+        <Banner bannerUrl={userProfile.bannerUrl ?? null} />
         <Container>
           <Box className="user-profile-header">
             <ProfilePicture
-              pseudo={profile.pseudo}
-              profileUrl={profile.profileUrl}
+              pseudo={userProfile.pseudo}
+              profileUrl={userProfile.profileUrl}
             />
             <Stack
               direction={{
@@ -59,10 +60,10 @@ export function UserProfile({ profile, user: defaultUser }: UserProfileProps) {
               className="user-profile-header-information-insights"
             >
               <Information
-                createdAt={profile.createdAt}
-                pseudo={profile.pseudo}
-                punchline={profile.punchline}
-                userName={profile.userName}
+                createdAt={userProfile.createdAt}
+                pseudo={userProfile.pseudo}
+                punchline={userProfile.punchline}
+                userName={userProfile.userName}
                 sx={{
                   marginTop: 1,
                 }}
@@ -94,8 +95,10 @@ export function UserProfile({ profile, user: defaultUser }: UserProfileProps) {
       </Box>
       <UpdateProfileModal
         open={openUpdateModal}
-        userName={profile.userName ? profile.userName : profile.pseudo}
-        punchline={profile.punchline ?? ''}
+        userName={
+          userProfile.userName ? userProfile.userName : userProfile.pseudo
+        }
+        punchline={userProfile.punchline ?? ''}
         handleClose={handleCloseUpdateModal}
         handleSubmit={handleUpdateProfileSubmit}
       />

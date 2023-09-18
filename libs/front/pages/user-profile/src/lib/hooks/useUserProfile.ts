@@ -1,21 +1,31 @@
 import { useMemo, useState } from 'react';
-import { IUser } from '../interfaces';
+import { IUser, IUserProfile } from '../interfaces';
 import { useSession } from 'next-auth/react';
 import { useMutation } from '@apollo/client';
-import { FollowDocument, UnfollowDocument } from '@cypher/front/shared/graphql';
+import {
+  FollowDocument,
+  UnfollowDocument,
+  UpdateUserProfileDocument,
+} from '@cypher/front/shared/graphql';
 import { UpdateProfileInput } from '../components/UpdateProfile/Form';
 
-export const useUserProfile = (defaultUser: IUser) => {
+export const useUserProfile = (
+  defaultUser: IUser,
+  defaultUserProfile: IUserProfile
+) => {
   // Next Auth
   const { data: sessionData, status: sessionStatus } = useSession();
 
   // GraphQL Mutations
   const [followMutation] = useMutation(FollowDocument);
   const [unfollowMutation] = useMutation(UnfollowDocument);
+  const [updateUserProfileMutation] = useMutation(UpdateUserProfileDocument);
 
   // React State
   const [user, setUser] = useState<IUser>(defaultUser);
-  const [openUpdateModal, setOpenUpdateModal] = useState<boolean>(true);
+  const [userProfile, setUserProfile] =
+    useState<IUserProfile>(defaultUserProfile);
+  const [openUpdateModal, setOpenUpdateModal] = useState<boolean>(false);
   const currentUserFollowUser = useMemo(
     () => Boolean(user.followedBy?.find((u) => u.id === sessionData?.user.id)),
     [user.followedBy, sessionData?.user.id]
@@ -58,8 +68,27 @@ export const useUserProfile = (defaultUser: IUser) => {
     }
   };
 
-  const handleUpdateProfileSubmit = async (data: UpdateProfileInput) => {
-    console.log('data : ', data);
+  const handleUpdateProfileSubmit = async (
+    data: UpdateProfileInput
+  ): Promise<boolean> => {
+    try {
+      const res = await updateUserProfileMutation({
+        variables: {
+          data,
+        },
+      });
+
+      if (res.data?.updateUserProfile)
+        setUserProfile({
+          ...userProfile,
+          ...res.data.updateUserProfile,
+        });
+
+      return true;
+    } catch (error: any) {
+      console.error('An error occured:', error.message);
+      return false;
+    }
   };
 
   const handleOpenUpdateModal = () => {
@@ -71,14 +100,15 @@ export const useUserProfile = (defaultUser: IUser) => {
   };
 
   return {
+    user,
+    userProfile,
+    openUpdateModal,
+    currentUserFollowUser,
+    currentUserIsOnHisProfilePage,
+    sessionStatus,
     handleFollowClick,
     handleOpenUpdateModal,
     handleCloseUpdateModal,
     handleUpdateProfileSubmit,
-    openUpdateModal,
-    currentUserFollowUser,
-    currentUserIsOnHisProfilePage,
-    user,
-    sessionStatus,
   };
 };

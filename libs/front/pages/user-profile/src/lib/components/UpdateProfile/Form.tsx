@@ -17,13 +17,14 @@ const UPDATE_PROFILE_ERRORS = {
   userName: "Ton nom d'utilisateur doit faire entre 3 et 20 caractères.",
   punchline:
     'Ton inspiration est remarquable mais la punchline est limitée à 250 caractères.',
+  root: "Une erreur s'est produite ... Veuillez vérifier vos information ou réessayer plus tard.",
 };
 
 const UpdateProfileSchema = z.object({
   userName: z
     .string()
     .min(3, { message: UPDATE_PROFILE_ERRORS.userName })
-    .max(20, { message: UPDATE_PROFILE_ERRORS.userName }),
+    .max(30, { message: UPDATE_PROFILE_ERRORS.userName }),
   punchline: z.string().max(250, { message: UPDATE_PROFILE_ERRORS.punchline }),
 });
 
@@ -32,25 +33,37 @@ export type UpdateProfileInput = z.infer<typeof UpdateProfileSchema>;
 interface UpdateProfileFormProps {
   userName: string;
   punchline: string;
-  handleSubmit: (data: UpdateProfileInput) => Promise<void>;
+  handleSubmit: (data: UpdateProfileInput) => Promise<boolean>;
+  handleClose: () => void;
 }
 
 export const UpdateProfileForm = ({
   userName,
   punchline,
   handleSubmit,
+  handleClose,
 }: UpdateProfileFormProps) => {
   const {
     control,
     handleSubmit: handleSubmitForm,
     formState: { errors },
+    setError,
   } = useForm<UpdateProfileInput>({
     resolver: zodResolver(UpdateProfileSchema),
   });
 
+  const onSubmit = async (data: UpdateProfileInput) => {
+    const resIsSuccess = await handleSubmit(data);
+    if (!resIsSuccess)
+      setError('root', {
+        message: UPDATE_PROFILE_ERRORS.root,
+      });
+    else handleClose();
+  };
+
   return (
     <form
-      onSubmit={handleSubmitForm(handleSubmit)}
+      onSubmit={handleSubmitForm(onSubmit)}
       style={{ marginTop: theme.spacing(2) }}
     >
       <Stack gap={2}>
@@ -93,6 +106,11 @@ export const UpdateProfileForm = ({
         <Button fullWidth type="submit" color="neutral" variant="outlined">
           Enregistrer
         </Button>
+        {errors.root?.message && (
+          <Typography level="body-sm" color="danger">
+            {errors.root?.message}
+          </Typography>
+        )}
       </Stack>
     </form>
   );
