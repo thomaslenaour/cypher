@@ -6,6 +6,7 @@ import { InsideRoomRightSide } from './RightSide/RightSide';
 import { InsideRoomLeftSide } from './LeftSide/LeftSide';
 import {
   AudioTrack,
+  useDataChannel,
   useLocalParticipant,
   useLocalParticipantPermissions,
   useParticipants,
@@ -25,6 +26,7 @@ import {
 import { useWebAudioContext } from '../../context/web-audio';
 import {
   AudioPresets,
+  DataPacket_Kind,
   LocalParticipant,
   Participant,
   RemoteTrackPublication,
@@ -45,10 +47,15 @@ function isLocal(p: Participant) {
 
 let interval: NodeJS.Timeout | null = null;
 
+const PLAY_JINGLE_MESSAGE = 'pj';
+const encoder = new TextEncoder();
+const decoder = new TextDecoder();
+
 export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
   // Audio
   const audioContext = useWebAudioContext();
   const audioElContainer = useRef<HTMLDivElement | null>(null);
+  const jingleEl = useRef<HTMLAudioElement | null>(null);
   const audioEl = useRef<HTMLAudioElement | null>(null);
   const source = useRef<MediaElementAudioSourceNode | null>(null);
   const sink = useRef<MediaStreamAudioDestinationNode | null>(null);
@@ -70,6 +77,12 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
   const participants = useParticipants();
   const currentParticipant = useLocalParticipant();
   const currentParticipantPermissions = useLocalParticipantPermissions();
+  const { send } = useDataChannel((msg) => {
+    const decodedMessage = decoder.decode(msg.payload);
+    if (decodedMessage === PLAY_JINGLE_MESSAGE) {
+      jingleEl?.current?.play();
+    }
+  });
   const tracks = useTracks([Track.Source.Microphone, Track.Source.Unknown], {
     updateOnlyOn: [],
     onlySubscribed: false,
@@ -134,8 +147,8 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
     }
 
     audioEl.current = new Audio('/audios/beat.mp3');
+    jingleEl.current = new Audio('/audios/jingle.mp3');
     audioEl.current.currentTime = Number(beatPosition) || 0;
-    console.log('handleReady', isCurrentlyPublishing);
     audioEl.current.setAttribute(
       'muted',
       isCurrentlyPublishing ? 'true' : 'false'
@@ -144,7 +157,9 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
     audioEl.current.setAttribute('loop', 'true');
     audioEl.current.setAttribute('autoplay', 'true');
     audioEl.current.volume = 0.25;
+    jingleEl.current.volume = 1;
     audioElContainer.current.appendChild(audioEl.current);
+    audioElContainer.current.appendChild(jingleEl.current);
     source.current = audioContext.createMediaElementSource(audioEl.current);
     sink.current = audioContext.createMediaStreamDestination();
     source.current.connect(audioContext.destination);
@@ -155,6 +170,9 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
 
   const handleStopPublishing = useCallback(async () => {
     if (iAmThePublisher) {
+      send(encoder.encode(PLAY_JINGLE_MESSAGE), {
+        kind: DataPacket_Kind.LOSSY,
+      });
       if (sink.current) {
         room.localParticipant.setMicrophoneEnabled(false);
         room.localParticipant.unpublishTrack(
@@ -182,6 +200,7 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
     stopPublishing,
     currentParticipant.localParticipant.identity,
     iAmThePublisher,
+    send,
   ]);
 
   async function handleMainButtonClick() {
@@ -216,8 +235,10 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
         if (isCurrentlyPublishing) {
           await handleStopPublishing();
         } else {
+          send(encoder.encode(PLAY_JINGLE_MESSAGE), {
+            kind: DataPacket_Kind.LOSSY,
+          });
           await startPublishing({ variables });
-
           if (sink.current) {
             room.localParticipant.setMicrophoneEnabled(micOpen);
             room.localParticipant.publishTrack(
