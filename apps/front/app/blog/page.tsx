@@ -1,13 +1,9 @@
-import { Footer, Header } from '@cypher/front/components/common';
 import React from 'react';
-import { Box, Container, Divider, Stack } from '@cypher/front/shared/ui';
+import { Box, Container, Divider } from '@cypher/front/shared/ui';
 import { SvgBackground } from '../../../../libs/front/pages/root/src/lib/components/SvgBackground';
 import { HighlightedPosts } from './components/HighlightedPosts';
-import { SeeMoreText } from './components/StyledText';
-import { PostsHelper } from './utils/PostsHelper';
-import { Post } from '../../.contentlayer/generated';
-import { PostCard } from './components/PostCard';
 import { AllOthersPosts } from './components/AllOthersPosts';
+import { Footer, Header } from '@cypher/front/components/common/server';
 
 export default function Home() {
   return (

@@ -24,11 +24,6 @@ export class PostsHelper {
     return [allPostsNotHighlighted[0], allPostsNotHighlighted[1]];
   }
 
-  static getThreeHighlightedPosts(): Post[] {
-    const allPostsNotHighlighted = PostsHelper.getAllPostsNotHighlighted();
-    return [PostsHelper.getHighlightPost(), allPostsNotHighlighted[0], allPostsNotHighlighted[1]];
-  }
-
   static getRestNonSpecialPosts(): Post[] {
     const twoLastPostsNotHighlighted =
       PostsHelper.getLastTwoPostsNotHighlighted();
@@ -64,5 +59,18 @@ export class PostsHelper {
     return PostsHelper.getRestNonSpecialPosts().filter((post: Post) =>
       tags.some((tag: string) => post.tag === tag)
     );
+  }
+
+  static getLastThreePostsThatNotTheCurrent(postTitle: string) {
+    const allPostsThatNotTheCurrent =
+      PostsHelper.getAllPostsSortedByDate().filter(
+        (post: Post) => post.title !== postTitle
+      );
+
+    return [
+      allPostsThatNotTheCurrent[0],
+      allPostsThatNotTheCurrent[1],
+      allPostsThatNotTheCurrent[2],
+    ];
   }
 }

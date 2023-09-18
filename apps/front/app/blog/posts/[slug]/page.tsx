@@ -1,13 +1,13 @@
 import { format, parseISO } from 'date-fns';
 import { allPosts, Post } from '../../../../.contentlayer/generated';
-import { Footer, Header } from '@cypher/front/components/common';
 import { Box, Container, Grid, Typography } from '@cypher/front/shared/ui';
 import React from 'react';
-import { RecordingAnimation } from '../../../../../../libs/front/pages/root/src/lib/components/RecordingAnimation';
 import { fr } from 'date-fns/locale';
 import { PostsHelper } from '../../utils/PostsHelper';
 import { PostCard } from '../../components/PostCard';
 import { BackButton } from '../../components/BackButton';
+import { Footer, Header } from '@cypher/front/components/common/server';
+import { RecordingAnimation } from '@cypher/front/components/common';
 
 export const generateStaticParams = async () =>
   allPosts.map((post) => ({ slug: post._raw.flattenedPath }));
@@ -63,7 +63,7 @@ const PostLayout = ({ params }: { params: { slug: string } }) => {
               <Typography level="h2" mb={1}>
                 Les dernières news
               </Typography>
-              {PostsHelper.getThreeHighlightedPosts().map(
+              {PostsHelper.getLastThreePostsThatNotTheCurrent(post.title).map(
                 (post: Post, idx: number) => (
                   <Grid key={idx} xs={12}>
                     <PostCard {...post} />
