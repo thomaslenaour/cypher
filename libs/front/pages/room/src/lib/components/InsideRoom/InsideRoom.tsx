@@ -46,6 +46,7 @@ function isLocal(p: Participant) {
 }
 
 let interval: NodeJS.Timeout | null = null;
+let jingleTimeout: NodeJS.Timeout | null = null;
 
 const PLAY_JINGLE_MESSAGE = 'pj';
 const encoder = new TextEncoder();
@@ -170,9 +171,6 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
 
   const handleStopPublishing = useCallback(async () => {
     if (iAmThePublisher) {
-      send(encoder.encode(PLAY_JINGLE_MESSAGE), {
-        kind: DataPacket_Kind.LOSSY,
-      });
       if (sink.current) {
         room.localParticipant.setMicrophoneEnabled(false);
         room.localParticipant.unpublishTrack(
@@ -194,13 +192,16 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
       interval = null;
       setRemainingSeconds(PUBLISH_DURATION_SECONDS);
     }
+    if (jingleTimeout) {
+      clearTimeout(jingleTimeout);
+      jingleTimeout = null;
+    }
   }, [
     room.localParticipant,
     roomId,
     stopPublishing,
     currentParticipant.localParticipant.identity,
     iAmThePublisher,
-    send,
   ]);
 
   async function handleMainButtonClick() {
@@ -233,11 +234,23 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
     try {
       if (iAmThePublisher) {
         if (isCurrentlyPublishing) {
+          if (jingleTimeout) {
+            clearTimeout(jingleTimeout);
+            jingleTimeout = null;
+          }
+          send(encoder.encode(PLAY_JINGLE_MESSAGE), {
+            kind: DataPacket_Kind.LOSSY,
+          });
           await handleStopPublishing();
         } else {
           send(encoder.encode(PLAY_JINGLE_MESSAGE), {
             kind: DataPacket_Kind.LOSSY,
           });
+          jingleTimeout = setTimeout(() => {
+            send(encoder.encode(PLAY_JINGLE_MESSAGE), {
+              kind: DataPacket_Kind.LOSSY,
+            });
+          }, PUBLISH_DURATION_SECONDS * 1000);
           await startPublishing({ variables });
           if (sink.current) {
             room.localParticipant.setMicrophoneEnabled(micOpen);
