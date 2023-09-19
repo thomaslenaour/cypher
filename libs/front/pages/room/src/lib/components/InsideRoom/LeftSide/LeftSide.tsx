@@ -4,6 +4,7 @@ import { Box } from '@cypher/front/shared/ui';
 import { InsideRoomLeftSideFooter } from './Footer/Footer';
 import { InsideRoomLeftSideHeader } from './Header/Header';
 import { InsideRoomLeftSideMain } from './Main/Main';
+import { ConnectionQuality } from 'livekit-client';
 
 interface InsideRoomLeftSideProps {
   header: {
@@ -28,12 +29,14 @@ interface InsideRoomLeftSideProps {
       mediaDeviceSelect: {
         disabled: boolean;
       };
+      connectionQuality: ConnectionQuality;
     };
     mainButton: {
       label: string;
       onClick: () => Promise<void>;
       loading: boolean;
     };
+    position?: number;
     chat: {
       toggle: () => void;
       open: boolean;

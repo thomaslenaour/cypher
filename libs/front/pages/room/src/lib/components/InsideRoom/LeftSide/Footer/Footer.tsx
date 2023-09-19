@@ -1,6 +1,7 @@
 import { Box, Button, IconButton, Typography } from '@cypher/front/shared/ui';
 import { Controls } from './Controls/Controls';
 import { Eye, EyeOff } from 'lucide-react';
+import { ConnectionQuality } from 'livekit-client';
 
 interface FooterProps {
   controls: {
@@ -12,7 +13,9 @@ interface FooterProps {
     mediaDeviceSelect: {
       disabled: boolean;
     };
+    connectionQuality: ConnectionQuality;
   };
+  position?: number;
   mainButton: {
     label: string;
     onClick: () => Promise<void>;
@@ -28,6 +31,7 @@ export function InsideRoomLeftSideFooter({
   mainButton,
   controls,
   chat,
+  position,
 }: FooterProps) {
   return (
     <Box
@@ -35,6 +39,7 @@ export function InsideRoomLeftSideFooter({
         display: 'flex',
         flexDirection: { xs: 'column', md: 'row' },
         justifyContent: 'space-between',
+        alignItems: 'flex-end',
         gap: 1,
       }}
     >
@@ -50,29 +55,54 @@ export function InsideRoomLeftSideFooter({
       >
         <Controls {...controls} />
       </Box>
-      <Button
-        size="lg"
-        onClick={mainButton.onClick}
-        loading={mainButton.loading}
-        fullWidth
-      >
-        {mainButton.label}
-      </Button>
-      <IconButton
-        variant="outlined"
-        onClick={chat.toggle}
-        size="sm"
+      <Box
         sx={{
-          p: { xs: 1, md: 2 },
+          flex: 1,
           display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: 0.5,
+          flexDirection: { xs: 'column', md: 'row' },
+          justifyContent: 'space-between',
+          width: '100%',
+          gap: 1,
         }}
       >
-        <Box>{chat.open ? <EyeOff size="20px" /> : <Eye size="20px" />}</Box>{' '}
-        <Typography>Chat</Typography>
-      </IconButton>
+        <Box
+          sx={{
+            width: '100%',
+          }}
+        >
+          {position && (
+            <Typography level="body-sm" textAlign="center" sx={{ mb: 0.5 }}>
+              Tu es en position {position} dans la file
+            </Typography>
+          )}
+          <Button
+            size="lg"
+            onClick={mainButton.onClick}
+            loading={mainButton.loading}
+            sx={{
+              height: '64px',
+            }}
+            fullWidth
+          >
+            {mainButton.label}
+          </Button>
+        </Box>
+        <IconButton
+          variant="outlined"
+          onClick={chat.toggle}
+          size="sm"
+          sx={{
+            p: { xs: 1, md: 2 },
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 0.5,
+          }}
+        >
+          <Box>{chat.open ? <EyeOff size="20px" /> : <Eye size="20px" />}</Box>{' '}
+          <Typography>Chat</Typography>
+        </IconButton>
+      </Box>
     </Box>
   );
 }
