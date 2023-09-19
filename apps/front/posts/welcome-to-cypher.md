@@ -1,7 +1,6 @@
 ---
 title: Bienvenue sur Cypher !
 date: 2023-09-11 14:26:00
-description: Le rythme palpite, les mots fusent et la créativité s'envole - Bienvenue dans l'univers du cypher !
 tag: Article
 mainPost: true
 highlight: true

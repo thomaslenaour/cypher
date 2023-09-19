@@ -1,8 +1,7 @@
 ---
 title: Comment performer en improvisation
 date: 2023-09-14 11:05:00
-description: Savoir comment performer lors d'une improvisation
-tag: Article
+tag: Conseils
 mainPost: false
 highlight: true
 image: https://images.pexels.com/photos/7955076/pexels-photo-7955076.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1

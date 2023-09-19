@@ -1,7 +1,6 @@
 ---
 title: Les différents types de rap
 date: 2023-09-14 13:57:00
-description: Les différents types de rap
 tag: Rap
 mainPost: false
 highlight: true
