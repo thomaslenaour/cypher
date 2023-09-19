@@ -34,6 +34,10 @@ interface InsideRoomLeftSideProps {
       onClick: () => Promise<void>;
       loading: boolean;
     };
+    chat: {
+      toggle: () => void;
+      open: boolean;
+    };
   };
 }
 

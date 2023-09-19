@@ -27,7 +27,7 @@ export function InsideRoomLeftSideMain({
         gap: 1,
       }}
     >
-      <Typography level="h2" textAlign="center">
+      <Typography level="h3" textAlign="center">
         {status.text}
       </Typography>
       {timer.enabled && (
