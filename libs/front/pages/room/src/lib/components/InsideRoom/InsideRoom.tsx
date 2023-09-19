@@ -22,7 +22,6 @@ import { useRouter } from 'next/navigation';
 import {
   StartPublishingDocument,
   StopPublishingDocument,
-  ToggleMyselfFromQueueDocument,
 } from '@cypher/front/shared/graphql';
 import { useWebAudioContext } from '../../context/web-audio';
 import {
@@ -74,6 +73,7 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
   const [micOpen, setMicOpen] = useState(false);
   const [footerMainButtonLoading, setFooterMainButtonLoading] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
+  const [canPublish, setCanPublish] = useState(false);
 
   // Livekit
   const room = useRoomContext();
@@ -100,15 +100,23 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
     : null;
   const participantsInQueue = getParticipantsInQueue(participants);
   const currentPublisher = getCurrentPublisher(participants);
+  const currentParticipantMetadata = useMemo(() => {
+    if (currentParticipant?.localParticipant?.metadata) {
+      return JSON.parse(currentParticipant.localParticipant.metadata);
+    }
+    return {};
+  }, [currentParticipant?.localParticipant?.metadata]);
   const currentPublisherMetadata = useMemo(() => {
     if (currentPublisher?.metadata) {
       return JSON.parse(currentPublisher.metadata);
     }
     return {};
   }, [currentPublisher?.metadata]);
-  const iAmInTheQueue = !!participantsInQueue?.find(
-    (p) => p.identity === currentParticipant.localParticipant.identity
-  );
+  const iAmInTheQueue = useMemo(() => {
+    return !!participantsInQueue?.find(
+      (p) => p.identity === currentParticipant.localParticipant.identity
+    );
+  }, [participantsInQueue, currentParticipant.localParticipant.identity]);
   const iAmThePublisher =
     currentParticipant.localParticipant?.identity ===
     currentPublisher?.identity;
@@ -149,7 +157,6 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
   }, [currentPublisher, participantsInQueue, isCurrentlyPublishing]);
 
   // GraphQL Requests
-  const [toggleMyselfFromQueue] = useMutation(ToggleMyselfFromQueueDocument);
   const [startPublishing] = useMutation(StartPublishingDocument);
   const [stopPublishing] = useMutation(StopPublishingDocument);
 
@@ -208,6 +215,7 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
           },
         },
       });
+      setCanPublish(false);
     }
     if (interval) {
       clearInterval(interval);
@@ -289,9 +297,14 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
           }
         }
       } else {
-        await toggleMyselfFromQueue({
-          variables,
-        });
+        currentParticipant.localParticipant.setMetadata(
+          JSON.stringify({
+            ...currentParticipantMetadata,
+            inQueueAt: currentParticipantMetadata?.inQueueAt
+              ? null
+              : new Date().getTime(),
+          })
+        );
       }
     } catch (err) {
       console.error(err);
@@ -347,6 +360,25 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
       setRemainingSeconds(PUBLISH_DURATION_SECONDS);
     }
   }, [currentPublisherMetadata?.startPublishAt, handleStopPublishing]);
+
+  useEffect(() => {
+    if (myPositionInQueue === 1 && !canPublish && !isCurrentlyPublishing) {
+      console.log('set can publish');
+      setCanPublish(true);
+      currentParticipant.localParticipant.setMetadata(
+        JSON.stringify({
+          ...currentParticipantMetadata,
+          canPublishAt: new Date().getTime(),
+        })
+      );
+    }
+  }, [
+    currentParticipant.localParticipant,
+    canPublish,
+    myPositionInQueue,
+    currentParticipantMetadata,
+    isCurrentlyPublishing,
+  ]);
 
   return (
     <>

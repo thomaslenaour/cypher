@@ -15,8 +15,8 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
   'mutation Follow($followed: String!) {\n  follow(followed: $followed) {\n    id\n    followedBy {\n      id\n    }\n  }\n}\n\nmutation Unfollow($unfollowed: String!) {\n  unfollow(unfollowed: $unfollowed) {\n    id\n    followedBy {\n      id\n    }\n  }\n}':
     types.FollowDocument,
-  'mutation ToggleMyselfFromQueue($data: ToggleMyselfFromQueueInput!) {\n  toggleMyselfFromQueue(data: $data)\n}\n\nmutation JoinPublicRoom($roomId: String!) {\n  joinPublicRoom(data: {roomId: $roomId})\n}\n\nmutation JoinRoom($roomId: String!) {\n  joinRoom(data: {roomId: $roomId})\n}\n\nmutation StartPublishing($data: StartStopPublishingInput!) {\n  startPublishing(data: $data)\n}\n\nmutation StopPublishing($data: StartStopPublishingInput!) {\n  stopPublishing(data: $data)\n}':
-    types.ToggleMyselfFromQueueDocument,
+  'mutation JoinPublicRoom($roomId: String!) {\n  joinPublicRoom(data: {roomId: $roomId})\n}\n\nmutation JoinRoom($roomId: String!) {\n  joinRoom(data: {roomId: $roomId})\n}\n\nmutation StartPublishing($data: StartStopPublishingInput!) {\n  startPublishing(data: $data)\n}\n\nmutation StopPublishing($data: StartStopPublishingInput!) {\n  stopPublishing(data: $data)\n}':
+    types.JoinPublicRoomDocument,
   'mutation UpdateUserProfile($data: UpdateUserProfileInput!) {\n  updateUserProfile(data: $data) {\n    userName\n    punchline\n  }\n}':
     types.UpdateUserProfileDocument,
   'query GetRooms {\n  rooms {\n    id\n    name\n    participantsNumber\n  }\n}':
@@ -52,8 +52,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'mutation ToggleMyselfFromQueue($data: ToggleMyselfFromQueueInput!) {\n  toggleMyselfFromQueue(data: $data)\n}\n\nmutation JoinPublicRoom($roomId: String!) {\n  joinPublicRoom(data: {roomId: $roomId})\n}\n\nmutation JoinRoom($roomId: String!) {\n  joinRoom(data: {roomId: $roomId})\n}\n\nmutation StartPublishing($data: StartStopPublishingInput!) {\n  startPublishing(data: $data)\n}\n\nmutation StopPublishing($data: StartStopPublishingInput!) {\n  stopPublishing(data: $data)\n}'
-): (typeof documents)['mutation ToggleMyselfFromQueue($data: ToggleMyselfFromQueueInput!) {\n  toggleMyselfFromQueue(data: $data)\n}\n\nmutation JoinPublicRoom($roomId: String!) {\n  joinPublicRoom(data: {roomId: $roomId})\n}\n\nmutation JoinRoom($roomId: String!) {\n  joinRoom(data: {roomId: $roomId})\n}\n\nmutation StartPublishing($data: StartStopPublishingInput!) {\n  startPublishing(data: $data)\n}\n\nmutation StopPublishing($data: StartStopPublishingInput!) {\n  stopPublishing(data: $data)\n}'];
+  source: 'mutation JoinPublicRoom($roomId: String!) {\n  joinPublicRoom(data: {roomId: $roomId})\n}\n\nmutation JoinRoom($roomId: String!) {\n  joinRoom(data: {roomId: $roomId})\n}\n\nmutation StartPublishing($data: StartStopPublishingInput!) {\n  startPublishing(data: $data)\n}\n\nmutation StopPublishing($data: StartStopPublishingInput!) {\n  stopPublishing(data: $data)\n}'
+): (typeof documents)['mutation JoinPublicRoom($roomId: String!) {\n  joinPublicRoom(data: {roomId: $roomId})\n}\n\nmutation JoinRoom($roomId: String!) {\n  joinRoom(data: {roomId: $roomId})\n}\n\nmutation StartPublishing($data: StartStopPublishingInput!) {\n  startPublishing(data: $data)\n}\n\nmutation StopPublishing($data: StartStopPublishingInput!) {\n  stopPublishing(data: $data)\n}'];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

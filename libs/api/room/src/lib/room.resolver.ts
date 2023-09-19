@@ -11,7 +11,6 @@ import { RoomService } from './services/room.service';
 import { JoinRoomInput } from './dtos/join-room.input';
 import { RoomObjectType } from './models/room.model';
 import { Room } from '@prisma/client';
-import { ToggleMyselfFromQueueInput } from './dtos/toggle-myself-from-queue.input';
 import { CurrentUser, GqlAuthGuard } from '@cypher/api/authentication';
 import { UseGuards } from '@nestjs/common';
 import { RoomQueueService } from './services/queue.service';
@@ -41,20 +40,6 @@ export class RoomResolver {
       roomId: data.roomId,
       userId: user?.userId || '',
     });
-  }
-
-  @UseGuards(GqlAuthGuard)
-  @Mutation(() => Boolean)
-  async toggleMyselfFromQueue(
-    @Args('data') data: ToggleMyselfFromQueueInput,
-    @CurrentUser() user: { userId: string }
-  ) {
-    await this.roomQueueService.toggleMyselfFromQueue({
-      ...data,
-      userId: user.userId,
-    });
-
-    return true;
   }
 
   @UseGuards(GqlAuthGuard)
