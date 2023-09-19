@@ -8,6 +8,7 @@ import { PostCard } from '../../components/PostCard';
 import { BackButton } from '../../components/BackButton';
 import { Footer, Header } from '@cypher/front/components/common/server';
 import { RecordingAnimation } from '@cypher/front/components/common';
+import { RightSide } from '../components/RightSide';
 
 export const generateStaticParams = async () =>
   allPosts.map((post) => ({ slug: post._raw.flattenedPath }));
@@ -49,28 +50,7 @@ const PostLayout = ({ params }: { params: { slug: string } }) => {
             </Typography>
           </Grid>
           <Grid xs={12} md={4}>
-            <Grid
-              container
-              spacing={3}
-              sx={{
-                flexGrow: 1,
-                position: 'sticky',
-                top: '2rem',
-                justifyContent: 'center',
-              }}
-              flexWrap="wrap"
-            >
-              <Typography level="h2" mb={1}>
-                Les dernières news
-              </Typography>
-              {PostsHelper.getLastThreePostsThatNotTheCurrent(post.title).map(
-                (post: Post, idx: number) => (
-                  <Grid key={idx} xs={12}>
-                    <PostCard {...post} />
-                  </Grid>
-                )
-              )}
-            </Grid>
+            <RightSide {...post} />
           </Grid>
         </Grid>
       </Container>
