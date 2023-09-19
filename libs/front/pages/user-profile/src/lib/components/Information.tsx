@@ -6,7 +6,7 @@ interface InformationProps {
   createdAt: Date;
   pseudo: string;
   punchline?: string | null;
-  userName?: string | null;
+  name?: string | null;
   sx?: SxProps;
 }
 
@@ -14,14 +14,14 @@ export const Information = ({
   createdAt,
   pseudo,
   punchline,
-  userName,
+  name,
   sx,
 }: InformationProps) => {
   const formattedDate = format(new Date(createdAt), 'yyyy');
 
   return (
     <Box {...{ sx }}>
-      <Typography level="h3">{userName ?? pseudo}</Typography>
+      <Typography level="h3">{name ?? pseudo}</Typography>
       {punchline && <Typography>{punchline}</Typography>}
       <Stack
         direction="row"
