@@ -4,7 +4,6 @@ import {
 } from '@livekit/components-react';
 
 import { Select, Option } from '@cypher/front/shared/ui';
-import { useEffect } from 'react';
 
 interface MediaDeviceSelectProps {
   disabled: boolean;
@@ -30,10 +29,6 @@ export function MediaDeviceSelect({ disabled }: MediaDeviceSelectProps) {
       }
     }
   };
-
-  useEffect(() => {
-    console.log('disabled', disabled);
-  }, [disabled]);
 
   return (
     <Select

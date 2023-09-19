@@ -28,7 +28,6 @@ export function EmailLogin() {
       callbackUrl: '/',
     });
 
-    console.log('signed', signed);
     if (signed?.ok) {
       setEmailSend(true);
     }
