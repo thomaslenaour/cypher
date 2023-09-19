@@ -2,7 +2,7 @@
 
 import { useChat } from '@livekit/components-react';
 import { useState } from 'react';
-import { Send } from 'lucide-react';
+import { Send, X } from 'lucide-react';
 import Link from 'next/link';
 
 import {
@@ -15,9 +15,13 @@ import {
 
 interface InsideRoomRightProps {
   authenticated: boolean;
+  closeChat: () => void;
 }
 
-export function InsideRoomRightSide({ authenticated }: InsideRoomRightProps) {
+export function InsideRoomRightSide({
+  authenticated,
+  closeChat,
+}: InsideRoomRightProps) {
   const [message, setMessage] = useState('');
   const { chatMessages, send } = useChat();
 
@@ -43,20 +47,28 @@ export function InsideRoomRightSide({ authenticated }: InsideRoomRightProps) {
         justifyContent: 'space-between',
       }}
     >
-      <Box>
-        <Typography
-          level="h3"
-          fontWeight={700}
-          textAlign="center"
-          p={1}
-          sx={{
-            borderBottom: '1px solid',
-            borderColor: (theme) =>
-              theme.palette.mode === 'dark' ? 'neutral.700' : 'neutral.200',
-          }}
-        >
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: { xs: 'space-between', md: 'center' },
+          alignItems: 'center',
+          p: 1,
+          borderBottom: '1px solid',
+          borderColor: (theme) =>
+            theme.palette.mode === 'dark' ? 'neutral.700' : 'neutral.200',
+        }}
+      >
+        <Typography level="h3" fontWeight={700} textAlign="center">
           Chat en direct
         </Typography>
+        <IconButton
+          sx={{
+            display: { xs: 'block', md: 'none' },
+          }}
+          onClick={closeChat}
+        >
+          <X size="24px" />
+        </IconButton>
       </Box>
       <Box
         sx={{

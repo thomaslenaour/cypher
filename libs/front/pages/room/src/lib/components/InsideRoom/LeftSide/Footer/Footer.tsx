@@ -1,5 +1,6 @@
-import { Box, Button } from '@cypher/front/shared/ui';
+import { Box, Button, IconButton, Typography } from '@cypher/front/shared/ui';
 import { Controls } from './Controls/Controls';
+import { Eye, EyeOff } from 'lucide-react';
 
 interface FooterProps {
   controls: {
@@ -17,16 +18,22 @@ interface FooterProps {
     onClick: () => Promise<void>;
     loading: boolean;
   };
+  chat: {
+    toggle: () => void;
+    open: boolean;
+  };
 }
 
 export function InsideRoomLeftSideFooter({
   mainButton,
   controls,
+  chat,
 }: FooterProps) {
   return (
     <Box
       sx={{
         display: 'flex',
+        flexDirection: { xs: 'column', md: 'row' },
         justifyContent: 'space-between',
         gap: 1,
       }}
@@ -36,9 +43,9 @@ export function InsideRoomLeftSideFooter({
           display: 'flex',
           flexDirection: 'column',
           gap: 1,
-          minWidth: '150px',
-          width: '150px',
-          maxWidth: '150px',
+          minWidth: { xs: '100%', md: '150px' },
+          width: { xs: '100%', md: '150px' },
+          maxWidth: { xs: '100%', md: '150px' },
         }}
       >
         <Controls {...controls} />
@@ -51,6 +58,21 @@ export function InsideRoomLeftSideFooter({
       >
         {mainButton.label}
       </Button>
+      <IconButton
+        variant="outlined"
+        onClick={chat.toggle}
+        size="sm"
+        sx={{
+          p: { xs: 1, md: 2 },
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 0.5,
+        }}
+      >
+        <Box>{chat.open ? <EyeOff size="20px" /> : <Eye size="20px" />}</Box>{' '}
+        <Typography>Chat</Typography>
+      </IconButton>
     </Box>
   );
 }

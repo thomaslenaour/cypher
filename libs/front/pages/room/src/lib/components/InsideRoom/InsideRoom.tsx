@@ -72,6 +72,7 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
   const [micPermissionError, setMicPermissionError] = useState('');
   const [micOpen, setMicOpen] = useState(false);
   const [footerMainButtonLoading, setFooterMainButtonLoading] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
 
   // Livekit
   const room = useRoomContext();
@@ -136,6 +137,10 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
   const [stopPublishing] = useMutation(StopPublishingDocument);
 
   // Handlers
+  async function toggleChat() {
+    setChatOpen((prev) => !prev);
+  }
+
   async function handleReady() {
     if (!audioElContainer.current) return;
 
@@ -335,8 +340,9 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
       ))}
       <Box
         sx={{
-          display: ready ? 'flex' : 'none',
+          display: ready ? { xs: 'block', md: 'flex' } : 'none',
           height: '100%',
+          position: 'relative',
           border: '1px solid',
           borderColor: (theme) =>
             theme.palette.mode === 'dark' ? 'neutral.700' : 'neutral.200',
@@ -382,11 +388,27 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
                 onClick: handleMainButtonClick,
                 loading: footerMainButtonLoading,
               },
+              chat: {
+                toggle: toggleChat,
+                open: chatOpen,
+              },
             }}
           />
         </Box>
-        <Box sx={{ width: '300px', height: '100%' }}>
-          <InsideRoomRightSide authenticated={authenticated} />
+        <Box
+          sx={{
+            display: chatOpen ? 'block' : 'none',
+            position: { xs: 'absolute', md: 'initial' },
+            top: 0,
+            width: { xs: '100%', md: '300px' },
+            height: '100%',
+            backgroundColor: 'background.body',
+          }}
+        >
+          <InsideRoomRightSide
+            authenticated={authenticated}
+            closeChat={() => setChatOpen(false)}
+          />
         </Box>
       </Box>
     </>
