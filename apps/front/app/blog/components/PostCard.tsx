@@ -1,5 +1,6 @@
 'use client';
 
+import React, { useState } from 'react';
 import {
   Card,
   CardContent,
@@ -14,9 +15,16 @@ import { Typography } from '@mui/joy';
 import { format, parseISO } from 'date-fns';
 import Link from 'next/link';
 import { Plus } from 'lucide-react';
-import React from 'react';
 
 export function PostCard(post: Post) {
+  const [hover, setHover] = useState(false);
+  const handleMouseEnter = () => {
+    setHover(true);
+  };
+  const handleMouseLeave = () => {
+    setHover(false);
+  };
+
   // #231717
   return (
     <Card
@@ -26,10 +34,19 @@ export function PostCard(post: Post) {
         p: 4,
         borderRadius: '20px',
       }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <Link href={`/blog/${post.url}`} style={{ height: '100%' }}>
-        <CardCover>
-          <img src={post.image} alt="image" />
+        <CardCover sx={{ overflow: 'hidden' }}>
+          <img
+            src={post.image}
+            alt="image"
+            style={{
+              transform: hover ? 'scale(1.05)' : '',
+              transition: 'transform .3s ease',
+            }}
+          />
         </CardCover>
         <CardContent sx={{ justifyContent: 'space-between', height: '100%' }}>
           <Stack
@@ -87,7 +104,7 @@ export function PostCard(post: Post) {
               <Plus />
             </IconButton>
           </Stack>
-          <Box sx={{ zIndex: 1, textAlign: 'right' }}>
+          <Box sx={{ zIndex: 1, textAlign: 'right', textWrap: 'balance' }}>
             <Typography
               level="h2"
               sx={{
