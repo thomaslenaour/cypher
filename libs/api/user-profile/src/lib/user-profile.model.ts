@@ -21,7 +21,7 @@ export class UserProfileObjectType {
   punchline!: string | null;
 
   @Field({ nullable: true })
-  userName!: string | null;
+  name!: string | null;
 
   @Field()
   userId!: string;

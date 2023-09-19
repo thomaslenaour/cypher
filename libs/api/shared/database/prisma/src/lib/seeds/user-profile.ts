@@ -54,7 +54,7 @@ export const userProfile: Prisma.UserProfileCreateManyInput[] = user
   .map((u) => {
     return {
       pseudo: u.name!.toLocaleLowerCase().replace(' ', '_'),
-      userName: u.name!,
+      name: u.name!,
       userId: u.id!,
       bannerUrl: USER_PROFILES[u.id!].bannerUrl,
       profileUrl: USER_PROFILES[u.id!].profileUrl,

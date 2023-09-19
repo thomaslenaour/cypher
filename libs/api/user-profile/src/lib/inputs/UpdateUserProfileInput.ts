@@ -6,7 +6,7 @@ export class UpdateUserProfileInput {
   @IsOptional()
   @Length(3, 30)
   @Field(() => String)
-  userName!: string | null;
+  name!: string | null;
 
   @IsOptional()
   @Length(0, 250)

@@ -5,7 +5,7 @@ export type IUserProfile = {
   profileUrl?: string | null;
   pseudo: string;
   punchline?: string | null;
-  userName?: string | null;
+  name?: string | null;
   userId: string;
 };
 
