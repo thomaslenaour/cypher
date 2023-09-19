@@ -4,7 +4,6 @@ import {
 } from '@livekit/components-react';
 
 import { Select, Option } from '@cypher/front/shared/ui';
-import { useEffect } from 'react';
 
 interface MediaDeviceSelectProps {
   disabled: boolean;
@@ -31,10 +30,6 @@ export function MediaDeviceSelect({ disabled }: MediaDeviceSelectProps) {
     }
   };
 
-  useEffect(() => {
-    console.log('disabled', disabled);
-  }, [disabled]);
-
   return (
     <Select
       defaultValue={activeDeviceId ?? disabled ? undefined : 'default'}
@@ -44,6 +39,9 @@ export function MediaDeviceSelect({ disabled }: MediaDeviceSelectProps) {
       size="sm"
       placeholder="Choisir un périphérique"
       disabled={disabled || devices.length === 0}
+      sx={{
+        width: { xs: '100%', md: 'auto' },
+      }}
     >
       {devices.map((device) => (
         <Option key={device.deviceId} value={device.deviceId}>

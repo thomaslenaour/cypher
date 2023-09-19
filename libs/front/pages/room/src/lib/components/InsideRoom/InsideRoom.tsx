@@ -6,6 +6,7 @@ import { InsideRoomRightSide } from './RightSide/RightSide';
 import { InsideRoomLeftSide } from './LeftSide/LeftSide';
 import {
   AudioTrack,
+  useConnectionQualityIndicator,
   useDataChannel,
   useLocalParticipant,
   useLocalParticipantPermissions,
@@ -72,6 +73,7 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
   const [micPermissionError, setMicPermissionError] = useState('');
   const [micOpen, setMicOpen] = useState(false);
   const [footerMainButtonLoading, setFooterMainButtonLoading] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
 
   // Livekit
   const room = useRoomContext();
@@ -88,6 +90,9 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
     updateOnlyOn: [],
     onlySubscribed: false,
   }).filter((ref) => !isLocal(ref.participant));
+  const { quality } = useConnectionQualityIndicator({
+    participant: currentParticipant.localParticipant,
+  });
 
   // Processing
   const roomCreatedAt = room?.metadata
@@ -107,6 +112,19 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
   const iAmThePublisher =
     currentParticipant.localParticipant?.identity ===
     currentPublisher?.identity;
+  const myPositionInQueue = useMemo(() => {
+    if (!iAmInTheQueue) return undefined;
+
+    const p = participantsInQueue.findIndex(
+      (p) => p.identity === currentParticipant.localParticipant.identity
+    );
+
+    return p + 1;
+  }, [
+    currentParticipant.localParticipant.identity,
+    iAmInTheQueue,
+    participantsInQueue,
+  ]);
   const isCurrentlyPublishing = !!currentPublisherMetadata?.startPublishAt;
   const footerMainButtonLabel = useMemo(() => {
     if (!authenticated) return 'Connecte-toi pour prendre le micro';
@@ -136,6 +154,10 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
   const [stopPublishing] = useMutation(StopPublishingDocument);
 
   // Handlers
+  async function toggleChat() {
+    setChatOpen((prev) => !prev);
+  }
+
   async function handleReady() {
     if (!audioElContainer.current) return;
 
@@ -335,8 +357,9 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
       ))}
       <Box
         sx={{
-          display: ready ? 'flex' : 'none',
+          display: ready ? { xs: 'block', md: 'flex' } : 'none',
           height: '100%',
+          position: 'relative',
           border: '1px solid',
           borderColor: (theme) =>
             theme.palette.mode === 'dark' ? 'neutral.700' : 'neutral.200',
@@ -376,17 +399,35 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
                 mediaDeviceSelect: {
                   disabled: !!micPermissionError,
                 },
+                connectionQuality: quality,
               },
+              position: myPositionInQueue,
               mainButton: {
                 label: micPermissionError || footerMainButtonLabel,
                 onClick: handleMainButtonClick,
                 loading: footerMainButtonLoading,
               },
+              chat: {
+                toggle: toggleChat,
+                open: chatOpen,
+              },
             }}
           />
         </Box>
-        <Box sx={{ width: '300px', height: '100%' }}>
-          <InsideRoomRightSide authenticated={authenticated} />
+        <Box
+          sx={{
+            display: chatOpen ? 'block' : 'none',
+            position: { xs: 'absolute', md: 'initial' },
+            top: 0,
+            width: { xs: '100%', md: '300px' },
+            height: '100%',
+            backgroundColor: 'background.body',
+          }}
+        >
+          <InsideRoomRightSide
+            authenticated={authenticated}
+            closeChat={() => setChatOpen(false)}
+          />
         </Box>
       </Box>
     </>

@@ -14,31 +14,31 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 
 const UPDATE_PROFILE_ERRORS = {
-  userName: "Ton nom d'utilisateur doit faire entre 3 et 20 caractères.",
+  name: "Ton nom d'utilisateur doit faire entre 3 et 20 caractères.",
   punchline:
     'Ton inspiration est remarquable mais la punchline est limitée à 250 caractères.',
   root: "Une erreur s'est produite ... Veuillez vérifier vos information ou réessayer plus tard.",
 };
 
 const UpdateProfileSchema = z.object({
-  userName: z
+  name: z
     .string()
-    .min(3, { message: UPDATE_PROFILE_ERRORS.userName })
-    .max(30, { message: UPDATE_PROFILE_ERRORS.userName }),
+    .min(3, { message: UPDATE_PROFILE_ERRORS.name })
+    .max(30, { message: UPDATE_PROFILE_ERRORS.name }),
   punchline: z.string().max(250, { message: UPDATE_PROFILE_ERRORS.punchline }),
 });
 
 export type UpdateProfileInput = z.infer<typeof UpdateProfileSchema>;
 
 interface UpdateProfileFormProps {
-  userName: string;
+  name: string;
   punchline: string;
   handleSubmit: (data: UpdateProfileInput) => Promise<boolean>;
   handleClose: () => void;
 }
 
 export const UpdateProfileForm = ({
-  userName,
+  name,
   punchline,
   handleSubmit,
   handleClose,
@@ -68,18 +68,18 @@ export const UpdateProfileForm = ({
     >
       <Stack gap={2}>
         <Controller
-          name="userName"
+          name="name"
           control={control}
-          defaultValue={userName}
+          defaultValue={name}
           render={({ field }) => (
             <Box>
               <FormLabel sx={{ marginBottom: 0.5 }}>
                 Nom d'utilisateur
               </FormLabel>
               <Input {...field} />
-              {errors.userName?.message && (
+              {errors.name?.message && (
                 <Typography level="body-sm" color="danger">
-                  {errors.userName?.message}
+                  {errors.name?.message}
                 </Typography>
               )}
             </Box>

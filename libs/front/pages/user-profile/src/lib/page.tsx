@@ -1,8 +1,7 @@
 import { Header } from '@cypher/front/components/common/server';
-import { getProfile } from './queries/getUserProfile';
-import { getUser } from './queries/getUser';
 import { UserProfile } from './components/UserProfile';
 import { UserNotFound } from './components/UserNotFound';
+import { getUser, getUserProfile } from '@cypher/front/libs/apollo/server';
 
 interface UserProfilePageProps {
   params: {
@@ -11,7 +10,9 @@ interface UserProfilePageProps {
 }
 
 export async function UserProfilePage({ params }: UserProfilePageProps) {
-  const profile = await getProfile(params.pseudo).catch(() => null);
+  const profile = await getUserProfile('pseudo', params.pseudo).catch(
+    () => null
+  );
   const user = profile ? await getUser(profile.userId).catch(() => null) : null;
   const displayNotFoundPage = profile === null || user === null;
 

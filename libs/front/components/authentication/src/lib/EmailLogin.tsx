@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+
 import {
   Alert,
   Button,
@@ -28,7 +29,6 @@ export function EmailLogin() {
       callbackUrl: '/',
     });
 
-    console.log('signed', signed);
     if (signed?.ok) {
       setEmailSend(true);
     }

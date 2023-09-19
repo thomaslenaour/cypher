@@ -63,7 +63,7 @@ export function UserProfile({ profile, user: defaultUser }: UserProfileProps) {
                 createdAt={userProfile.createdAt}
                 pseudo={userProfile.pseudo}
                 punchline={userProfile.punchline}
-                userName={userProfile.userName}
+                name={userProfile.name}
                 sx={{
                   marginTop: 1,
                 }}
@@ -95,9 +95,7 @@ export function UserProfile({ profile, user: defaultUser }: UserProfileProps) {
       </Box>
       <UpdateProfileModal
         open={openUpdateModal}
-        userName={
-          userProfile.userName ? userProfile.userName : userProfile.pseudo
-        }
+        name={userProfile.name ? userProfile.name : userProfile.pseudo}
         punchline={userProfile.punchline ?? ''}
         handleClose={handleCloseUpdateModal}
         handleSubmit={handleUpdateProfileSubmit}

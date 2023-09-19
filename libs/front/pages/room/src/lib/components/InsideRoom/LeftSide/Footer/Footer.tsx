@@ -1,5 +1,7 @@
-import { Box, Button } from '@cypher/front/shared/ui';
+import { Box, Button, IconButton, Typography } from '@cypher/front/shared/ui';
 import { Controls } from './Controls/Controls';
+import { Eye, EyeOff } from 'lucide-react';
+import { ConnectionQuality } from 'livekit-client';
 
 interface FooterProps {
   controls: {
@@ -11,23 +13,33 @@ interface FooterProps {
     mediaDeviceSelect: {
       disabled: boolean;
     };
+    connectionQuality: ConnectionQuality;
   };
+  position?: number;
   mainButton: {
     label: string;
     onClick: () => Promise<void>;
     loading: boolean;
+  };
+  chat: {
+    toggle: () => void;
+    open: boolean;
   };
 }
 
 export function InsideRoomLeftSideFooter({
   mainButton,
   controls,
+  chat,
+  position,
 }: FooterProps) {
   return (
     <Box
       sx={{
         display: 'flex',
+        flexDirection: { xs: 'column', md: 'row' },
         justifyContent: 'space-between',
+        alignItems: 'flex-end',
         gap: 1,
       }}
     >
@@ -36,21 +48,61 @@ export function InsideRoomLeftSideFooter({
           display: 'flex',
           flexDirection: 'column',
           gap: 1,
-          minWidth: '150px',
-          width: '150px',
-          maxWidth: '150px',
+          minWidth: { xs: '100%', md: '150px' },
+          width: { xs: '100%', md: '150px' },
+          maxWidth: { xs: '100%', md: '150px' },
         }}
       >
         <Controls {...controls} />
       </Box>
-      <Button
-        size="lg"
-        onClick={mainButton.onClick}
-        loading={mainButton.loading}
-        fullWidth
+      <Box
+        sx={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: { xs: 'column', md: 'row' },
+          justifyContent: 'space-between',
+          width: '100%',
+          gap: 1,
+        }}
       >
-        {mainButton.label}
-      </Button>
+        <Box
+          sx={{
+            width: '100%',
+          }}
+        >
+          {position && (
+            <Typography level="body-sm" textAlign="center" sx={{ mb: 0.5 }}>
+              Tu es en position {position} dans la file
+            </Typography>
+          )}
+          <Button
+            size="lg"
+            onClick={mainButton.onClick}
+            loading={mainButton.loading}
+            sx={{
+              height: '64px',
+            }}
+            fullWidth
+          >
+            {mainButton.label}
+          </Button>
+        </Box>
+        <IconButton
+          variant="outlined"
+          onClick={chat.toggle}
+          size="sm"
+          sx={{
+            p: { xs: 1, md: 2 },
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 0.5,
+          }}
+        >
+          <Box>{chat.open ? <EyeOff size="20px" /> : <Eye size="20px" />}</Box>{' '}
+          <Typography>Chat</Typography>
+        </IconButton>
+      </Box>
     </Box>
   );
 }

@@ -20,12 +20,12 @@ export function InsideRoomLeftSideHeader({
     },
     {
       icon: <Hourglass size="24px" />,
-      title: 'Artistes en attente',
+      title: 'En attente',
       value: waitingArtists || 0,
     },
     {
       icon: <Mic size="24px" />,
-      title: 'Prochain rappeur',
+      title: 'Prochain MC',
       value: nextArtist || 'N/A',
     },
   ];
@@ -33,9 +33,8 @@ export function InsideRoomLeftSideHeader({
   return (
     <Box
       sx={{
-        display: 'flex',
-        alignItems: 'center',
-        jusityContent: 'space-between',
+        display: 'grid',
+        gridTemplateColumns: 'repeat(3, 1fr)',
         gap: 2,
       }}
     >
@@ -48,6 +47,11 @@ export function InsideRoomLeftSideHeader({
               theme.palette.mode === 'dark' ? 'neutral.700' : 'neutral.200',
             borderRadius: '1px',
             width: '100%',
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
             p: 2,
           }}
         >
@@ -57,16 +61,22 @@ export function InsideRoomLeftSideHeader({
             alignItems="center"
             justifyContent="center"
           >
-            {c.icon}
-            <Typography level="title-lg">{c.title}</Typography>
+            <Box>{c.icon}</Box>
+            <Typography
+              level="title-lg"
+              textAlign="center"
+              sx={{ display: { xs: 'none', sm: 'block' } }}
+            >
+              {c.title}
+            </Typography>
           </Stack>
           <Typography
             mt={1}
-            level="h2"
+            level="h3"
             textAlign="center"
             color="primary"
             sx={{
-              maxWidth: '220px',
+              maxWidth: { xs: '126px', md: '220px' },
               textOverflow: 'ellipsis',
               overflow: 'hidden',
             }}

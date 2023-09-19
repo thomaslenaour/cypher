@@ -1,5 +1,5 @@
-import { getClient } from '@cypher/front/libs/apollo/server';
 import { GetUserDocument } from '@cypher/front/shared/graphql';
+import { getClient } from '../client';
 
 export const getUser = async (userId: string) => {
   const appolloClient = getClient();
