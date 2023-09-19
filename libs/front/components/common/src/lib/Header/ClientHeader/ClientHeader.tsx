@@ -1,18 +1,29 @@
 'use client';
 
-import { Box, Button, Container, Typography } from '@cypher/front/shared/ui';
-import { Menu, X } from 'lucide-react';
+import {
+  Box,
+  Button,
+  Container,
+  IconButton,
+  Stack,
+  Typography,
+} from '@cypher/front/shared/ui';
+import { Menu, User, X } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 
 import { signOut } from '@cypher/front/libs/auth';
 import { ModeToggle } from '../ModeToggle/ModeToggle';
+import { useRouter } from 'next/navigation';
 
 interface NavigationProps {
   authenticated: boolean;
+  pseudo: string | null;
 }
 
-function Navigation({ authenticated }: NavigationProps) {
+function Navigation({ authenticated, pseudo }: NavigationProps) {
+  const router = useRouter();
+
   return (
     <Box
       sx={{
@@ -22,10 +33,7 @@ function Navigation({ authenticated }: NavigationProps) {
           xs: 'column',
           md: 'row',
         },
-        gap: {
-          xs: 1,
-          md: 2,
-        },
+        gap: 1,
       }}
     >
       <Box
@@ -41,7 +49,10 @@ function Navigation({ authenticated }: NavigationProps) {
         </Link>
       </Box>
       {authenticated ? (
-        <Box
+        <Stack
+          direction={'row'}
+          alignItems={'center'}
+          gap={1}
           sx={{
             width: {
               xs: '100%',
@@ -52,15 +63,32 @@ function Navigation({ authenticated }: NavigationProps) {
           <Button
             onClick={() => signOut()}
             sx={{
-              width: {
-                xs: '100%',
+              flex: {
+                xs: 1,
                 md: 'auto',
               },
             }}
           >
             Se déconnecter
           </Button>
-        </Box>
+          {pseudo && (
+            <IconButton
+              variant="soft"
+              color="neutral"
+              onClick={() => {
+                router.push(`/users/${pseudo}`);
+              }}
+              sx={{
+                flex: {
+                  xs: 1,
+                  md: 'auto',
+                },
+              }}
+            >
+              <User />
+            </IconButton>
+          )}
+        </Stack>
       ) : (
         <>
           <Box
@@ -114,9 +142,10 @@ function Navigation({ authenticated }: NavigationProps) {
 
 interface ClientHeaderProps {
   authenticated: boolean;
+  pseudo: string | null;
 }
 
-export function ClientHeader({ authenticated }: ClientHeaderProps) {
+export function ClientHeader({ authenticated, pseudo }: ClientHeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   function toggleMenu() {
@@ -175,12 +204,12 @@ export function ClientHeader({ authenticated }: ClientHeaderProps) {
               display: { xs: 'none', md: 'block' },
             }}
           >
-            <Navigation authenticated={authenticated} />
+            <Navigation {...{ authenticated, pseudo }} />
           </Box>
         </Box>
         {menuOpen && (
           <Box sx={{ mt: 1, display: { xs: 'block', md: 'none' } }}>
-            <Navigation authenticated={authenticated} />
+            <Navigation {...{ authenticated, pseudo }} />
           </Box>
         )}
       </Container>
