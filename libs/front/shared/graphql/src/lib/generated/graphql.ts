@@ -105,8 +105,8 @@ export type StartStopPublishingInput = {
 };
 
 export type UpdateUserProfileInput = {
+  name: Scalars['String']['input'];
   punchline: Scalars['String']['input'];
-  userName: Scalars['String']['input'];
 };
 
 export type UserObjectType = {
@@ -126,11 +126,11 @@ export type UserProfileObjectType = {
   bannerUrl?: Maybe<Scalars['String']['output']>;
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['String']['output'];
+  name?: Maybe<Scalars['String']['output']>;
   profileUrl?: Maybe<Scalars['String']['output']>;
   pseudo: Scalars['String']['output'];
   punchline?: Maybe<Scalars['String']['output']>;
   userId: Scalars['String']['output'];
-  userName?: Maybe<Scalars['String']['output']>;
 };
 
 export type FollowMutationVariables = Exact<{
@@ -200,7 +200,7 @@ export type UpdateUserProfileMutation = {
   __typename?: 'Mutation';
   updateUserProfile: {
     __typename?: 'UserProfileObjectType';
-    userName?: string | null;
+    name?: string | null;
     punchline?: string | null;
   };
 };
@@ -236,7 +236,7 @@ export type GetUserProfileQuery = {
     profileUrl?: string | null;
     pseudo: string;
     punchline?: string | null;
-    userName?: string | null;
+    name?: string | null;
     userId: string;
   };
 };
@@ -617,7 +617,7 @@ export const UpdateUserProfileDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'userName' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'punchline' } },
               ],
             },
@@ -741,7 +741,7 @@ export const GetUserProfileDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'profileUrl' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'pseudo' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'punchline' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'userName' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'userId' } },
               ],
             },

@@ -59,7 +59,7 @@ model UserProfile {
   profileUrl String?
   pseudo     String   @unique
   punchline  String?
-  userName   String?
+  name       String?
   user       User     @relation(fields: [userId], references: [id])
   userId     String   @unique
 }

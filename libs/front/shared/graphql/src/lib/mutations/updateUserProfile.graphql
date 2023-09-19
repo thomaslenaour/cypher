@@ -1,6 +1,6 @@
 mutation UpdateUserProfile($data: UpdateUserProfileInput!) {
   updateUserProfile(data: $data) {
-    userName
+    name
     punchline
   }
 }
