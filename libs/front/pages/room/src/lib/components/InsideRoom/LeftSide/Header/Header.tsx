@@ -72,11 +72,11 @@ export function InsideRoomLeftSideHeader({
           </Stack>
           <Typography
             mt={1}
-            level="h2"
+            level="h3"
             textAlign="center"
             color="primary"
             sx={{
-              maxWidth: '220px',
+              maxWidth: { xs: '126px', md: '220px' },
               textOverflow: 'ellipsis',
               overflow: 'hidden',
             }}

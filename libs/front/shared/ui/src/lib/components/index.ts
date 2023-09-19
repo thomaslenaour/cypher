@@ -31,6 +31,7 @@ export { default as Modal } from '@mui/joy/Modal';
 export { default as ModalDialog } from '@mui/joy/ModalDialog';
 export { useColorScheme, useTheme } from '@mui/joy/styles';
 export { getInitColorSchemeScript } from '@mui/joy';
+export { keyframes } from '@mui/system';
 export * from '@mui/joy/styles/types';
 
 // Custom UI Components

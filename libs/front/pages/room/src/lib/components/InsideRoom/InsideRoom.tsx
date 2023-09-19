@@ -6,6 +6,7 @@ import { InsideRoomRightSide } from './RightSide/RightSide';
 import { InsideRoomLeftSide } from './LeftSide/LeftSide';
 import {
   AudioTrack,
+  useConnectionQualityIndicator,
   useDataChannel,
   useLocalParticipant,
   useLocalParticipantPermissions,
@@ -89,6 +90,9 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
     updateOnlyOn: [],
     onlySubscribed: false,
   }).filter((ref) => !isLocal(ref.participant));
+  const { quality } = useConnectionQualityIndicator({
+    participant: currentParticipant.localParticipant,
+  });
 
   // Processing
   const roomCreatedAt = room?.metadata
@@ -108,6 +112,19 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
   const iAmThePublisher =
     currentParticipant.localParticipant?.identity ===
     currentPublisher?.identity;
+  const myPositionInQueue = useMemo(() => {
+    if (!iAmInTheQueue) return undefined;
+
+    const p = participantsInQueue.findIndex(
+      (p) => p.identity === currentParticipant.localParticipant.identity
+    );
+
+    return p + 1;
+  }, [
+    currentParticipant.localParticipant.identity,
+    iAmInTheQueue,
+    participantsInQueue,
+  ]);
   const isCurrentlyPublishing = !!currentPublisherMetadata?.startPublishAt;
   const footerMainButtonLabel = useMemo(() => {
     if (!authenticated) return 'Connecte-toi pour prendre le micro';
@@ -382,7 +399,9 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
                 mediaDeviceSelect: {
                   disabled: !!micPermissionError,
                 },
+                connectionQuality: quality,
               },
+              position: myPositionInQueue,
               mainButton: {
                 label: micPermissionError || footerMainButtonLabel,
                 onClick: handleMainButtonClick,
