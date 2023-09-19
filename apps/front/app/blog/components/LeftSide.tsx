@@ -7,9 +7,7 @@ import { PostsHelper } from '../utils/PostsHelper';
 import { PostCard } from './PostCard';
 
 export function LeftSide() {
-  // const postsSortedByDate = PostsHelper.getAllPostsSortedByDate();
-
-  const highlightPost = PostsHelper.getHighlightPost();
+  const mainHighlightPost = PostsHelper.getMainHighlightedPost();
 
   return (
     <Box>
@@ -20,7 +18,7 @@ export function LeftSide() {
         }}
       >
         <CatchPhrase />
-        <PostCard {...highlightPost} />
+        <PostCard {...mainHighlightPost} />
       </Stack>
     </Box>
   );

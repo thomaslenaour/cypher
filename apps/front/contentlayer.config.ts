@@ -8,6 +8,7 @@ export const Post = defineDocumentType(() => ({
     date: { type: 'date', required: true },
     description: { type: 'string', required: true },
     tag: { type: 'string', required: true },
+    mainPost: { type: 'boolean', required: true },
     highlight: { type: 'boolean', required: true },
     image: { type: 'string', required: true },
   },

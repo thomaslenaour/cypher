@@ -15,8 +15,12 @@ export class PostsHelper {
   }
 
   // Returns the highlighted post. If no post has been configured to be highlighted, returns the last post created.
-  static getHighlightPost(): Post {
-    return allPosts.find((post: Post) => post.highlight) || allPosts[0];
+  static getMainHighlightedPost(): Post {
+    return allPosts.find((post: Post) => post.mainPost) || PostsHelper.getAllPostsSortedByDate()[0];
+  }
+
+  static getHighlightedPosts(): Post[] {
+    return PostsHelper.getAllPostsSortedByDate().filter((post: Post) => post.highlight && !post.mainPost);
   }
 
   static getLastTwoPostsNotHighlighted(): Post[] {
@@ -25,18 +29,17 @@ export class PostsHelper {
   }
 
   static getRestNonSpecialPosts(): Post[] {
-    const twoLastPostsNotHighlighted =
-      PostsHelper.getLastTwoPostsNotHighlighted();
-    const thirdHighlightedPosts = [
-      PostsHelper.getHighlightPost(),
-      twoLastPostsNotHighlighted[0],
-      twoLastPostsNotHighlighted[1],
-    ];
+    const mainHighlitedPost = PostsHelper.getMainHighlightedPost();
+    const highlightedPosts =
+      PostsHelper.getHighlightedPosts();
+
+    const allHighlitedPosts = [mainHighlitedPost, highlightedPosts[0], highlightedPosts[1]]
+
     const allPostsSortedByDate = PostsHelper.getAllPostsSortedByDate();
 
     return allPostsSortedByDate.filter(
       (post) =>
-        !thirdHighlightedPosts.some(
+        !allHighlitedPosts.some(
           (highlightPost) => highlightPost.title === post.title
         )
     );

@@ -3,6 +3,7 @@ title: Post numéro 7
 date: 2023-09-18 14:16:00
 description: Post 7
 tag: Studio
+mainPost: false
 highlight: false
 image: https://images.pexels.com/photos/7971865/pexels-photo-7971865.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1
 ---

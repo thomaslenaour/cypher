@@ -8,7 +8,7 @@ import { Post } from '../../../.contentlayer/generated';
 
 export function RightSide() {
   const lastTwoPostsNotHighlighted =
-    PostsHelper.getLastTwoPostsNotHighlighted();
+    PostsHelper.getHighlightedPosts();
 
   return (
     <Box sx={{ minWidth: '35%' }}>
