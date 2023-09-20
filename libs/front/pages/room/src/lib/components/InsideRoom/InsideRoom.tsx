@@ -40,6 +40,7 @@ interface InsideRoomProps {
 
 const BEAT_DURATION_IN_SECONDS = 183;
 export const PUBLISH_DURATION_SECONDS = 45;
+const CAN_PUBLISH_TIME_SECONDS = 60;
 
 function isLocal(p: Participant) {
   return p instanceof LocalParticipant;
@@ -47,6 +48,7 @@ function isLocal(p: Participant) {
 
 let interval: NodeJS.Timeout | null = null;
 let jingleTimeout: NodeJS.Timeout | null = null;
+let canPublishTimeout: NodeJS.Timeout | null = null;
 
 const PLAY_JINGLE_MESSAGE = 'pj';
 const encoder = new TextEncoder();
@@ -273,6 +275,10 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
           });
           await handleStopPublishing();
         } else {
+          if (canPublishTimeout) {
+            clearTimeout(canPublishTimeout);
+            canPublishTimeout = null;
+          }
           send(encoder.encode(PLAY_JINGLE_MESSAGE), {
             kind: DataPacket_Kind.LOSSY,
           });
@@ -363,7 +369,6 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
 
   useEffect(() => {
     if (myPositionInQueue === 1 && !canPublish && !isCurrentlyPublishing) {
-      console.log('set can publish');
       setCanPublish(true);
       currentParticipant.localParticipant.setMetadata(
         JSON.stringify({
@@ -371,6 +376,20 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
           canPublishAt: new Date().getTime(),
         })
       );
+      // start timeout
+      canPublishTimeout = setTimeout(() => {
+        currentParticipant.localParticipant.setMetadata(
+          JSON.stringify({
+            ...currentParticipantMetadata,
+            canPublishAt: null,
+            inQueueAt: null,
+          })
+        );
+        if (canPublishTimeout) {
+          clearTimeout(canPublishTimeout);
+          canPublishTimeout = null;
+        }
+      }, CAN_PUBLISH_TIME_SECONDS * 1000);
     }
   }, [
     currentParticipant.localParticipant,
@@ -379,6 +398,12 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
     currentParticipantMetadata,
     isCurrentlyPublishing,
   ]);
+
+  useEffect(() => {
+    if (typeof myPositionInQueue === 'undefined') {
+      setCanPublish(false);
+    }
+  }, [myPositionInQueue]);
 
   return (
     <>
