@@ -37,12 +37,18 @@ export function UserProfile({ profile, user: defaultUser }: UserProfileProps) {
   return (
     <>
       <Box>
-        <Banner bannerUrl={userProfile.bannerUrl ?? null} />
+        <Banner
+          bannerUrl={userProfile.bannerUrl ?? null}
+          currentUserIsOnHisProfilePage
+        />
         <Container>
           <Box className="user-profile-header">
             <ProfilePicture
-              pseudo={userProfile.pseudo}
-              profileUrl={userProfile.profileUrl}
+              {...{
+                currentUserIsOnHisProfilePage,
+                pseudo: userProfile.pseudo,
+                profileUrl: userProfile.profileUrl,
+              }}
             />
             <Stack
               direction={{

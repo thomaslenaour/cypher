@@ -1,5 +1,22 @@
 'use client';
-import { Box, Typography } from '@cypher/front/shared/ui';
+import { Box, IconButton, Typography } from '@cypher/front/shared/ui';
+import { useState } from 'react';
+import { Pencil } from 'lucide-react';
+import Uppy from '@uppy/core';
+import Webcam from '@uppy/webcam';
+import { DashboardModal } from '@uppy/react';
+import '@uppy/core/dist/style.min.css';
+import '@uppy/dashboard/dist/style.min.css';
+import '@uppy/webcam/dist/style.min.css';
+import '@uppy/image-editor/dist/style.min.css';
+
+const profilePictureUppy = new Uppy({
+  restrictions: {
+    maxNumberOfFiles: 1,
+    maxFileSize: 2000000,
+    allowedFileTypes: ['image/*'],
+  },
+}).use(Webcam);
 
 const PROFILE_PICTURE_SIZE = {
   sm: 8.125,
@@ -9,16 +26,21 @@ const PROFILE_PICTURE_SIZE = {
 interface ProfilePictureProps {
   pseudo: string;
   profileUrl?: string | null;
+  currentUserIsOnHisProfilePage: boolean;
 }
 
-export function ProfilePicture({ pseudo, profileUrl }: ProfilePictureProps) {
+export function ProfilePicture({
+  pseudo,
+  profileUrl,
+  currentUserIsOnHisProfilePage,
+}: ProfilePictureProps) {
+  const [openDashboardModal, setOpenDashboardModal] = useState<boolean>(false);
+
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        alignItems: 'end',
-        justifyContent: 'space-between',
-        '& > .profile-picture': {
+    <>
+      <Box
+        className="profile-picture"
+        sx={{
           ...(profileUrl != null
             ? {
                 background: `url("${profileUrl}")`,
@@ -47,18 +69,48 @@ export function ProfilePicture({ pseudo, profileUrl }: ProfilePictureProps) {
             sm: `-${PROFILE_PICTURE_SIZE.sm / 2}rem`,
             xs: `-${PROFILE_PICTURE_SIZE.xs / 2}rem`,
           },
-        },
-      }}
-    >
-      {profileUrl ? (
-        <Box className="profile-picture" />
-      ) : (
-        <Box className="profile-picture">
+          position: 'relative',
+        }}
+      >
+        {!profileUrl && (
           <Typography level="h1" component="span">
             {pseudo[0].toUpperCase()}
           </Typography>
-        </Box>
+        )}
+        {currentUserIsOnHisProfilePage && (
+          <IconButton
+            sx={{
+              borderRadius: '100px',
+              position: 'absolute',
+              bottom: 0,
+              right: '5px',
+              height: '20px',
+              width: '20px',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            color="neutral"
+            variant="soft"
+            onClick={() => {
+              setOpenDashboardModal(true);
+            }}
+          >
+            <Pencil size={17} />
+          </IconButton>
+        )}
+      </Box>
+      {currentUserIsOnHisProfilePage && (
+        <DashboardModal
+          uppy={profilePictureUppy}
+          plugins={['Webcam']}
+          open={openDashboardModal}
+          onRequestClose={() => {
+            setOpenDashboardModal(false);
+          }}
+          closeModalOnClickOutside={true}
+        />
       )}
-    </Box>
+    </>
   );
 }
