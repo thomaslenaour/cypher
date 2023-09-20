@@ -11,54 +11,6 @@ export class RoomQueueService {
     private readonly roomRepository: RoomRepository
   ) {}
 
-  async toggleMyselfFromQueue({
-    roomId,
-    identity,
-    userId,
-  }: {
-    roomId: string;
-    identity: string;
-    userId: string;
-  }) {
-    const room = await this.roomRepository.getRoom(roomId);
-
-    if (!room) {
-      throw new Error('No room found with given id');
-    }
-
-    const participant = await this.livekitService.getParticipant(
-      roomId,
-      identity
-    );
-    const currentParticipantMetadata = participant?.metadata
-      ? JSON.parse(participant.metadata)
-      : {};
-
-    if (!participant) {
-      throw new Error('No participant found with given identity');
-    }
-
-    const isAllowed = currentParticipantMetadata?.userId === userId;
-
-    if (!isAllowed) {
-      throw new Error('You are not allowed to toggle this participant');
-    }
-
-    const newMetadata = {
-      ...currentParticipantMetadata,
-      inQueueAt: currentParticipantMetadata?.inQueueAt
-        ? null
-        : new Date().getTime(),
-    };
-
-    return await this.livekitService.updateParticipant(
-      roomId,
-      identity,
-      newMetadata,
-      { canPublish: false, canPublishData: true, canSubscribe: true }
-    );
-  }
-
   /**
    * This methods returns an array of participants in queue, sorted by joined at ASC
    * @param roomName The name of the Livekit room
