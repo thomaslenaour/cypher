@@ -2,5 +2,7 @@ mutation UpdateUserProfile($data: UpdateUserProfileInput!) {
   updateUserProfile(data: $data) {
     name
     punchline
+    profileUrl
+    bannerUrl
   }
 }
