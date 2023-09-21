@@ -13,7 +13,11 @@ interface InsideRoomLeftSideProps {
     nextArtist?: string;
   };
   main: {
-    status: { text: string };
+    status: {
+      text: string;
+      isCurrentlyPublishing: boolean;
+      pseudo: string | null;
+    };
     timer: {
       enabled: boolean;
       timeRemaining: number;
