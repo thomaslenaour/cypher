@@ -105,8 +105,10 @@ export type StartStopPublishingInput = {
 };
 
 export type UpdateUserProfileInput = {
-  name: Scalars['String']['input'];
-  punchline: Scalars['String']['input'];
+  bannerUrl?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  profileUrl?: InputMaybe<Scalars['String']['input']>;
+  punchline?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UserObjectType = {
@@ -202,6 +204,8 @@ export type UpdateUserProfileMutation = {
     __typename?: 'UserProfileObjectType';
     name?: string | null;
     punchline?: string | null;
+    profileUrl?: string | null;
+    bannerUrl?: string | null;
   };
 };
 
@@ -619,6 +623,8 @@ export const UpdateUserProfileDocument = {
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'name' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'punchline' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'profileUrl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'bannerUrl' } },
               ],
             },
           },

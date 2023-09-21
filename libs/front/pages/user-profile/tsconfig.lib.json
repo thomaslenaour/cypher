@@ -24,6 +24,7 @@
     "src/**/*.jsx",
     "src/**/*.ts",
     "src/**/*.tsx",
-    "../../libs/auth/next-auth.d.ts"
+    "../../libs/auth/next-auth.d.ts",
+    "./environment.d.ts"
   ]
 }

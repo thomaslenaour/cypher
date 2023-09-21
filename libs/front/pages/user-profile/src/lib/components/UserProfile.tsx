@@ -32,17 +32,26 @@ export function UserProfile({ profile, user: defaultUser }: UserProfileProps) {
     handleFollowClick,
     handleOpenUpdateModal,
     handleUpdateProfileSubmit,
+    handleUpdateProfileUrl,
+    handleUpdateBannerUrl,
   } = useUserProfile(defaultUser, profile);
 
   return (
     <>
       <Box>
-        <Banner bannerUrl={userProfile.bannerUrl ?? null} />
+        <Banner
+          pseudo={userProfile.pseudo}
+          handleUpdateBannerUrl={handleUpdateBannerUrl}
+          bannerUrl={userProfile.bannerUrl ?? null}
+          currentUserIsOnHisProfilePage={currentUserIsOnHisProfilePage}
+        />
         <Container>
           <Box className="user-profile-header">
             <ProfilePicture
+              currentUserIsOnHisProfilePage={currentUserIsOnHisProfilePage}
               pseudo={userProfile.pseudo}
-              profileUrl={userProfile.profileUrl}
+              profileUrl={userProfile.profileUrl ?? null}
+              handleUpdateProfileUrl={handleUpdateProfileUrl}
             />
             <Stack
               direction={{

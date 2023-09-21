@@ -91,6 +91,53 @@ export const useUserProfile = (
     }
   };
 
+  const handleUpdateProfileUrl = async (profileUrl: string) => {
+    try {
+      const res = await updateUserProfileMutation({
+        variables: {
+          data: {
+            profileUrl,
+          },
+        },
+      });
+
+      if (res.data?.updateUserProfile) {
+        setUserProfile({
+          ...userProfile,
+          ...res.data.updateUserProfile,
+        });
+      }
+
+      return true;
+    } catch (error: any) {
+      console.error('An error occured:', error.message);
+      return false;
+    }
+  };
+
+  const handleUpdateBannerUrl = async (bannerUrl: string) => {
+    try {
+      const res = await updateUserProfileMutation({
+        variables: {
+          data: {
+            bannerUrl,
+          },
+        },
+      });
+
+      if (res.data?.updateUserProfile)
+        setUserProfile({
+          ...userProfile,
+          ...res.data.updateUserProfile,
+        });
+
+      return true;
+    } catch (error: any) {
+      console.error('An error occured:', error.message);
+      return false;
+    }
+  };
+
   const handleOpenUpdateModal = () => {
     setOpenUpdateModal(true);
   };
@@ -110,5 +157,7 @@ export const useUserProfile = (
     handleOpenUpdateModal,
     handleCloseUpdateModal,
     handleUpdateProfileSubmit,
+    handleUpdateProfileUrl,
+    handleUpdateBannerUrl,
   };
 };
