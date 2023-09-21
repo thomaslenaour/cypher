@@ -63,6 +63,7 @@ export function InsideRoomLeftSideFooter({
           justifyContent: 'space-between',
           width: '100%',
           gap: 1,
+          alignItems: 'flex-end',
         }}
       >
         <Box
@@ -97,9 +98,22 @@ export function InsideRoomLeftSideFooter({
             alignItems: 'center',
             justifyContent: 'center',
             gap: 0.5,
+            height: '64px',
+            width: {
+              xs: '100%',
+              md: 'auto',
+            },
           }}
         >
-          <Box>{chat.open ? <EyeOff size="20px" /> : <Eye size="20px" />}</Box>{' '}
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            {chat.open ? <EyeOff size="20px" /> : <Eye size="20px" />}
+          </Box>{' '}
           <Typography>Chat</Typography>
         </IconButton>
       </Box>
