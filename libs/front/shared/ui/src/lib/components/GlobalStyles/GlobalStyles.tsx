@@ -7,6 +7,9 @@ export function GlobalStyles() {
     <JoyGlobalStyles
       styles={{
         a: { textDecoration: 'none', color: 'inherit' },
+        body: {
+          paddingBottom: 'env(safe-area-inset-bottom)',
+        },
       }}
     />
   );
