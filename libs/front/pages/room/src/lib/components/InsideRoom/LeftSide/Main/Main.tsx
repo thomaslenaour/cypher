@@ -1,10 +1,13 @@
-import { Box, Typography } from '@cypher/front/shared/ui';
+import { Box, Button, Typography } from '@cypher/front/shared/ui';
 
 import { PUBLISH_DURATION_SECONDS } from '../../InsideRoom';
+import Link from 'next/link';
 
 interface InsideRoomLeftSideMainProps {
   status: {
     text: string;
+    isCurrentlyPublishing: boolean;
+    pseudo: string | null;
   };
   timer: { timeRemaining: number; enabled: boolean };
 }
@@ -13,6 +16,7 @@ export function InsideRoomLeftSideMain({
   timer,
   status,
 }: InsideRoomLeftSideMainProps) {
+  console.log('status: ', status);
   const strokeDasharray = `${
     (((timer.timeRemaining * 100) / PUBLISH_DURATION_SECONDS) * 283) / 100
   }, 283`;
@@ -30,6 +34,15 @@ export function InsideRoomLeftSideMain({
       <Typography level="h3" textAlign="center">
         {status.text}
       </Typography>
+      {status.isCurrentlyPublishing && status.pseudo && (
+        <Link href={`../users/${status.pseudo}`} target="_blank">
+          <Button variant="outlined" color="neutral">
+            <Typography fontStyle="italic" textTransform="uppercase">
+              Voir le profil
+            </Typography>
+          </Button>
+        </Link>
+      )}
       {timer.enabled && (
         <Box
           sx={{

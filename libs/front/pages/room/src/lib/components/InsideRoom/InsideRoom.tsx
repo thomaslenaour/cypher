@@ -440,6 +440,8 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
             main={{
               status: {
                 text: statusText,
+                isCurrentlyPublishing: isCurrentlyPublishing,
+                pseudo: currentPublisher?.name ?? null,
               },
               timer: {
                 enabled: !!currentPublisherMetadata?.startPublishAt,
