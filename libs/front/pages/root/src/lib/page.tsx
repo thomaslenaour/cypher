@@ -13,6 +13,7 @@ import { PresentationSection } from './components/PresentationSection';
 import { SvgBackground } from './components/SvgBackground';
 import { ChevronsDown } from 'lucide-react';
 import Link from 'next/link';
+import { HowItWorksSection } from './components/HowItWorksSection';
 
 export async function HomePage() {
   const response = await getClient().query({
@@ -111,7 +112,10 @@ export async function HomePage() {
         </Container>
       </Box>
       <Box sx={{ height: 'calc(100vh - 73px)' }} />
-      <PresentationSection />
+      <Box sx={{ mb: { xs: 5, md: 10 } }}>
+        <PresentationSection />
+      </Box>
+      <HowItWorksSection />
       <Footer />
     </>
   );

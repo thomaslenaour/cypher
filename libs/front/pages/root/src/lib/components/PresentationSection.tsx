@@ -41,7 +41,16 @@ export function PresentationSection() {
 
   return (
     <Container>
-      <Typography level="h1" textAlign="center" mb={4}>
+      <Typography
+        sx={{
+          typography: {
+            xs: 'h2',
+            md: 'h1',
+          },
+          textAlign: 'center',
+          mb: { xs: 5, md: 10 },
+        }}
+      >
         Qu'est-ce que Cypher ?
       </Typography>
       <Stack
