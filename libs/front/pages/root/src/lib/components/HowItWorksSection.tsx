@@ -150,7 +150,7 @@ function SignupImage() {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 751.57 539.42"
-      style={{ maxHeight: '300px' }}
+      style={{ maxHeight: '300px', width: '100%' }}
     >
       <path
         d="m19.9,538.23c0,.66.53,1.19,1.19,1.19h729.29c.66,0,1.19-.53,1.19-1.19s-.53-1.19-1.19-1.19H21.09c-.66,0-1.19.53-1.19,1.19Z"
@@ -263,7 +263,7 @@ function QueueImage() {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 863.6556 506.4464"
-      style={{ maxHeight: '300px' }}
+      style={{ maxHeight: '300px', width: '100%' }}
     >
       <g>
         <path
@@ -525,7 +525,7 @@ function MicImage() {
       xmlns="http://www.w3.org/2000/svg"
       data-name="Layer 1"
       viewBox="0 0 488 692.30649"
-      style={{ maxHeight: '300px' }}
+      style={{ maxHeight: '300px', width: '100%' }}
     >
       <rect y="627.75922" width="488" height="2" fill="#3f3d56" />
       <path
