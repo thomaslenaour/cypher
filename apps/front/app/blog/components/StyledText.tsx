@@ -23,7 +23,7 @@ export function CatchPhrase() {
         <Typography sx={{ color: 'primary.500' }}>Toutes </Typography>
         les dernières{' '}
         <Typography sx={{ color: 'primary.500' }}>actualités </Typography>
-        sur l'
+        sur l&apos;
         <Typography sx={{ color: 'primary.500' }}>
           univers du rap{' '}
         </Typography>{' '}
@@ -53,8 +53,11 @@ export function SeeMoreText() {
       >
         <Typography sx={{ color: 'primary.500' }}>Psst </Typography>! Pour
         encore{' '}
-        <Typography sx={{ color: 'primary.500' }}>plus d'articles</Typography>,
-        c'est par <Typography sx={{ color: 'primary.500' }}>ici </Typography>!
+        <Typography sx={{ color: 'primary.500' }}>
+          plus d&apos;articles
+        </Typography>
+        , c&apos;est par{' '}
+        <Typography sx={{ color: 'primary.500' }}>ici </Typography>!
       </Typography>
     </Box>
   );
