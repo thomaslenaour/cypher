@@ -90,6 +90,7 @@ export class LivekitService implements OnModuleInit {
       canSubscribe: true,
       canPublish: false,
       canPublishData: true,
+      canUpdateOwnMetadata: true,
     });
 
     return at.toJwt();
@@ -106,6 +107,15 @@ export class LivekitService implements OnModuleInit {
       console.error(err);
       return [];
     }
+  }
+
+  async updateRoomMetadata(roomName: string, metadata: Record<string, string>) {
+    const updatedRoom = await this.roomServiceClient.updateRoomMetadata(
+      roomName,
+      JSON.stringify(metadata)
+    );
+
+    return updatedRoom;
   }
 
   async getParticipant(roomName: string, identity: string) {
@@ -125,6 +135,7 @@ export class LivekitService implements OnModuleInit {
       canPublish: boolean;
       canSubscribe: boolean;
       canPublishData: boolean;
+      canUpdateMetadata: boolean;
     }
   ) {
     const newParticipant = await this.roomServiceClient.updateParticipant(

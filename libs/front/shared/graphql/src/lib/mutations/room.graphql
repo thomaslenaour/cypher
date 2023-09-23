@@ -1,7 +1,3 @@
-mutation ToggleMyselfFromQueue($data: ToggleMyselfFromQueueInput!) {
-  toggleMyselfFromQueue(data: $data)
-}
-
 mutation JoinPublicRoom($roomId: String!) {
   joinPublicRoom(data: { roomId: $roomId })
 }

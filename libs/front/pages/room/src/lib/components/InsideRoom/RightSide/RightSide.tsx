@@ -1,7 +1,7 @@
 'use client';
 
 import { useChat } from '@livekit/components-react';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Send, X } from 'lucide-react';
 import Link from 'next/link';
 
@@ -24,6 +24,9 @@ export function InsideRoomRightSide({
 }: InsideRoomRightProps) {
   const [message, setMessage] = useState('');
   const { chatMessages, send } = useChat();
+  const messages = useMemo(() => {
+    return [...chatMessages].reverse();
+  }, [chatMessages]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);
@@ -75,12 +78,12 @@ export function InsideRoomRightSide({
           p: 1,
           flex: 1,
           display: 'flex',
-          flexDirection: 'column',
+          flexDirection: 'column-reverse',
           gap: 0.5,
           overflowY: 'auto',
         }}
       >
-        {chatMessages.map((message) => {
+        {messages.map((message) => {
           const userMetadata = message.from?.metadata
             ? JSON.parse(message.from?.metadata)
             : null;
@@ -93,7 +96,9 @@ export function InsideRoomRightSide({
                   {message.from?.name || 'Anonymous'}
                 </span>
                 &nbsp;&nbsp;
-                {message.message}
+                <span style={{ wordBreak: 'break-all' }}>
+                  {message.message}
+                </span>
               </Typography>
             </Box>
           );

@@ -42,7 +42,6 @@ export type Mutation = {
   joinRoom: Scalars['String']['output'];
   startPublishing: Scalars['Boolean']['output'];
   stopPublishing: Scalars['Boolean']['output'];
-  toggleMyselfFromQueue: Scalars['Boolean']['output'];
   unfollow: UserObjectType;
   updateUserProfile: UserProfileObjectType;
 };
@@ -65,10 +64,6 @@ export type MutationStartPublishingArgs = {
 
 export type MutationStopPublishingArgs = {
   data: StartStopPublishingInput;
-};
-
-export type MutationToggleMyselfFromQueueArgs = {
-  data: ToggleMyselfFromQueueInput;
 };
 
 export type MutationUnfollowArgs = {
@@ -109,14 +104,11 @@ export type StartStopPublishingInput = {
   roomId: Scalars['String']['input'];
 };
 
-export type ToggleMyselfFromQueueInput = {
-  identity: Scalars['String']['input'];
-  roomId: Scalars['String']['input'];
-};
-
 export type UpdateUserProfileInput = {
-  name: Scalars['String']['input'];
-  punchline: Scalars['String']['input'];
+  bannerUrl?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  profileUrl?: InputMaybe<Scalars['String']['input']>;
+  punchline?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UserObjectType = {
@@ -169,15 +161,6 @@ export type UnfollowMutation = {
   };
 };
 
-export type ToggleMyselfFromQueueMutationVariables = Exact<{
-  data: ToggleMyselfFromQueueInput;
-}>;
-
-export type ToggleMyselfFromQueueMutation = {
-  __typename?: 'Mutation';
-  toggleMyselfFromQueue: boolean;
-};
-
 export type JoinPublicRoomMutationVariables = Exact<{
   roomId: Scalars['String']['input'];
 }>;
@@ -221,6 +204,8 @@ export type UpdateUserProfileMutation = {
     __typename?: 'UserProfileObjectType';
     name?: string | null;
     punchline?: string | null;
+    profileUrl?: string | null;
+    bannerUrl?: string | null;
   };
 };
 
@@ -396,51 +381,6 @@ export const UnfollowDocument = {
     },
   ],
 } as unknown as DocumentNode<UnfollowMutation, UnfollowMutationVariables>;
-export const ToggleMyselfFromQueueDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'ToggleMyselfFromQueue' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'data' } },
-          type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: { kind: 'Name', value: 'ToggleMyselfFromQueueInput' },
-            },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'toggleMyselfFromQueue' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'data' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'data' },
-                },
-              },
-            ],
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<
-  ToggleMyselfFromQueueMutation,
-  ToggleMyselfFromQueueMutationVariables
->;
 export const JoinPublicRoomDocument = {
   kind: 'Document',
   definitions: [
@@ -683,6 +623,8 @@ export const UpdateUserProfileDocument = {
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'name' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'punchline' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'profileUrl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'bannerUrl' } },
               ],
             },
           },
