@@ -7,14 +7,13 @@ highlight: true
 image: https://images.pexels.com/photos/1238980/pexels-photo-1238980.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1
 ---
 
-*Le rythme palpite, les mots fusent, et la créativité s'épanouit - bienvenue dans l'univers du cypher !*
+_Le rythme palpite, les mots fusent, et la créativité s'épanouit - bienvenue dans l'univers du cypher !_
 
 Au cœur de la culture musicale contemporaine, les cyphers sont devenus un terrain fertile pour les artistes et les amateurs de musique du monde entier. Ils représentent l'essence même de l'expression artistique, où les mots se mêlent à la musique pour créer une expérience sonore inoubliable. Aujourd'hui, nous sommes ravis de vous présenter notre plateforme révolutionnaire qui va transformer la manière dont vous découvrez, créez et partagez des cyphers : bienvenue sur Cypher !
 
 ## Qu'est-ce que Cypher ?
 
 Cypher est bien plus qu'une simple plateforme en ligne. C'est un lieu de rencontre virtuel où les amateurs de rap et de musique peuvent se réunir, collaborer et s'exprimer. Notre vision est de créer une communauté dynamique où l'art du cypher est à l'honneur, un endroit où les frontières géographiques s'effacent et où la créativité est sans limites.
-
 
 ## Découvrez nos salles virtuelles
 

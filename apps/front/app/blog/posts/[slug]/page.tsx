@@ -1,10 +1,8 @@
 import { format, parseISO } from 'date-fns';
-import { allPosts, Post } from '../../../../.contentlayer/generated';
+import { allPosts } from '../../../../.contentlayer/generated';
 import { Box, Container, Grid, Typography } from '@cypher/front/shared/ui';
 import React from 'react';
 import { fr } from 'date-fns/locale';
-import { PostsHelper } from '../../utils/PostsHelper';
-import { PostCard } from '../../components/PostCard';
 import { BackButton } from '../../components/BackButton';
 import { Footer, Header } from '@cypher/front/components/common/server';
 import { RecordingAnimation } from '@cypher/front/components/common';

@@ -1,7 +1,13 @@
 'use client';
 
 import { SeeMoreText } from './StyledText';
-import { Box, Grid, IconButton, Stack, Typography } from '@cypher/front/shared/ui';
+import {
+  Box,
+  Grid,
+  IconButton,
+  Stack,
+  Typography,
+} from '@cypher/front/shared/ui';
 import { PostsHelper } from '../utils/PostsHelper';
 import { Post } from '../../../.contentlayer/generated';
 import { PostCard } from './PostCard';

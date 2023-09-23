@@ -50,4 +50,3 @@ Les cyphers sont des moments uniques de création musicale collective. Profitez 
 Observez et apprenez des rappeurs talentueux avec lesquels vous partagez un cypher. Vous pouvez tirer des leçons précieuses de leur style et de leur technique.
 
 L'improvisation lors d'un cypher peut être à la fois intimidante et exaltante. En suivant ces conseils, vous pouvez vous préparer à briller dans cet environnement artistique dynamique. Alors, entrez dans le cypher avec confiance, exprimez votre voix unique, et faites de chaque performance une expérience mémorable.
-

@@ -7,7 +7,6 @@ highlight: false
 image: https://images.pexels.com/photos/7586689/pexels-photo-7586689.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1
 ---
 
-
 Les cyphers virtuels sont devenus un moyen populaire pour les artistes de rap et de hip-hop de se connecter, de collaborer et de montrer leur talent au monde entier. Si vous envisagez d'organiser votre propre cypher virtuel, suivez ce guide complet pour créer un événement mémorable qui fera vibrer la communauté rap.
 
 ## 1. **Définissez votre objectif**

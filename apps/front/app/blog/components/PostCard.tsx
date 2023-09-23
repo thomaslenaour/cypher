@@ -9,9 +9,9 @@ import {
   Stack,
   Box,
   IconButton,
+  Typography,
 } from '@cypher/front/shared/ui';
 import { Post } from '../../../.contentlayer/generated';
-import { Typography } from '@mui/joy';
 import { format, parseISO } from 'date-fns';
 import Link from 'next/link';
 import { Plus } from 'lucide-react';
