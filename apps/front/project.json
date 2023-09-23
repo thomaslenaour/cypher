@@ -7,7 +7,7 @@
     "pre-build": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "prisma generate"
+        "command": "prisma generate && cd ./apps/front && contentlayer build -c ./contentlayer.config.ts"
       }
     },
     "build": {

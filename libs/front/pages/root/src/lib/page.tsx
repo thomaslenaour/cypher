@@ -10,7 +10,7 @@ import {
 } from '@cypher/front/shared/ui';
 import { Footer, Header } from '@cypher/front/components/common/server';
 import { PresentationSection } from './components/PresentationSection';
-import { SvgBackground } from './components/SvgBackground';
+import { SvgBackground } from '@cypher/front/components/common';
 import { ChevronsDown } from 'lucide-react';
 import Link from 'next/link';
 import { HowItWorksSection } from './components/HowItWorksSection';
