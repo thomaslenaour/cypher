@@ -73,7 +73,9 @@ export function InsideRoomLeftSideFooter({
         >
           {position && (
             <Typography level="body-sm" textAlign="center" sx={{ mb: 0.5 }}>
-              Tu es en position {position} dans la file
+              {position === 1
+                ? `C'est ton tour ! Tu disposes de 30s pour commencer ton couplet`
+                : `Tu es en position {position} dans la file`}
             </Typography>
           )}
           <Button
