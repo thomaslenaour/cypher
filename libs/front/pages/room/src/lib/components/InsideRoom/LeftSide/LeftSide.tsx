@@ -9,7 +9,7 @@ import { ConnectionQuality } from 'livekit-client';
 interface InsideRoomLeftSideProps {
   header: {
     participants: number;
-    waitingArtists: number;
+    waitingArtists?: string[];
     nextArtist?: string;
   };
   main: {

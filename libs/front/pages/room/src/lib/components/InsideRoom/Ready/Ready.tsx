@@ -57,14 +57,14 @@ export function Ready({ onReady }: ReadyProps) {
           <Stack direction="column" alignItems="center" my={4} spacing={2}>
             <Chip
               variant="soft"
-              startDecorator={<Info />}
+              startDecorator={<Info size="18px" />}
               sx={{ width: '100%' }}
             >
               Pour pouvoir rapper, vous devez être connecter à votre compte
             </Chip>
             <Chip
               variant="soft"
-              startDecorator={<Info />}
+              startDecorator={<Info size="18px" />}
               sx={{ width: '100%' }}
             >
               Les participants peuvent vous entendre uniquement lorsque vous
@@ -72,7 +72,7 @@ export function Ready({ onReady }: ReadyProps) {
             </Chip>
             <Chip
               variant="soft"
-              startDecorator={<Info />}
+              startDecorator={<Info size="18px" />}
               sx={{ width: '100%' }}
             >
               Respectez les autres utilisateurs

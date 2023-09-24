@@ -434,7 +434,9 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
           <InsideRoomLeftSide
             header={{
               participants: participants.length,
-              waitingArtists: participantsInQueue.length,
+              waitingArtists: participantsInQueue?.map(
+                (p) => p?.name || 'Anonymous'
+              ),
               nextArtist: participantsInQueue?.[0]?.name,
             }}
             main={{
