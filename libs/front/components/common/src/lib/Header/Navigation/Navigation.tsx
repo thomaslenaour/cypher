@@ -1,35 +1,44 @@
-import Link from 'next/link';
-
 import { Box, Typography } from '@cypher/front/shared/ui';
+import Link from 'next/link';
+import { ReactNode } from 'react';
 
-type LinkType = { label: string; href: string };
 interface NavigationProps {
-  links: {
-    [key: string]: LinkType;
-  };
+  AuthenticationLinksComponent: ReactNode;
 }
 
-export function Navigation({ links }: NavigationProps) {
+export function Navigation({ AuthenticationLinksComponent }: NavigationProps) {
   return (
-    <Box component="nav">
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: { xs: 'column', md: 'row' },
+        alignItems: { md: 'center' },
+        px: 2,
+        gap: { xs: 2, md: 2.5 },
+      }}
+    >
+      <Box>
+        <Link href="/#what-is-cypher">
+          <Typography level="body-sm">Qu'est-ce que Cypher ?</Typography>
+        </Link>
+      </Box>
+      <Box>
+        <Link href="/#how-it-works">
+          <Typography level="body-sm">Comment ça marche ?</Typography>
+        </Link>
+      </Box>
+      <Box>
+        <Link href="/blog">
+          <Typography level="body-sm">Blog</Typography>
+        </Link>
+      </Box>
       <Box
-        component="ul"
         sx={{
-          display: 'flex',
-          alignItems: 'center',
-          listStyle: 'none',
-          padding: 0,
-          gap: 3,
+          display: { xs: 'block', md: 'none' },
         }}
       >
-        {Object.entries(links).map(([key, { label, href }]) => (
-          <Typography key={key} component="li">
-            <Link href={href}>{label}</Link>
-          </Typography>
-        ))}
+        {AuthenticationLinksComponent}
       </Box>
     </Box>
   );
 }
-
-export default Navigation;

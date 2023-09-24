@@ -19,7 +19,7 @@ export async function RootLayout({ children }: RootLayoutProps) {
   const token = session?.accessToken || '';
 
   return (
-    <html lang="fr">
+    <html lang="fr" suppressHydrationWarning>
       <body>
         {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID && (
           <GoogleAnalytics id={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID} />

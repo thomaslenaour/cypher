@@ -133,6 +133,7 @@ export function HowItWorksSection() {
           textAlign: 'center',
           mb: { xs: 5, md: 10 },
         }}
+        id="how-it-works"
       >
         Comment ça marche ?
       </Typography>

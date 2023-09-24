@@ -50,6 +50,7 @@ export function PresentationSection() {
           textAlign: 'center',
           mb: { xs: 5, md: 10 },
         }}
+        id="what-is-cypher"
       >
         Qu'est-ce que Cypher ?
       </Typography>
