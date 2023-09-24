@@ -40,7 +40,7 @@ interface InsideRoomProps {
 
 const BEAT_DURATION_IN_SECONDS = 183;
 export const PUBLISH_DURATION_SECONDS = 45;
-const CAN_PUBLISH_TIME_SECONDS = 60;
+const CAN_PUBLISH_TIME_SECONDS = 30;
 
 function isLocal(p: Participant) {
   return p instanceof LocalParticipant;

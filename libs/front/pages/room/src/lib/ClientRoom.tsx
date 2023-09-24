@@ -29,7 +29,9 @@ export function ClientRoom({
 
     return () => {
       setAudioContext((prev) => {
-        prev?.close();
+        if (prev?.state !== 'closed') {
+          prev?.close();
+        }
         return null;
       });
     };
