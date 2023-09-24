@@ -15,7 +15,7 @@ export async function Header() {
   return (
     <ClientHeader
       authenticated={!!session}
-      pseudo={profile ? profile.pseudo : null}
+      pseudo={profile ? profile.pseudo : undefined}
     />
   );
 }

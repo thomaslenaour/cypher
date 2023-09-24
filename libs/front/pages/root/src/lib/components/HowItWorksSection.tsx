@@ -62,7 +62,7 @@ export function HowItWorksSection() {
               },
             }}
           >
-            Inscription et connexion
+            Inscription & connexion
           </Typography>
           <Typography>
             Crée ton compte en quelques étapes simples, en fournissant les
@@ -133,6 +133,7 @@ export function HowItWorksSection() {
           textAlign: 'center',
           mb: { xs: 5, md: 10 },
         }}
+        id="how-it-works"
       >
         Comment ça marche ?
       </Typography>
