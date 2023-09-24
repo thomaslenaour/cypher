@@ -4,5 +4,8 @@ query getUser($key: String!, $value: String!) {
     followedBy {
       id
     }
+    following {
+      id
+    }
   }
 }

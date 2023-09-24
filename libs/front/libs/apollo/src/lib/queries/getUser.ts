@@ -10,6 +10,11 @@ export const getUser = async (userId: string) => {
       key: 'id',
       value: userId,
     },
+    context: {
+      fetchOptions: {
+        next: { revalidate: 5 },
+      },
+    },
   });
 
   return getUserResponse.data.user;

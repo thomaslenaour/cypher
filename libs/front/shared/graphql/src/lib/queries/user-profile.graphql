@@ -10,3 +10,16 @@ query getUserProfile($key: String!, $value: String!) {
     userId
   }
 }
+
+query getUserProfiles($key: String!, $values: [String!]!) {
+  userProfiles(key: $key, values: $values) {
+    id
+    createdAt
+    bannerUrl
+    profileUrl
+    pseudo
+    punchline
+    name
+    userId
+  }
+}

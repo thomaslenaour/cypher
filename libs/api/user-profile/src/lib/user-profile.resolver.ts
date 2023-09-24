@@ -7,6 +7,7 @@ import { USER_PROFILE_UNIQUE_FIELDS } from './constants';
 import { BadRequestException, UseGuards } from '@nestjs/common';
 import { CurrentUser, GqlAuthGuard } from '@cypher/api/authentication';
 import { UpdateUserProfileInput } from './inputs/UpdateUserProfileInput';
+import { UserProfilesArgs } from './args/user-profiles.args';
 
 @Resolver()
 export class UserProfileResolver {
@@ -25,6 +26,22 @@ export class UserProfileResolver {
     return await this.userProfileService.getUserProfile(
       key as UserProfileUniqueFields,
       value
+    );
+  }
+
+  @Query(() => [UserProfileObjectType])
+  async userProfiles(@Args() { key, values }: UserProfilesArgs) {
+    if (!(USER_PROFILE_UNIQUE_FIELDS as readonly string[]).includes(key)) {
+      throw new BadRequestException(
+        `key should be equals to one of these values : [${USER_PROFILE_UNIQUE_FIELDS.join(
+          ', '
+        )}]`
+      );
+    }
+
+    return await this.userProfileService.getUserProfiles(
+      key as UserProfileUniqueFields,
+      values
     );
   }
 

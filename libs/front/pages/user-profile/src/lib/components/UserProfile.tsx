@@ -55,50 +55,43 @@ export function UserProfile({ profile, user: defaultUser }: UserProfileProps) {
             />
             <Stack
               direction={{
-                sm: 'row',
                 xs: 'column',
+                md: 'row',
               }}
               justifyContent={{
-                sm: 'space-between',
                 xs: 'none',
+                md: 'space-between',
               }}
-              alignItems={{
-                sm: 'center',
-                xs: 'start',
-              }}
-              className="user-profile-header-information-insights"
+              alignItems={'start'}
+              gap={3}
+              my={2}
             >
               <Information
                 createdAt={userProfile.createdAt}
                 pseudo={userProfile.pseudo}
                 punchline={userProfile.punchline}
                 name={userProfile.name}
-                sx={{
-                  marginTop: 1,
-                }}
+                sx={{ flex: 1 }}
               />
-              <Stack direction={'column'} justifyContent={'flex-end'} gap={1}>
+              <Stack direction={'column'} gap={1} sx={{ flex: 1 }}>
                 <Insights
                   contributions={20}
-                  followers={user?.followedBy?.length ?? 0}
+                  followers={user.followedBy ?? []}
+                  followings={user.following ?? []}
                 />
                 <ActionButtons
-                  {...{
-                    currentUserFollowUser,
-                    currentUserIsOnHisProfilePage,
-                    sessionStatus,
-                    handleFollowClick,
-                    handleOpenUpdateModal,
-                  }}
+                  currentUserFollowUser={currentUserFollowUser}
+                  currentUserIsOnHisProfilePage={currentUserIsOnHisProfilePage}
+                  sessionStatus={sessionStatus}
+                  handleFollowClick={handleFollowClick}
+                  handleOpenUpdateModal={handleOpenUpdateModal}
                 />
               </Stack>
             </Stack>
-            <Divider sx={{ marginTop: 1 }} />
+            <Divider sx={{ marginY: 1 }} />
           </Box>
           <Box>
-            <Typography mt={2}>
-              Les tracks de l'utilisateur seront listées ici
-            </Typography>
+            <Typography my={2}>Tes tracks (bientôt disponible)</Typography>
           </Box>
         </Container>
       </Box>

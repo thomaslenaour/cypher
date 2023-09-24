@@ -13,7 +13,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-  'mutation Follow($followed: String!) {\n  follow(followed: $followed) {\n    id\n    followedBy {\n      id\n    }\n  }\n}\n\nmutation Unfollow($unfollowed: String!) {\n  unfollow(unfollowed: $unfollowed) {\n    id\n    followedBy {\n      id\n    }\n  }\n}':
+  'mutation Follow($followed: String!) {\n  follow(followed: $followed) {\n    id\n    followedBy {\n      id\n    }\n    following {\n      id\n    }\n  }\n}\n\nmutation Unfollow($unfollowed: String!) {\n  unfollow(unfollowed: $unfollowed) {\n    id\n    followedBy {\n      id\n    }\n    following {\n      id\n    }\n  }\n}':
     types.FollowDocument,
   'mutation JoinPublicRoom($roomId: String!) {\n  joinPublicRoom(data: {roomId: $roomId})\n}\n\nmutation JoinRoom($roomId: String!) {\n  joinRoom(data: {roomId: $roomId})\n}\n\nmutation StartPublishing($data: StartStopPublishingInput!) {\n  startPublishing(data: $data)\n}\n\nmutation StopPublishing($data: StartStopPublishingInput!) {\n  stopPublishing(data: $data)\n}':
     types.JoinPublicRoomDocument,
@@ -22,9 +22,9 @@ const documents = {
   'query GetRooms {\n  rooms {\n    id\n    name\n    participantsNumber\n  }\n}':
     types.GetRoomsDocument,
   'query GetTest {\n  test\n}': types.GetTestDocument,
-  'query getUserProfile($key: String!, $value: String!) {\n  userProfile(key: $key, value: $value) {\n    id\n    createdAt\n    bannerUrl\n    profileUrl\n    pseudo\n    punchline\n    name\n    userId\n  }\n}':
+  'query getUserProfile($key: String!, $value: String!) {\n  userProfile(key: $key, value: $value) {\n    id\n    createdAt\n    bannerUrl\n    profileUrl\n    pseudo\n    punchline\n    name\n    userId\n  }\n}\n\nquery getUserProfiles($key: String!, $values: [String!]!) {\n  userProfiles(key: $key, values: $values) {\n    id\n    createdAt\n    bannerUrl\n    profileUrl\n    pseudo\n    punchline\n    name\n    userId\n  }\n}':
     types.GetUserProfileDocument,
-  'query getUser($key: String!, $value: String!) {\n  user(key: $key, value: $value) {\n    id\n    followedBy {\n      id\n    }\n  }\n}':
+  'query getUser($key: String!, $value: String!) {\n  user(key: $key, value: $value) {\n    id\n    followedBy {\n      id\n    }\n    following {\n      id\n    }\n  }\n}':
     types.GetUserDocument,
 };
 
@@ -46,8 +46,8 @@ export function graphql(source: string): unknown;
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'mutation Follow($followed: String!) {\n  follow(followed: $followed) {\n    id\n    followedBy {\n      id\n    }\n  }\n}\n\nmutation Unfollow($unfollowed: String!) {\n  unfollow(unfollowed: $unfollowed) {\n    id\n    followedBy {\n      id\n    }\n  }\n}'
-): (typeof documents)['mutation Follow($followed: String!) {\n  follow(followed: $followed) {\n    id\n    followedBy {\n      id\n    }\n  }\n}\n\nmutation Unfollow($unfollowed: String!) {\n  unfollow(unfollowed: $unfollowed) {\n    id\n    followedBy {\n      id\n    }\n  }\n}'];
+  source: 'mutation Follow($followed: String!) {\n  follow(followed: $followed) {\n    id\n    followedBy {\n      id\n    }\n    following {\n      id\n    }\n  }\n}\n\nmutation Unfollow($unfollowed: String!) {\n  unfollow(unfollowed: $unfollowed) {\n    id\n    followedBy {\n      id\n    }\n    following {\n      id\n    }\n  }\n}'
+): (typeof documents)['mutation Follow($followed: String!) {\n  follow(followed: $followed) {\n    id\n    followedBy {\n      id\n    }\n    following {\n      id\n    }\n  }\n}\n\nmutation Unfollow($unfollowed: String!) {\n  unfollow(unfollowed: $unfollowed) {\n    id\n    followedBy {\n      id\n    }\n    following {\n      id\n    }\n  }\n}'];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -76,14 +76,14 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'query getUserProfile($key: String!, $value: String!) {\n  userProfile(key: $key, value: $value) {\n    id\n    createdAt\n    bannerUrl\n    profileUrl\n    pseudo\n    punchline\n    name\n    userId\n  }\n}'
-): (typeof documents)['query getUserProfile($key: String!, $value: String!) {\n  userProfile(key: $key, value: $value) {\n    id\n    createdAt\n    bannerUrl\n    profileUrl\n    pseudo\n    punchline\n    name\n    userId\n  }\n}'];
+  source: 'query getUserProfile($key: String!, $value: String!) {\n  userProfile(key: $key, value: $value) {\n    id\n    createdAt\n    bannerUrl\n    profileUrl\n    pseudo\n    punchline\n    name\n    userId\n  }\n}\n\nquery getUserProfiles($key: String!, $values: [String!]!) {\n  userProfiles(key: $key, values: $values) {\n    id\n    createdAt\n    bannerUrl\n    profileUrl\n    pseudo\n    punchline\n    name\n    userId\n  }\n}'
+): (typeof documents)['query getUserProfile($key: String!, $value: String!) {\n  userProfile(key: $key, value: $value) {\n    id\n    createdAt\n    bannerUrl\n    profileUrl\n    pseudo\n    punchline\n    name\n    userId\n  }\n}\n\nquery getUserProfiles($key: String!, $values: [String!]!) {\n  userProfiles(key: $key, values: $values) {\n    id\n    createdAt\n    bannerUrl\n    profileUrl\n    pseudo\n    punchline\n    name\n    userId\n  }\n}'];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'query getUser($key: String!, $value: String!) {\n  user(key: $key, value: $value) {\n    id\n    followedBy {\n      id\n    }\n  }\n}'
-): (typeof documents)['query getUser($key: String!, $value: String!) {\n  user(key: $key, value: $value) {\n    id\n    followedBy {\n      id\n    }\n  }\n}'];
+  source: 'query getUser($key: String!, $value: String!) {\n  user(key: $key, value: $value) {\n    id\n    followedBy {\n      id\n    }\n    following {\n      id\n    }\n  }\n}'
+): (typeof documents)['query getUser($key: String!, $value: String!) {\n  user(key: $key, value: $value) {\n    id\n    followedBy {\n      id\n    }\n    following {\n      id\n    }\n  }\n}'];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

@@ -20,6 +20,19 @@ export class UserProfilePrismaAdapter implements UserProfileRepository {
     });
   }
 
+  public async getUserProfiles(
+    key: UserProfileUniqueFields,
+    values: string[]
+  ): Promise<UserProfileObjectType[]> {
+    return await this.prisma.userProfile.findMany({
+      where: {
+        [key]: {
+          in: values,
+        },
+      },
+    });
+  }
+
   public async updateUserProfile(
     userProfileId: string,
     input: UpdateUserProfileInput
