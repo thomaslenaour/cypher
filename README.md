@@ -1,32 +1,28 @@
 # Cypher App
 
+## Pre-requisites
+
+### Livekit
+
+```sh
+brew install livekit
+```
+
+### Docker
+
+https://docs.docker.com/get-docker/
+
 ## Getting started
 
 ```sh
 git clone https://github.com/thomaslenaour/cypher
 cd cypher
+nvm use # if you have nvm installed
 npm install
 npm install -g nx # if not already installed
 ```
 
 ## Applications
-
-### Dev Services
-
-#### Services
-
-- PostgreSQL
-- Livekit server in dev mode
-
-#### Pre-requisites
-
-- Docker installed and running
-
-#### Run
-
-```sh
-docker-compose up -d
-```
 
 ### Front (Next.js)
 
@@ -44,4 +40,10 @@ In the second terminal:
 
 ```sh
 nx serve api
+```
+
+In another terminal:
+
+```sh
+livekit-server --dev
 ```

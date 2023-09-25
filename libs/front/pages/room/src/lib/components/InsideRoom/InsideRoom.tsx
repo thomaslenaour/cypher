@@ -72,7 +72,7 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
   const router = useRouter();
   const [ready, setReady] = useState(false);
   const [micPermissionError, setMicPermissionError] = useState('');
-  const [micOpen, setMicOpen] = useState(false);
+  const [micOpen, setMicOpen] = useState(true);
   const [footerMainButtonLoading, setFooterMainButtonLoading] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [canPublish, setCanPublish] = useState(false);
@@ -434,7 +434,9 @@ export function InsideRoom({ authenticated, roomId }: InsideRoomProps) {
           <InsideRoomLeftSide
             header={{
               participants: participants.length,
-              waitingArtists: participantsInQueue.length,
+              waitingArtists: participantsInQueue?.map(
+                (p) => p?.name || 'Anonymous'
+              ),
               nextArtist: participantsInQueue?.[0]?.name,
             }}
             main={{

@@ -23,6 +23,7 @@ export function MicToggle({ disabled, onToggle, value }: MicToggleProps) {
         color={value ? 'success' : 'neutral'}
         onChange={onToggle}
         disabled={disabled}
+        checked={value}
         slotProps={{
           track: {
             children: (
