@@ -1,1 +1,6 @@
-export { UserProfilePage as default } from '@cypher/front/pages/user-profile/server';
+export {
+  UserProfilePage as default,
+  dynamic,
+  revalidate,
+  fetchCache,
+} from '@cypher/front/pages/user-profile/server';
