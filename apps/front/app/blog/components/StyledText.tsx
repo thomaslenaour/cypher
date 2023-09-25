@@ -27,7 +27,7 @@ export function CatchPhrase() {
         <Typography sx={{ color: 'primary.500' }}>
           univers du rap{' '}
         </Typography>{' '}
-        sont sur <Typography sx={{ color: 'primary.500' }}>Cypher </Typography>!
+        sont sur <Typography sx={{ color: 'primary.500' }}>Cypher </Typography>
       </Typography>
     </Box>
   );
@@ -51,13 +51,8 @@ export function SeeMoreText() {
           textAlign: { xs: 'center', md: 'left' },
         }}
       >
-        <Typography sx={{ color: 'primary.500' }}>Psst </Typography>! Pour
-        encore{' '}
-        <Typography sx={{ color: 'primary.500' }}>
-          plus d&apos;articles
-        </Typography>
-        , c&apos;est par{' '}
-        <Typography sx={{ color: 'primary.500' }}>ici </Typography>!
+        Les autres{' '}
+        <Typography sx={{ color: 'primary.500' }}>articles</Typography>
       </Typography>
     </Box>
   );

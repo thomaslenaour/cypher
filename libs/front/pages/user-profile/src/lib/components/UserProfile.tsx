@@ -98,7 +98,9 @@ export function UserProfile({ profile, user: defaultUser }: UserProfileProps) {
             <Divider sx={{ marginY: 1 }} />
           </Box>
           <Box>
-            <Typography my={2}>Tes tracks (bientôt disponible)</Typography>
+            <Typography my={2}>
+              Liste des tracks (bientôt disponible)
+            </Typography>
           </Box>
         </Container>
       </Box>

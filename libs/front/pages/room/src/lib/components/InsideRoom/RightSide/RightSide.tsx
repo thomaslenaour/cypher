@@ -118,7 +118,7 @@ export function InsideRoomRightSide({
             <Input
               sx={{ width: '100%', py: 1 }}
               value={message}
-              placeholder="Tapez votre message ici..."
+              placeholder="Ecris ton message ici..."
               onChange={handleChange}
               onKeyDown={(e) => {
                 e.key === 'Enter' && handleSend();
@@ -130,7 +130,7 @@ export function InsideRoomRightSide({
           </>
         ) : (
           <Link href="/login" style={{ width: '100%' }}>
-            <Button fullWidth>Connectez-vous pour chatter</Button>
+            <Button fullWidth>Connecte-toi pour chatter</Button>
           </Link>
         )}
       </Box>

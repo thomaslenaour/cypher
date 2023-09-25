@@ -15,7 +15,7 @@ export default function RegisterPageContent({
   const authenticationCardProps = {
     title: 'Inscription',
     description:
-      'Bienvenue sur Cypher. Inscrivez-vous afin de rejoindre une communauté de passionnés autour de la musique urbaine.',
+      'Bienvenue sur Cypher. Inscris-toi afin de rejoindre une communauté de passionnés autour de la musique urbaine.',
     dividerText: 'ou',
   };
 
