@@ -60,22 +60,21 @@ export function Ready({ onReady }: ReadyProps) {
               startDecorator={<Info size="18px" />}
               sx={{ width: '100%' }}
             >
-              Pour pouvoir rapper, vous devez être connecter à votre compte
+              Pour pouvoir rapper, tu dois être connecté
             </Chip>
             <Chip
               variant="soft"
               startDecorator={<Info size="18px" />}
               sx={{ width: '100%' }}
             >
-              Les participants peuvent vous entendre uniquement lorsque vous
-              rappez
+              Les participants peuvent t'entendre uniquement lorsque tu rappes
             </Chip>
             <Chip
               variant="soft"
               startDecorator={<Info size="18px" />}
               sx={{ width: '100%' }}
             >
-              Respectez les autres utilisateurs
+              Respecte les autres utilisateurs
             </Chip>
           </Stack>
           <Button size="lg" fullWidth sx={{ mt: 2 }} onClick={onReady}>

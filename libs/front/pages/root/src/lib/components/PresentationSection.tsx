@@ -62,17 +62,17 @@ export function PresentationSection() {
         <PresentationCard
           title="Cypher en direct"
           logo={<RadioTower size={48} color={theme.palette.primary[500]} />}
-          description="Explorez des cyphers en direct et rejoignez des rappeurs du monde entier. Affichez vos compétences et connectez-vous avec d'autres passionnés de rap instantanément."
+          description="Explore des cyphers en direct et rejoins des rappeurs du monde entier. Affiche tes compétences et connecte-toi avec d'autres passionnés de rap instantanément."
         />
         <PresentationCard
           title="Partage ton flow"
           logo={<CircleDashed size={48} color={theme.palette.primary[500]} />}
-          description="Rejoignez une communauté de rappeurs en ligne et partagez votre flow avec le monde entier. Faites-vous entendre, recevez des commentaires constructifs et connectez-vous avec d'autres artistes partageant la même passion."
+          description="Rejoins une communauté de rappeurs en ligne et partage ton flow avec le monde entier. Fais-toi entendre, reçois des commentaires constructifs et connecte-toi avec d'autres artistes partageant la même passion."
         />
         <PresentationCard
           title="Respect et découverte"
           logo={<Shell size={48} color={theme.palette.primary[500]} />}
-          description="Le rap en ligne est un art où règnent le respect et la découverte. Écoutez les talents émergents, encouragez les nouveaux artistes et découvrez des voix uniques."
+          description="Le rap en ligne est un art où règnent le respect et la découverte. Ecoute les talents émergents, encourage les nouveaux artistes et découvre des voix uniques."
         />
       </Stack>
     </Container>

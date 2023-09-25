@@ -1,4 +1,4 @@
-import { Header } from '@cypher/front/components/common/server';
+import { Footer, Header } from '@cypher/front/components/common/server';
 import { UserProfile } from './components/UserProfile';
 import { UserNotFound } from './components/UserNotFound';
 import { getUser, getUserProfile } from '@cypher/front/libs/apollo/server';
@@ -28,6 +28,7 @@ export async function UserProfilePage({ params }: UserProfilePageProps) {
       ) : (
         <UserProfile profile={profile} user={user} />
       )}
+      <Footer />
     </>
   );
 }

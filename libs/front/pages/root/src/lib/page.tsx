@@ -82,11 +82,11 @@ export async function HomePage() {
                 textAlign="center"
               >
                 <Typography sx={{ color: 'primary.500' }}>
-                  Élevez votre art
+                  Élève ton art
                 </Typography>
-                , participez à un{' '}
+                , participe à un{' '}
                 <Typography sx={{ color: 'primary.500' }}>cypher</Typography> en
-                ligne et vivez{' '}
+                ligne et vis{' '}
                 <Typography sx={{ color: 'primary.500' }}>
                   l'expérience ultime
                 </Typography>{' '}
@@ -99,13 +99,13 @@ export async function HomePage() {
                 maxWidth="md"
                 textAlign="center"
               >
-                Rappez en ligne, repoussez vos limites artistiques, et tracez
-                votre chemin pour devenir une légende du freestyle.
+                Rappe en ligne, repousse tes limites artistiques, et trace ton
+                chemin pour devenir une légende du freestyle.
               </Typography>
             </Stack>
             <Link href={`/rooms/${roomId}`}>
               <Button size="lg" fullWidth sx={{ maxWidth: { md: '500px' } }}>
-                Prêt à briller ? Rejoignez le Cypher maintenant !
+                Prêt à briller ? Rejoins le Cypher maintenant !
               </Button>
             </Link>
           </Stack>

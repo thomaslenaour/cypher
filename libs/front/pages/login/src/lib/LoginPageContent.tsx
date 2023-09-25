@@ -13,7 +13,7 @@ export function LoginPageContent({ providers }: LoginPageContentProps) {
   const authenticationCardProps = {
     title: 'Connexion',
     description:
-      'Bienvenue sur Cypher. Connectez-vous pour accéder à votre compte.',
+      'Bienvenue sur Cypher. Connecte-toi pour accéder à ton compte.',
     dividerText: 'ou',
   };
 

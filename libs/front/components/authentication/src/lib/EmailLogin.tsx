@@ -38,7 +38,7 @@ export function EmailLogin() {
     <form onSubmit={handleSubmit}>
       {emailSend ? (
         <Alert color="success" size="md" variant="soft">
-          Vérifiez vos emails ! Un lien de connexion a été envoyé à l'adresse{' '}
+          Vérifie tes emails ! Un lien de connexion a été envoyé à l'adresse{' '}
           {value}
         </Alert>
       ) : (
@@ -48,7 +48,7 @@ export function EmailLogin() {
             <Input
               size="lg"
               type="email"
-              placeholder="Entrez votre adresse email"
+              placeholder="Entre ton adresse email"
               value={value}
               onChange={handleChange}
               required
