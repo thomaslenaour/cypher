@@ -23,7 +23,7 @@ export const UpdateProfileModal = ({
   handleSubmit,
 }: UpdateProfileModalProps) => (
   <Modal open={open} onClose={handleClose}>
-    <ModalDialog sx={{ minWidth: '34.375rem' }}>
+    <ModalDialog>
       <Typography p={0} m={0} level="h3">
         Mettre à jour mes informations
       </Typography>

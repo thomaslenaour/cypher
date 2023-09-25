@@ -1,4 +1,4 @@
-import { Box, Divider, Stack, Typography } from '@cypher/front/shared/ui';
+import { Box, Stack, Typography } from '@cypher/front/shared/ui';
 import { SxProps } from '@mui/joy/styles/types';
 import { format } from 'date-fns';
 
@@ -20,16 +20,18 @@ export const Information = ({
   const formattedDate = format(new Date(createdAt), 'yyyy');
 
   return (
-    <Box {...{ sx }}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 0.2,
+        ...sx,
+      }}
+    >
       <Typography level="h3">{name ?? pseudo}</Typography>
       {punchline && <Typography>{punchline}</Typography>}
-      <Stack
-        direction="row"
-        alignItems="center"
-        divider={<Divider orientation="vertical" />}
-        spacing={1}
-      >
-        <Typography fontStyle={'italic'} level="body-sm" color="primary">
+      <Stack direction={'row'} gap={1} alignItems={'center'}>
+        <Typography level="body-sm" color="primary">
           @{pseudo}
         </Typography>
         <Typography level="body-sm">

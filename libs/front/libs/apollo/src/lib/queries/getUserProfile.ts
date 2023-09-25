@@ -13,6 +13,11 @@ export const getUserProfile = async (
       key,
       value,
     },
+    context: {
+      fetchOptions: {
+        next: { revalidate: 5 },
+      },
+    },
   });
 
   return res.data.userProfile;

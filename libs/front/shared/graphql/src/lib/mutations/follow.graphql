@@ -4,6 +4,9 @@ mutation Follow($followed: String!) {
     followedBy {
       id
     }
+    following {
+      id
+    }
   }
 }
 
@@ -11,6 +14,9 @@ mutation Unfollow($unfollowed: String!) {
   unfollow(unfollowed: $unfollowed) {
     id
     followedBy {
+      id
+    }
+    following {
       id
     }
   }

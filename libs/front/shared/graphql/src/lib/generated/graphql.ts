@@ -80,6 +80,7 @@ export type Query = {
   test: Scalars['String']['output'];
   user: UserObjectType;
   userProfile: UserProfileObjectType;
+  userProfiles: Array<UserProfileObjectType>;
 };
 
 export type QueryUserArgs = {
@@ -90,6 +91,11 @@ export type QueryUserArgs = {
 export type QueryUserProfileArgs = {
   key: Scalars['String']['input'];
   value: Scalars['String']['input'];
+};
+
+export type QueryUserProfilesArgs = {
+  key: Scalars['String']['input'];
+  values: Array<Scalars['String']['input']>;
 };
 
 export type RoomObjectType = {
@@ -145,6 +151,7 @@ export type FollowMutation = {
     __typename?: 'UserObjectType';
     id: string;
     followedBy?: Array<{ __typename?: 'UserObjectType'; id: string }> | null;
+    following?: Array<{ __typename?: 'UserObjectType'; id: string }> | null;
   };
 };
 
@@ -158,6 +165,7 @@ export type UnfollowMutation = {
     __typename?: 'UserObjectType';
     id: string;
     followedBy?: Array<{ __typename?: 'UserObjectType'; id: string }> | null;
+    following?: Array<{ __typename?: 'UserObjectType'; id: string }> | null;
   };
 };
 
@@ -245,6 +253,26 @@ export type GetUserProfileQuery = {
   };
 };
 
+export type GetUserProfilesQueryVariables = Exact<{
+  key: Scalars['String']['input'];
+  values: Array<Scalars['String']['input']> | Scalars['String']['input'];
+}>;
+
+export type GetUserProfilesQuery = {
+  __typename?: 'Query';
+  userProfiles: Array<{
+    __typename?: 'UserProfileObjectType';
+    id: string;
+    createdAt: any;
+    bannerUrl?: string | null;
+    profileUrl?: string | null;
+    pseudo: string;
+    punchline?: string | null;
+    name?: string | null;
+    userId: string;
+  }>;
+};
+
 export type GetUserQueryVariables = Exact<{
   key: Scalars['String']['input'];
   value: Scalars['String']['input'];
@@ -256,6 +284,7 @@ export type GetUserQuery = {
     __typename?: 'UserObjectType';
     id: string;
     followedBy?: Array<{ __typename?: 'UserObjectType'; id: string }> | null;
+    following?: Array<{ __typename?: 'UserObjectType'; id: string }> | null;
   };
 };
 
@@ -305,6 +334,16 @@ export const FollowDocument = {
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'followedBy' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'following' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
@@ -366,6 +405,16 @@ export const UnfollowDocument = {
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'followedBy' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'following' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
@@ -757,6 +806,92 @@ export const GetUserProfileDocument = {
     },
   ],
 } as unknown as DocumentNode<GetUserProfileQuery, GetUserProfileQueryVariables>;
+export const GetUserProfilesDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'getUserProfiles' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'key' } },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'values' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'ListType',
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: { kind: 'Name', value: 'String' },
+                },
+              },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'userProfiles' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'key' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'key' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'values' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'values' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'bannerUrl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'profileUrl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pseudo' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'punchline' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'userId' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  GetUserProfilesQuery,
+  GetUserProfilesQueryVariables
+>;
 export const GetUserDocument = {
   kind: 'Document',
   definitions: [
@@ -822,6 +957,16 @@ export const GetUserDocument = {
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'followedBy' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'following' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [

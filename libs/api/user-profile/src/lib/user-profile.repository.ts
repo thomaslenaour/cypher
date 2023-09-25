@@ -10,6 +10,11 @@ export abstract class UserProfileRepository {
     value: string
   ): Promise<UserProfileObjectType | null>;
 
+  abstract getUserProfiles(
+    key: UserProfileUniqueFields,
+    value: string[]
+  ): Promise<UserProfileObjectType[]>;
+
   abstract updateUserProfile(
     userProfileId: string,
     input: UpdateUserProfileInput

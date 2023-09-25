@@ -12,4 +12,5 @@ export type IUserProfile = {
 export type IUser = {
   id: string;
   followedBy?: IUser[] | null;
+  following?: IUser[] | null;
 };

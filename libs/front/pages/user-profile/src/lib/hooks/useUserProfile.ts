@@ -49,6 +49,8 @@ export const useUserProfile = (
           },
         });
 
+        console.log(res.data);
+
         if (res.data) resultData = res.data.follow;
       } else {
         const res = await unfollowMutation({
@@ -57,10 +59,16 @@ export const useUserProfile = (
           },
         });
 
+        console.log('UNFOLLOW : ', res.data);
         if (res.data) resultData = res.data.unfollow;
       }
 
-      if (resultData) setUser(resultData);
+      if (resultData)
+        setUser({
+          ...user,
+          followedBy: resultData.followedBy,
+          following: resultData.following,
+        });
       else console.error('Failed to process follow/unfollow.');
     } catch (error: any) {
       // Handle any errors from the API call

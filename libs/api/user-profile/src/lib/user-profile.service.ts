@@ -25,6 +25,13 @@ export class UserProfileService {
     return userProfile;
   }
 
+  async getUserProfiles(
+    key: UserProfileUniqueFields,
+    values: string[]
+  ): Promise<UserProfileObjectType[]> {
+    return await this.userProfileRepository.getUserProfiles(key, values);
+  }
+
   async updateUserProfile(
     userId: string,
     input: UpdateUserProfileInput
