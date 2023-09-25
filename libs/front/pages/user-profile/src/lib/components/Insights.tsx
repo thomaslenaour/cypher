@@ -5,17 +5,11 @@ import { FollowersModal } from './FollowersModal';
 import { useState } from 'react';
 
 interface InsightsProps {
-  contributions: number;
   followers: IUser[];
   followings: IUser[];
 }
 
-export const Insights = ({
-  contributions,
-  followers,
-  followings,
-}: InsightsProps) => {
-  const contributionsLabel = `Participation${contributions > 1 ? 's' : ''}`;
+export const Insights = ({ followers, followings }: InsightsProps) => {
   const followersLabel = `Abonné${followers.length > 1 ? 's' : ''}`;
   const followingsLabel = `Abonnement${followings.length > 1 ? 's' : ''}`;
 
@@ -42,7 +36,6 @@ export const Insights = ({
           },
         }}
       >
-        <Insight label={contributionsLabel} value={contributions} />
         <Insight
           label={followersLabel}
           value={followers.length}

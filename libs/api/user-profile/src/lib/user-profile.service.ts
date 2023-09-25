@@ -3,6 +3,7 @@ import { UserProfileRepository } from './user-profile.repository';
 import { UserProfileUniqueFields } from './types';
 import { UserProfileObjectType } from './user-profile.model';
 import { UpdateUserProfileInput } from './inputs/UpdateUserProfileInput';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class UserProfileService {
@@ -38,9 +39,20 @@ export class UserProfileService {
   ): Promise<UserProfileObjectType | null> {
     const userProfile = await this.getUserProfile('userId', userId);
 
-    return await this.userProfileRepository.updateUserProfile(
-      userProfile.id,
-      input
-    );
+    try {
+      return await this.userProfileRepository.updateUserProfile(
+        userProfile.id,
+        input
+      );
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        // The .code property can be accessed in a type-safe manner
+        if (error.code === 'P2002') {
+          throw new Error(`UNIQUE_PSEUDO`);
+        }
+      }
+
+      throw error;
+    }
   }
 }

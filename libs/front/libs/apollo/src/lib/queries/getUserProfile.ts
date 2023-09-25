@@ -15,7 +15,7 @@ export const getUserProfile = async (
     },
     context: {
       fetchOptions: {
-        next: { revalidate: 5 },
+        cache: 'no-store',
       },
     },
   });

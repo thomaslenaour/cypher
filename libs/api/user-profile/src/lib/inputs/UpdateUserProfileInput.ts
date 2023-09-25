@@ -1,8 +1,20 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { IsOptional, IsUrl, Length } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsOptional,
+  IsUrl,
+  Length,
+  NotContains,
+} from 'class-validator';
 
 @InputType()
 export class UpdateUserProfileInput {
+  @IsNotEmpty()
+  @Length(3, 30)
+  @NotContains(' ')
+  @Field(() => String)
+  pseudo!: string;
+
   @IsOptional()
   @Length(3, 30)
   @Field(() => String, { nullable: true })

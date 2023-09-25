@@ -83,7 +83,6 @@ export function UserProfile({ profile, user: defaultUser }: UserProfileProps) {
               />
               <Stack direction={'column'} gap={1} sx={{ flex: 1 }}>
                 <Insights
-                  contributions={20}
                   followers={user.followedBy ?? []}
                   followings={user.following ?? []}
                 />
@@ -105,6 +104,7 @@ export function UserProfile({ profile, user: defaultUser }: UserProfileProps) {
       </Box>
       <UpdateProfileModal
         open={openUpdateModal}
+        pseudo={userProfile.pseudo}
         name={userProfile.name ? userProfile.name : userProfile.pseudo}
         punchline={userProfile.punchline ?? ''}
         handleClose={handleCloseUpdateModal}

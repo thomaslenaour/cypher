@@ -17,7 +17,7 @@ const documents = {
     types.FollowDocument,
   'mutation JoinPublicRoom($roomId: String!) {\n  joinPublicRoom(data: {roomId: $roomId})\n}\n\nmutation JoinRoom($roomId: String!) {\n  joinRoom(data: {roomId: $roomId})\n}\n\nmutation StartPublishing($data: StartStopPublishingInput!) {\n  startPublishing(data: $data)\n}\n\nmutation StopPublishing($data: StartStopPublishingInput!) {\n  stopPublishing(data: $data)\n}':
     types.JoinPublicRoomDocument,
-  'mutation UpdateUserProfile($data: UpdateUserProfileInput!) {\n  updateUserProfile(data: $data) {\n    name\n    punchline\n    profileUrl\n    bannerUrl\n  }\n}':
+  'mutation UpdateUserProfile($data: UpdateUserProfileInput!) {\n  updateUserProfile(data: $data) {\n    name\n    punchline\n    profileUrl\n    bannerUrl\n    pseudo\n  }\n}':
     types.UpdateUserProfileDocument,
   'query GetRooms {\n  rooms {\n    id\n    name\n    participantsNumber\n  }\n}':
     types.GetRoomsDocument,
@@ -58,8 +58,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'mutation UpdateUserProfile($data: UpdateUserProfileInput!) {\n  updateUserProfile(data: $data) {\n    name\n    punchline\n    profileUrl\n    bannerUrl\n  }\n}'
-): (typeof documents)['mutation UpdateUserProfile($data: UpdateUserProfileInput!) {\n  updateUserProfile(data: $data) {\n    name\n    punchline\n    profileUrl\n    bannerUrl\n  }\n}'];
+  source: 'mutation UpdateUserProfile($data: UpdateUserProfileInput!) {\n  updateUserProfile(data: $data) {\n    name\n    punchline\n    profileUrl\n    bannerUrl\n    pseudo\n  }\n}'
+): (typeof documents)['mutation UpdateUserProfile($data: UpdateUserProfileInput!) {\n  updateUserProfile(data: $data) {\n    name\n    punchline\n    profileUrl\n    bannerUrl\n    pseudo\n  }\n}'];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
