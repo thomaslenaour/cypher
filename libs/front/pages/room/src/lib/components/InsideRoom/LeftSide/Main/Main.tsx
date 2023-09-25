@@ -16,7 +16,6 @@ export function InsideRoomLeftSideMain({
   timer,
   status,
 }: InsideRoomLeftSideMainProps) {
-  console.log('status: ', status);
   const strokeDasharray = `${
     (((timer.timeRemaining * 100) / PUBLISH_DURATION_SECONDS) * 283) / 100
   }, 283`;

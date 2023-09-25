@@ -14,6 +14,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 
 const UPDATE_PROFILE_ERRORS = {
+  api: {
+    ['UNIQUE_PSEUDO' as string]: 'Ce pseudo est déjà utilisé.',
+  },
+  pseudo:
+    "Ton pseudo doit faire entre 3 et 20 caractères et ne doit pas contenir d'espace.",
   name: "Ton nom d'utilisateur doit faire entre 3 et 20 caractères.",
   punchline:
     'Ton inspiration est remarquable mais la punchline est limitée à 250 caractères.',
@@ -21,6 +26,11 @@ const UPDATE_PROFILE_ERRORS = {
 };
 
 const UpdateProfileSchema = z.object({
+  pseudo: z
+    .string()
+    .min(3, { message: UPDATE_PROFILE_ERRORS.pseudo })
+    .max(30, { message: UPDATE_PROFILE_ERRORS.pseudo })
+    .refine((s) => !s.includes(' '), UPDATE_PROFILE_ERRORS.pseudo),
   name: z
     .string()
     .min(3, { message: UPDATE_PROFILE_ERRORS.name })
@@ -31,13 +41,18 @@ const UpdateProfileSchema = z.object({
 export type UpdateProfileInput = z.infer<typeof UpdateProfileSchema>;
 
 interface UpdateProfileFormProps {
+  pseudo: string;
   name: string;
   punchline: string;
-  handleSubmit: (data: UpdateProfileInput) => Promise<boolean>;
+  handleSubmit: (data: UpdateProfileInput) => Promise<{
+    success: boolean;
+    errorCode?: string;
+  }>;
   handleClose: () => void;
 }
 
 export const UpdateProfileForm = ({
+  pseudo,
   name,
   punchline,
   handleSubmit,
@@ -53,12 +68,18 @@ export const UpdateProfileForm = ({
   });
 
   const onSubmit = async (data: UpdateProfileInput) => {
-    const resIsSuccess = await handleSubmit(data);
-    if (!resIsSuccess)
-      setError('root', {
-        message: UPDATE_PROFILE_ERRORS.root,
-      });
-    else handleClose();
+    const res = await handleSubmit(data);
+    if (!res.success && res.errorCode) {
+      if (UPDATE_PROFILE_ERRORS.api[res.errorCode]) {
+        setError('root', {
+          message: UPDATE_PROFILE_ERRORS.api[res.errorCode],
+        });
+      } else {
+        setError('root', {
+          message: UPDATE_PROFILE_ERRORS.root,
+        });
+      }
+    } else handleClose();
   };
 
   return (
@@ -68,14 +89,28 @@ export const UpdateProfileForm = ({
     >
       <Stack gap={2}>
         <Controller
+          name="pseudo"
+          control={control}
+          defaultValue={pseudo}
+          render={({ field }) => (
+            <Box>
+              <FormLabel sx={{ mb: 0.5 }}>Pseudo</FormLabel>
+              <Input {...field} />
+              {errors.pseudo?.message && (
+                <Typography level="body-sm" color="danger">
+                  {errors.pseudo?.message}
+                </Typography>
+              )}
+            </Box>
+          )}
+        />
+        <Controller
           name="name"
           control={control}
           defaultValue={name}
           render={({ field }) => (
             <Box>
-              <FormLabel sx={{ marginBottom: 0.5 }}>
-                Nom d'utilisateur
-              </FormLabel>
+              <FormLabel sx={{ mb: 0.5 }}>Nom d'utilisateur</FormLabel>
               <Input {...field} />
               {errors.name?.message && (
                 <Typography level="body-sm" color="danger">
@@ -91,9 +126,7 @@ export const UpdateProfileForm = ({
           defaultValue={punchline}
           render={({ field }) => (
             <Box>
-              <FormLabel sx={{ marginBottom: 0.5 }}>
-                Ta meilleure punchline
-              </FormLabel>
+              <FormLabel sx={{ mb: 0.5 }}>Ta meilleure punchline</FormLabel>
               <Textarea minRows={2} {...field} />
               {errors.punchline?.message && (
                 <Typography level="body-sm" color="danger">

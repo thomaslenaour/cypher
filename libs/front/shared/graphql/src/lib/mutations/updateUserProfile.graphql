@@ -4,5 +4,6 @@ mutation UpdateUserProfile($data: UpdateUserProfileInput!) {
     punchline
     profileUrl
     bannerUrl
+    pseudo
   }
 }

@@ -8,6 +8,7 @@ import {
   UpdateUserProfileDocument,
 } from '@cypher/front/shared/graphql';
 import { UpdateProfileInput } from '../components/UpdateProfile/Form';
+import { useRouter } from 'next/navigation';
 
 export const useUserProfile = (
   defaultUser: IUser,
@@ -15,6 +16,9 @@ export const useUserProfile = (
 ) => {
   // Next Auth
   const { data: sessionData, status: sessionStatus } = useSession();
+
+  // Next Navigation
+  const router = useRouter();
 
   // GraphQL Mutations
   const [followMutation] = useMutation(FollowDocument);
@@ -49,8 +53,6 @@ export const useUserProfile = (
           },
         });
 
-        console.log(res.data);
-
         if (res.data) resultData = res.data.follow;
       } else {
         const res = await unfollowMutation({
@@ -59,7 +61,6 @@ export const useUserProfile = (
           },
         });
 
-        console.log('UNFOLLOW : ', res.data);
         if (res.data) resultData = res.data.unfollow;
       }
 
@@ -78,7 +79,7 @@ export const useUserProfile = (
 
   const handleUpdateProfileSubmit = async (
     data: UpdateProfileInput
-  ): Promise<boolean> => {
+  ): Promise<{ success: boolean; errorCode?: string }> => {
     try {
       const res = await updateUserProfileMutation({
         variables: {
@@ -86,16 +87,30 @@ export const useUserProfile = (
         },
       });
 
-      if (res.data?.updateUserProfile)
+      if (res.data?.updateUserProfile) {
         setUserProfile({
           ...userProfile,
           ...res.data.updateUserProfile,
         });
 
-      return true;
+        if (res.data.updateUserProfile.pseudo !== userProfile.pseudo) {
+          router.refresh();
+          router.push(`/users/${res.data.updateUserProfile.pseudo}`);
+        }
+      }
+
+      if (res.errors && res.errors.length > 0) {
+        throw new Error(res.errors[0]?.message);
+      }
+
+      return { success: true };
     } catch (error: any) {
       console.error('An error occured:', error.message);
-      return false;
+
+      return {
+        success: false,
+        errorCode: error.message ?? 'UNKNOWN',
+      };
     }
   };
 
@@ -104,6 +119,7 @@ export const useUserProfile = (
       const res = await updateUserProfileMutation({
         variables: {
           data: {
+            pseudo: userProfile.pseudo,
             profileUrl,
           },
         },
@@ -128,6 +144,7 @@ export const useUserProfile = (
       const res = await updateUserProfileMutation({
         variables: {
           data: {
+            pseudo: userProfile.pseudo,
             bannerUrl,
           },
         },

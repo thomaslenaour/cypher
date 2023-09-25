@@ -9,14 +9,19 @@ import { UpdateProfileForm, UpdateProfileInput } from './Form';
 
 interface UpdateProfileModalProps {
   open: boolean;
+  pseudo: string;
   name: string;
   punchline: string;
   handleClose: () => void;
-  handleSubmit: (data: UpdateProfileInput) => Promise<boolean>;
+  handleSubmit: (data: UpdateProfileInput) => Promise<{
+    success: boolean;
+    errorCode?: string;
+  }>;
 }
 
 export const UpdateProfileModal = ({
   open,
+  pseudo,
   name,
   punchline,
   handleClose,
@@ -28,7 +33,9 @@ export const UpdateProfileModal = ({
         Mettre à jour mes informations
       </Typography>
       <Divider />
-      <UpdateProfileForm {...{ name, punchline, handleSubmit, handleClose }} />
+      <UpdateProfileForm
+        {...{ pseudo, name, punchline, handleSubmit, handleClose }}
+      />
     </ModalDialog>
   </Modal>
 );

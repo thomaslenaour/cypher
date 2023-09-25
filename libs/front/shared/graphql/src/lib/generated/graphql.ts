@@ -114,6 +114,7 @@ export type UpdateUserProfileInput = {
   bannerUrl?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   profileUrl?: InputMaybe<Scalars['String']['input']>;
+  pseudo: Scalars['String']['input'];
   punchline?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -214,6 +215,7 @@ export type UpdateUserProfileMutation = {
     punchline?: string | null;
     profileUrl?: string | null;
     bannerUrl?: string | null;
+    pseudo: string;
   };
 };
 
@@ -674,6 +676,7 @@ export const UpdateUserProfileDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'punchline' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'profileUrl' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'bannerUrl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pseudo' } },
               ],
             },
           },
