@@ -1,4 +1,7 @@
 'use client';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+
 import {
   Box,
   Container,
@@ -21,6 +24,7 @@ interface UserProfileProps {
 }
 
 export function UserProfile({ profile, user: defaultUser }: UserProfileProps) {
+  const router = useRouter();
   const {
     currentUserFollowUser,
     currentUserIsOnHisProfilePage,
@@ -35,6 +39,10 @@ export function UserProfile({ profile, user: defaultUser }: UserProfileProps) {
     handleUpdateProfileUrl,
     handleUpdateBannerUrl,
   } = useUserProfile(defaultUser, profile);
+
+  useEffect(() => {
+    router.refresh();
+  }, [router]);
 
   return (
     <>

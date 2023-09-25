@@ -3,6 +3,10 @@ import { UserProfile } from './components/UserProfile';
 import { UserNotFound } from './components/UserNotFound';
 import { getUser, getUserProfile } from '@cypher/front/libs/apollo/server';
 
+export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
+export const revalidate = 0;
+
 interface UserProfilePageProps {
   params: {
     pseudo: string;
