@@ -18,7 +18,7 @@ export function ProvidersLogin({ providers }: ProvidersLoginProps) {
           key={`provider-${provider.id}`}
           variant="outlined"
           size="lg"
-          onClick={() => signIn(provider.id)}
+          onClick={() => signIn(provider.id, { callbackUrl: '/' })}
           fullWidth
         >
           Se connecter avec {provider.name}
