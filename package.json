@@ -125,7 +125,7 @@
     "livekit-server-sdk": "^1.2.3",
     "lottie-react": "^2.4.0",
     "lucide-react": "^0.279.0",
-    "next": "^13.4.19",
+    "next": "^13.5.4",
     "next-auth": "^4.22.1",
     "next-contentlayer": "^0.3.4",
     "nodemailer": "^6.9.3",
